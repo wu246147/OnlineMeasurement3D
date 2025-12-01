@@ -147,6 +147,9 @@
   <data name="is_save_para" xml:space="preserve">
     <value>是否保存参数</value>
   </data>
+  <data name="License_error" xml:space="preserve">
+    <value>许可错误！</value>
+  </data>
   <data name="Maximize" xml:space="preserve">
     <value>最大化</value>
   </data>
