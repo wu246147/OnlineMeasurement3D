@@ -117,11 +117,62 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="but_not_exist" xml:space="preserve">
+    <value>却不存</value>
+  </data>
+  <data name="cam" xml:space="preserve">
+    <value>相机</value>
+  </data>
+  <data name="cam0_fail" xml:space="preserve">
+    <value>拍照0失败</value>
+  </data>
+  <data name="cam1_fail" xml:space="preserve">
+    <value>拍照1失败</value>
+  </data>
+  <data name="cam_error" xml:space="preserve">
+    <value>拍照异常</value>
+  </data>
+  <data name="cam_open_fail" xml:space="preserve">
+    <value>相机打开失败</value>
+  </data>
+  <data name="cam_open_success" xml:space="preserve">
+    <value>相机打开成功</value>
+  </data>
   <data name="car_no" xml:space="preserve">
     <value>车号</value>
   </data>
+  <data name="car_no2" xml:space="preserve">
+    <value>连番号</value>
+  </data>
+  <data name="car_no_info_read_fail" xml:space="preserve">
+    <value>连番信息读取失败</value>
+  </data>
   <data name="change_language_success" xml:space="preserve">
     <value>切换语言成功</value>
+  </data>
+  <data name="check_result" xml:space="preserve">
+    <value>检测结果</value>
+  </data>
+  <data name="check_result_readable_write_fail" xml:space="preserve">
+    <value>测量结果可读写入失败</value>
+  </data>
+  <data name="check_result_write_fail" xml:space="preserve">
+    <value>测量结果写入失败</value>
+  </data>
+  <data name="connection_failed" xml:space="preserve">
+    <value>连接失败</value>
+  </data>
+  <data name="connection_successful" xml:space="preserve">
+    <value>连接成功</value>
+  </data>
+  <data name="connect_again_success" xml:space="preserve">
+    <value>重新连接成功</value>
+  </data>
+  <data name="contains_illegal_characters" xml:space="preserve">
+    <value>存在非法字符</value>
+  </data>
+  <data name="Coordinate_calculation_completed" xml:space="preserve">
+    <value>坐标计算完成</value>
   </data>
   <data name="copy_to_all_model" xml:space="preserve">
     <value>复制至全部车型</value>
@@ -129,11 +180,38 @@
   <data name="could_not_repect_add" xml:space="preserve">
     <value>不能重复添加</value>
   </data>
+  <data name="create_dir" xml:space="preserve">
+    <value>创建文件夹</value>
+  </data>
+  <data name="create_dir_use_time" xml:space="preserve">
+    <value>其中创建目录耗时</value>
+  </data>
+  <data name="database_connect_fail" xml:space="preserve">
+    <value>数据库连接测试失败</value>
+  </data>
+  <data name="database_connect_success" xml:space="preserve">
+    <value>数据库连接测试成功</value>
+  </data>
+  <data name="database_write_error" xml:space="preserve">
+    <value>数据库写入异常</value>
+  </data>
   <data name="edge" xml:space="preserve">
     <value>棱</value>
   </data>
+  <data name="end_point" xml:space="preserve">
+    <value>末点</value>
+  </data>
+  <data name="exist" xml:space="preserve">
+    <value>存在</value>
+  </data>
   <data name="fail" xml:space="preserve">
     <value>失败</value>
+  </data>
+  <data name="finish" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="fix" xml:space="preserve">
+    <value>张</value>
   </data>
   <data name="format_error" xml:space="preserve">
     <value>格式不正确</value>
@@ -141,20 +219,53 @@
   <data name="hole" xml:space="preserve">
     <value>孔</value>
   </data>
+  <data name="Image_storage_into_memory_completed" xml:space="preserve">
+    <value>存图进内存完成</value>
+  </data>
   <data name="inconsistent_size_of_pasting_area" xml:space="preserve">
     <value>粘贴区域大小不一致</value>
   </data>
   <data name="is_save_para" xml:space="preserve">
     <value>是否保存参数</value>
   </data>
+  <data name="Laser_coordinates_exceed_the_calibration_range" xml:space="preserve">
+    <value>激光坐标超出标定范围</value>
+  </data>
   <data name="License_error" xml:space="preserve">
     <value>许可错误！</value>
+  </data>
+  <data name="L_photo_finish_write_fail" xml:space="preserve">
+    <value>L拍照完成写入失败</value>
+  </data>
+  <data name="L_robot_cancle" xml:space="preserve">
+    <value>L机器人任务被取消</value>
+  </data>
+  <data name="L_robot_error" xml:space="preserve">
+    <value>L机器人任务异常</value>
+  </data>
+  <data name="L_robot_finish" xml:space="preserve">
+    <value>L机器人任务完成</value>
+  </data>
+  <data name="match_error" xml:space="preserve">
+    <value>匹配异常</value>
+  </data>
+  <data name="Match_fail" xml:space="preserve">
+    <value>匹配失败</value>
   </data>
   <data name="Maximize" xml:space="preserve">
     <value>最大化</value>
   </data>
   <data name="model_no" xml:space="preserve">
     <value>车型</value>
+  </data>
+  <data name="model_no2" xml:space="preserve">
+    <value>车型号</value>
+  </data>
+  <data name="model_no_code_read_fail" xml:space="preserve">
+    <value>车型代码读取失败</value>
+  </data>
+  <data name="model_para_not_exist" xml:space="preserve">
+    <value>车型参数不存在</value>
   </data>
   <data name="name_already_exist" xml:space="preserve">
     <value>名称已存在</value>
@@ -164,6 +275,9 @@
   </data>
   <data name="need_to_input_num" xml:space="preserve">
     <value>需要输入数字名称</value>
+  </data>
+  <data name="not_exist" xml:space="preserve">
+    <value>不存在</value>
   </data>
   <data name="not_input_name" xml:space="preserve">
     <value>未输入名称</value>
@@ -177,8 +291,50 @@
   <data name="not_value" xml:space="preserve">
     <value>非值类型</value>
   </data>
+  <data name="no_cam_calib" xml:space="preserve">
+    <value>相机未做标定</value>
+  </data>
+  <data name="no_model" xml:space="preserve">
+    <value>未做模板</value>
+  </data>
+  <data name="output_ready_signal" xml:space="preserve">
+    <value>输出准备好信号</value>
+  </data>
+  <data name="pallet_no" xml:space="preserve">
+    <value>托盘号</value>
+  </data>
+  <data name="pallet_no_read_fail" xml:space="preserve">
+    <value>托盘号读取失败</value>
+  </data>
+  <data name="para_already_load" xml:space="preserve">
+    <value>参数已加载</value>
+  </data>
+  <data name="para_has_not_made" xml:space="preserve">
+    <value>未做参数</value>
+  </data>
+  <data name="para_load_fail" xml:space="preserve">
+    <value>参数加载失败</value>
+  </data>
+  <data name="para_load_success" xml:space="preserve">
+    <value>参数加载成功</value>
+  </data>
+  <data name="Photo_posture_in_place_signal_reading_failed" xml:space="preserve">
+    <value>拍照姿态到位信号读取失败</value>
+  </data>
+  <data name="pix" xml:space="preserve">
+    <value>像素</value>
+  </data>
+  <data name="pix_not_save_to_hard_disk_in_memory" xml:space="preserve">
+    <value>张图在内存中未存进硬盘</value>
+  </data>
   <data name="please_fill_it_out_again" xml:space="preserve">
     <value>请重新填写</value>
+  </data>
+  <data name="Point_number_reading_failed" xml:space="preserve">
+    <value>点位号读取失败</value>
+  </data>
+  <data name="Process_ended" xml:space="preserve">
+    <value>流程结束</value>
   </data>
   <data name="product_id_already_exist" xml:space="preserve">
     <value>产品ID已存在</value>
@@ -198,8 +354,41 @@
   <data name="product_name_could_not_null" xml:space="preserve">
     <value>产品名称不能为空</value>
   </data>
+  <data name="ready_write_fail" xml:space="preserve">
+    <value>准备好写入失败</value>
+  </data>
+  <data name="read_signal_read_fail" xml:space="preserve">
+    <value>已读信号读取失败</value>
+  </data>
+  <data name="reconstruct_coordinates_error" xml:space="preserve">
+    <value>重建坐标异常</value>
+  </data>
+  <data name="remain" xml:space="preserve">
+    <value>剩余</value>
+  </data>
   <data name="repeat" xml:space="preserve">
     <value>重复</value>
+  </data>
+  <data name="repect_again" xml:space="preserve">
+    <value>重试中</value>
+  </data>
+  <data name="reserve_end_point" xml:space="preserve">
+    <value>收到点位</value>
+  </data>
+  <data name="reserve_read_signal" xml:space="preserve">
+    <value>收到已读信号</value>
+  </data>
+  <data name="reserve_reset_signal" xml:space="preserve">
+    <value>收到重置流程信号</value>
+  </data>
+  <data name="reserve_start_signal" xml:space="preserve">
+    <value>收到开始信号</value>
+  </data>
+  <data name="reserve_the_signal_that_the_camera_posture_is_in_place" xml:space="preserve">
+    <value>收到拍照姿态到位信号</value>
+  </data>
+  <data name="reset_signal_read_fail" xml:space="preserve">
+    <value>重置流程信号读取失败</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>还原</value>
@@ -207,19 +396,175 @@
   <data name="root_node" xml:space="preserve">
     <value>根节点</value>
   </data>
+  <data name="Running" xml:space="preserve">
+    <value>运行</value>
+  </data>
+  <data name="running_write_fail" xml:space="preserve">
+    <value>运行中写入失败</value>
+  </data>
+  <data name="run_empty_signal" xml:space="preserve">
+    <value>空运行信号</value>
+  </data>
+  <data name="run_empty_signal_read_fail" xml:space="preserve">
+    <value>空运行信号读取失败</value>
+  </data>
+  <data name="R_photo_finish_write_fail" xml:space="preserve">
+    <value>R拍照完成写入失败</value>
+  </data>
+  <data name="R_robot_cancle" xml:space="preserve">
+    <value>R机器人任务被取消</value>
+  </data>
+  <data name="R_robot_error" xml:space="preserve">
+    <value>R机器人任务异常</value>
+  </data>
+  <data name="R_robot_finish" xml:space="preserve">
+    <value>R机器人任务完成</value>
+  </data>
   <data name="save" xml:space="preserve">
     <value>保存</value>
+  </data>
+  <data name="save_fail" xml:space="preserve">
+    <value>保存失败</value>
+  </data>
+  <data name="save_img_error" xml:space="preserve">
+    <value>存图异常</value>
+  </data>
+  <data name="save_img_finish" xml:space="preserve">
+    <value>存图完成</value>
+  </data>
+  <data name="save_pic_error" xml:space="preserve">
+    <value>存图异常</value>
+  </data>
+  <data name="save_pic_use_time" xml:space="preserve">
+    <value>存图耗时</value>
+  </data>
+  <data name="save_success" xml:space="preserve">
+    <value>保存成功</value>
+  </data>
+  <data name="Serial_port_already_opened" xml:space="preserve">
+    <value>串口已经打开</value>
+  </data>
+  <data name="Serial_port_failly_opened" xml:space="preserve">
+    <value>串口打开失败</value>
+  </data>
+  <data name="Serial_port_sending_exception" xml:space="preserve">
+    <value>串口发送异常</value>
+  </data>
+  <data name="Serial_port_successfully_opened" xml:space="preserve">
+    <value>串口打开成功</value>
+  </data>
+  <data name="set_cam0_export_fail" xml:space="preserve">
+    <value>曝光0设置失败</value>
+  </data>
+  <data name="set_cam1_export_fail" xml:space="preserve">
+    <value>曝光1设置失败</value>
+  </data>
+  <data name="signal_read_again_success" xml:space="preserve">
+    <value>信号重新读取成功</value>
+  </data>
+  <data name="signal_read_fail" xml:space="preserve">
+    <value>信号读取失败</value>
+  </data>
+  <data name="signal_rewrite_fail" xml:space="preserve">
+    <value>信号写入失败</value>
+  </data>
+  <data name="signal_rewrite_success" xml:space="preserve">
+    <value>信号重新写入成功</value>
+  </data>
+  <data name="skip_this_save_image" xml:space="preserve">
+    <value>跳过本次存图</value>
   </data>
   <data name="software_could_open_mul" xml:space="preserve">
     <value>软件已设置禁止多开</value>
   </data>
+  <data name="software_is_running" xml:space="preserve">
+    <value>软件正在运行中</value>
+  </data>
+  <data name="Start_calculating_coordinates" xml:space="preserve">
+    <value>开始计算坐标</value>
+  </data>
+  <data name="start_img" xml:space="preserve">
+    <value>开始存图</value>
+  </data>
+  <data name="start_signal_read_fail" xml:space="preserve">
+    <value>开始信号读取失败</value>
+  </data>
+  <data name="Start_storing_images_into_memory" xml:space="preserve">
+    <value>开始存图进内存</value>
+  </data>
+  <data name="stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="sure_exist" xml:space="preserve">
+    <value>确定退出</value>
+  </data>
+  <data name="sure_skip_start_signal" xml:space="preserve">
+    <value>是否确定跳过开始信号</value>
+  </data>
+  <data name="take_photo_error" xml:space="preserve">
+    <value>拍照异常</value>
+  </data>
+  <data name="take_photo_finish" xml:space="preserve">
+    <value>拍照结束</value>
+  </data>
+  <data name="take_photo_finish_write" xml:space="preserve">
+    <value>拍照完成写入</value>
+  </data>
+  <data name="take_photo_finish_write_fail" xml:space="preserve">
+    <value>拍照完成写入失败</value>
+  </data>
+  <data name="The_number_of_coordinate_points_is_less_than" xml:space="preserve">
+    <value>建坐标点数量小于</value>
+  </data>
   <data name="the_path_contains_illegal_characters" xml:space="preserve">
     <value>路径存在非法字符</value>
+  </data>
+  <data name="The_photography_distance_exceeds_the_calibration_range" xml:space="preserve">
+    <value>拍照距离超出标定范围</value>
+  </data>
+  <data name="The_written_value_is_inconsistent_with_the_read_value" xml:space="preserve">
+    <value>写入值与读取值不一致</value>
   </data>
   <data name="tip" xml:space="preserve">
     <value>提示</value>
   </data>
+  <data name="Trajectory_endpoint_reading_failed" xml:space="preserve">
+    <value>轨迹末点读取失败</value>
+  </data>
   <data name="trough" xml:space="preserve">
     <value>槽</value>
+  </data>
+  <data name="Unable_to_reconstruct_coordinates" xml:space="preserve">
+    <value>无法重建坐标</value>
+  </data>
+  <data name="user_stop" xml:space="preserve">
+    <value>用户执行了停止</value>
+  </data>
+  <data name="use_time" xml:space="preserve">
+    <value>流程耗时</value>
+  </data>
+  <data name="use_time2" xml:space="preserve">
+    <value>耗时</value>
+  </data>
+  <data name="vin2" xml:space="preserve">
+    <value>车架号</value>
+  </data>
+  <data name="vin_read_fail" xml:space="preserve">
+    <value>车架号读取失败</value>
+  </data>
+  <data name="wait" xml:space="preserve">
+    <value>等待</value>
+  </data>
+  <data name="Waiting_for_the_signal_that_the_camera_posture_is_in_place" xml:space="preserve">
+    <value>等待拍照姿态到位信号</value>
+  </data>
+  <data name="wait_for_read_signal" xml:space="preserve">
+    <value>等待已读信号</value>
+  </data>
+  <data name="wait_for_robot_finish" xml:space="preserve">
+    <value>等待机器人任务完成</value>
+  </data>
+  <data name="wait_start_signal" xml:space="preserve">
+    <value>等待开始信号</value>
   </data>
 </root>
