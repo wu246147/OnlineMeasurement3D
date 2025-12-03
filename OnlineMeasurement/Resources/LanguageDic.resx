@@ -297,6 +297,9 @@
   <data name="no_model" xml:space="preserve">
     <value>未做模板</value>
   </data>
+  <data name="Online_Det" xml:space="preserve">
+    <value>在线计测系统</value>
+  </data>
   <data name="output_ready_signal" xml:space="preserve">
     <value>输出准备好信号</value>
   </data>

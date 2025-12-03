@@ -219,4 +219,355 @@
   <data name="change_language_success" xml:space="preserve">
     <value>Successfully switched languages</value>
   </data>
+  <data name="but_not_exist" xml:space="preserve">
+    <value>But it doesn't exist</value>
+  </data>
+  <data name="cam" xml:space="preserve">
+    <value>camera</value>
+  </data>
+  <data name="cam0_fail" xml:space="preserve">
+    <value>Photo 0 failed</value>
+  </data>
+  <data name="cam1_fail" xml:space="preserve">
+    <value>Photo 1 failed</value>
+  </data>
+  <data name="cam_error" xml:space="preserve">
+    <value>Abnormal photography</value>
+  </data>
+  <data name="cam_open_fail" xml:space="preserve">
+    <value>Camera failed to open</value>
+  </data>
+  <data name="cam_open_success" xml:space="preserve">
+    <value>Camera successfully opened</value>
+  </data>
+  <data name="car_no2" xml:space="preserve">
+    <value>Serial number</value>
+  </data>
+  <data name="car_no_info_read_fail" xml:space="preserve">
+    <value>Failed to read consecutive information</value>
+  </data>
+  <data name="check_result" xml:space="preserve">
+    <value>Test results</value>
+  </data>
+  <data name="check_result_readable_write_fail" xml:space="preserve">
+    <value>Reading and writing of measurement results failed</value>
+  </data>
+  <data name="check_result_write_fail" xml:space="preserve">
+    <value>Measurement result writing failed</value>
+  </data>
+  <data name="connection_failed" xml:space="preserve">
+    <value>Connection failed</value>
+  </data>
+  <data name="connection_successful" xml:space="preserve">
+    <value>Connection successful</value>
+  </data>
+  <data name="connect_again_success" xml:space="preserve">
+    <value>Reconnect successfully</value>
+  </data>
+  <data name="contains_illegal_characters" xml:space="preserve">
+    <value>Illegal characters exist</value>
+  </data>
+  <data name="Coordinate_calculation_completed" xml:space="preserve">
+    <value>Coordinate calculation completed</value>
+  </data>
+  <data name="create_dir" xml:space="preserve">
+    <value>Create folder</value>
+  </data>
+  <data name="create_dir_use_time" xml:space="preserve">
+    <value>The creation of the directory takes time</value>
+  </data>
+  <data name="database_connect_fail" xml:space="preserve">
+    <value>Database connection test failed</value>
+  </data>
+  <data name="database_connect_success" xml:space="preserve">
+    <value>Database connection test successful</value>
+  </data>
+  <data name="database_write_error" xml:space="preserve">
+    <value>Database write exception</value>
+  </data>
+  <data name="end_point" xml:space="preserve">
+    <value>End point</value>
+  </data>
+  <data name="exist" xml:space="preserve">
+    <value>exist</value>
+  </data>
+  <data name="finish" xml:space="preserve">
+    <value>complete</value>
+  </data>
+  <data name="fix" xml:space="preserve">
+    <value>Zhang</value>
+  </data>
+  <data name="Image_storage_into_memory_completed" xml:space="preserve">
+    <value>Image storage into memory completed</value>
+  </data>
+  <data name="Laser_coordinates_exceed_the_calibration_range" xml:space="preserve">
+    <value>Laser coordinates exceed the calibration range</value>
+  </data>
+  <data name="License_error" xml:space="preserve">
+    <value>License error!</value>
+  </data>
+  <data name="L_photo_finish_write_fail" xml:space="preserve">
+    <value>L failed to complete writing after taking photos</value>
+  </data>
+  <data name="L_robot_cancle" xml:space="preserve">
+    <value>The L robot task has been cancelled</value>
+  </data>
+  <data name="L_robot_error" xml:space="preserve">
+    <value>L Robot Task Exception</value>
+  </data>
+  <data name="L_robot_finish" xml:space="preserve">
+    <value>L Robot Task Completed</value>
+  </data>
+  <data name="match_error" xml:space="preserve">
+    <value>Match exception</value>
+  </data>
+  <data name="Match_fail" xml:space="preserve">
+    <value>Matching failed</value>
+  </data>
+  <data name="model_no2" xml:space="preserve">
+    <value>model of car</value>
+  </data>
+  <data name="model_no_code_read_fail" xml:space="preserve">
+    <value>Vehicle model code reading failed</value>
+  </data>
+  <data name="model_para_not_exist" xml:space="preserve">
+    <value>Vehicle model parameters do not exist</value>
+  </data>
+  <data name="not_exist" xml:space="preserve">
+    <value>does not exist</value>
+  </data>
+  <data name="no_cam_calib" xml:space="preserve">
+    <value>Camera not calibrated</value>
+  </data>
+  <data name="no_model" xml:space="preserve">
+    <value>Template not created</value>
+  </data>
+  <data name="output_ready_signal" xml:space="preserve">
+    <value>Output ready signal</value>
+  </data>
+  <data name="pallet_no" xml:space="preserve">
+    <value>Pallet Number</value>
+  </data>
+  <data name="pallet_no_read_fail" xml:space="preserve">
+    <value>Tray number reading failed</value>
+  </data>
+  <data name="para_already_load" xml:space="preserve">
+    <value>Parameters loaded</value>
+  </data>
+  <data name="para_has_not_made" xml:space="preserve">
+    <value>No parameters have been made</value>
+  </data>
+  <data name="para_load_fail" xml:space="preserve">
+    <value>Parameter loading failed</value>
+  </data>
+  <data name="para_load_success" xml:space="preserve">
+    <value>Parameter loading successful</value>
+  </data>
+  <data name="Photo_posture_in_place_signal_reading_failed" xml:space="preserve">
+    <value>Photo posture in place signal reading failed</value>
+  </data>
+  <data name="pix" xml:space="preserve">
+    <value>pixel</value>
+  </data>
+  <data name="pix_not_save_to_hard_disk_in_memory" xml:space="preserve">
+    <value>Zhang Tu is not stored in memory on the hard drive</value>
+  </data>
+  <data name="Point_number_reading_failed" xml:space="preserve">
+    <value>Point number reading failed</value>
+  </data>
+  <data name="Process_ended" xml:space="preserve">
+    <value>Process ended</value>
+  </data>
+  <data name="ready_write_fail" xml:space="preserve">
+    <value>Ready to write failed</value>
+  </data>
+  <data name="read_signal_read_fail" xml:space="preserve">
+    <value>Read signal read failed</value>
+  </data>
+  <data name="reconstruct_coordinates_error" xml:space="preserve">
+    <value>Reconstructing coordinate anomalies</value>
+  </data>
+  <data name="remain" xml:space="preserve">
+    <value>remaining</value>
+  </data>
+  <data name="repect_again" xml:space="preserve">
+    <value>Retrying</value>
+  </data>
+  <data name="reserve_end_point" xml:space="preserve">
+    <value>Received location</value>
+  </data>
+  <data name="reserve_read_signal" xml:space="preserve">
+    <value>Received read signal</value>
+  </data>
+  <data name="reserve_reset_signal" xml:space="preserve">
+    <value>Received reset process signal</value>
+  </data>
+  <data name="reserve_start_signal" xml:space="preserve">
+    <value>Received start signal</value>
+  </data>
+  <data name="reserve_the_signal_that_the_camera_posture_is_in_place" xml:space="preserve">
+    <value>Received a signal indicating that the camera posture is in place</value>
+  </data>
+  <data name="reset_signal_read_fail" xml:space="preserve">
+    <value>Reset process signal reading failed</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>run</value>
+  </data>
+  <data name="running_write_fail" xml:space="preserve">
+    <value>Writing failed during operation</value>
+  </data>
+  <data name="run_empty_signal" xml:space="preserve">
+    <value>Empty operation signal</value>
+  </data>
+  <data name="run_empty_signal_read_fail" xml:space="preserve">
+    <value>Empty operation signal read failed</value>
+  </data>
+  <data name="R_photo_finish_write_fail" xml:space="preserve">
+    <value>R failed to complete writing after taking photos</value>
+  </data>
+  <data name="R_robot_cancle" xml:space="preserve">
+    <value>The R robot task has been cancelled</value>
+  </data>
+  <data name="R_robot_error" xml:space="preserve">
+    <value>R robot task abnormality</value>
+  </data>
+  <data name="R_robot_finish" xml:space="preserve">
+    <value>R robot task completed</value>
+  </data>
+  <data name="save_fail" xml:space="preserve">
+    <value>Save failed</value>
+  </data>
+  <data name="save_img_error" xml:space="preserve">
+    <value>Abnormal image storage</value>
+  </data>
+  <data name="save_img_finish" xml:space="preserve">
+    <value>Image storage completed</value>
+  </data>
+  <data name="save_pic_error" xml:space="preserve">
+    <value>Abnormal image storage</value>
+  </data>
+  <data name="save_pic_use_time" xml:space="preserve">
+    <value>Image storage time</value>
+  </data>
+  <data name="save_success" xml:space="preserve">
+    <value>Saved successfully</value>
+  </data>
+  <data name="Serial_port_already_opened" xml:space="preserve">
+    <value>The serial port has been opened</value>
+  </data>
+  <data name="Serial_port_failly_opened" xml:space="preserve">
+    <value>Serial port opening failed</value>
+  </data>
+  <data name="Serial_port_sending_exception" xml:space="preserve">
+    <value>Serial port sending exception</value>
+  </data>
+  <data name="Serial_port_successfully_opened" xml:space="preserve">
+    <value>Serial port successfully opened</value>
+  </data>
+  <data name="set_cam0_export_fail" xml:space="preserve">
+    <value>Exposure 0 setting failed</value>
+  </data>
+  <data name="set_cam1_export_fail" xml:space="preserve">
+    <value>Exposure 1 setting failed</value>
+  </data>
+  <data name="signal_read_again_success" xml:space="preserve">
+    <value>Signal re reading successful</value>
+  </data>
+  <data name="signal_read_fail" xml:space="preserve">
+    <value>Signal reading failed</value>
+  </data>
+  <data name="signal_rewrite_fail" xml:space="preserve">
+    <value>Signal writing failed</value>
+  </data>
+  <data name="signal_rewrite_success" xml:space="preserve">
+    <value>Signal rewrite successful</value>
+  </data>
+  <data name="skip_this_save_image" xml:space="preserve">
+    <value>Skip this save image</value>
+  </data>
+  <data name="software_is_running" xml:space="preserve">
+    <value>The software is currently running</value>
+  </data>
+  <data name="Start_calculating_coordinates" xml:space="preserve">
+    <value>Start calculating coordinates</value>
+  </data>
+  <data name="start_img" xml:space="preserve">
+    <value>Start saving images</value>
+  </data>
+  <data name="start_signal_read_fail" xml:space="preserve">
+    <value>Start signal reading failed</value>
+  </data>
+  <data name="Start_storing_images_into_memory" xml:space="preserve">
+    <value>Start storing images into memory</value>
+  </data>
+  <data name="stop" xml:space="preserve">
+    <value>stop</value>
+  </data>
+  <data name="sure_exist" xml:space="preserve">
+    <value>Confirm exit</value>
+  </data>
+  <data name="sure_skip_start_signal" xml:space="preserve">
+    <value>Are you sure to skip the start signal</value>
+  </data>
+  <data name="take_photo_error" xml:space="preserve">
+    <value>Abnormal photography</value>
+  </data>
+  <data name="take_photo_finish" xml:space="preserve">
+    <value>Photo taken ends</value>
+  </data>
+  <data name="take_photo_finish_write" xml:space="preserve">
+    <value>Photo taken and written in completed</value>
+  </data>
+  <data name="take_photo_finish_write_fail" xml:space="preserve">
+    <value>Photo completion failed to write</value>
+  </data>
+  <data name="The_number_of_coordinate_points_is_less_than" xml:space="preserve">
+    <value>The number of coordinate points is less than</value>
+  </data>
+  <data name="The_photography_distance_exceeds_the_calibration_range" xml:space="preserve">
+    <value>The photography distance exceeds the calibration range</value>
+  </data>
+  <data name="The_written_value_is_inconsistent_with_the_read_value" xml:space="preserve">
+    <value>The written value is inconsistent with the read value</value>
+  </data>
+  <data name="Trajectory_endpoint_reading_failed" xml:space="preserve">
+    <value>Trajectory endpoint reading failed</value>
+  </data>
+  <data name="Unable_to_reconstruct_coordinates" xml:space="preserve">
+    <value>Unable to reconstruct coordinates</value>
+  </data>
+  <data name="user_stop" xml:space="preserve">
+    <value>The user has executed a stop</value>
+  </data>
+  <data name="use_time" xml:space="preserve">
+    <value>Process time consumption</value>
+  </data>
+  <data name="use_time2" xml:space="preserve">
+    <value>time-consuming</value>
+  </data>
+  <data name="vin2" xml:space="preserve">
+    <value>Vehicle Identification Number (VIN)</value>
+  </data>
+  <data name="vin_read_fail" xml:space="preserve">
+    <value>Frame number reading failed</value>
+  </data>
+  <data name="wait" xml:space="preserve">
+    <value>wait</value>
+  </data>
+  <data name="Waiting_for_the_signal_that_the_camera_posture_is_in_place" xml:space="preserve">
+    <value>Waiting for the signal that the camera posture is in place</value>
+  </data>
+  <data name="wait_for_read_signal" xml:space="preserve">
+    <value>Waiting for read signal</value>
+  </data>
+  <data name="wait_for_robot_finish" xml:space="preserve">
+    <value>Waiting for the robot task to complete</value>
+  </data>
+  <data name="wait_start_signal" xml:space="preserve">
+    <value>Waiting for the start signal</value>
+  </data>
+  <data name="Online_Det" xml:space="preserve">
+    <value>Online Detection System</value>
+  </data>
 </root>
