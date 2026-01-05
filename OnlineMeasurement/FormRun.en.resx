@@ -130,7 +130,7 @@
     <value>--</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>license number:</value>
+    <value>Car number:</value>
   </data>
   <data name="labelCarNum.Text" xml:space="preserve">
     <value>--------</value>
