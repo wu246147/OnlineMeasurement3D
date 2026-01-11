@@ -264,6 +264,9 @@
   <data name="model_no_code_read_fail" xml:space="preserve">
     <value>车型代码读取失败</value>
   </data>
+  <data name="model_no_code_write_fail" xml:space="preserve">
+    <value>车型码写入失败</value>
+  </data>
   <data name="model_para_not_exist" xml:space="preserve">
     <value>车型参数不存在</value>
   </data>
@@ -336,6 +339,9 @@
   <data name="Point_number_reading_failed" xml:space="preserve">
     <value>点位号读取失败</value>
   </data>
+  <data name="Point_number_writing_failed" xml:space="preserve">
+    <value>点位号反馈写入失败</value>
+  </data>
   <data name="Process_ended" xml:space="preserve">
     <value>流程结束</value>
   </data>
@@ -395,6 +401,9 @@
   </data>
   <data name="Restore" xml:space="preserve">
     <value>还原</value>
+  </data>
+  <data name="result_write_fail" xml:space="preserve">
+    <value>结果写入失败</value>
   </data>
   <data name="root_node" xml:space="preserve">
     <value>根节点</value>

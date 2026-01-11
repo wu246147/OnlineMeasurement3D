@@ -570,4 +570,13 @@
   <data name="Online_Det" xml:space="preserve">
     <value>Online Detection System</value>
   </data>
+  <data name="model_no_code_write_fail" xml:space="preserve">
+    <value>model no code write fail</value>
+  </data>
+  <data name="Point_number_writing_failed" xml:space="preserve">
+    <value>Point number writing failed</value>
+  </data>
+  <data name="result_write_fail" xml:space="preserve">
+    <value>result write fail</value>
+  </data>
 </root>
