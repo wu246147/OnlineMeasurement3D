@@ -121,6 +121,15 @@
     <Compile Include="FormZero.Designer.cs">
       <DependentUpon>FormZero.cs</DependentUpon>
     </Compile>
+    <Compile Include="IO\HslForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IO\HslForm.Designer.cs">
+      <DependentUpon>HslForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IO\IHsl.cs" />
+    <Compile Include="IO\ISignal.cs" />
+    <Compile Include="IO\MelsecPlc.cs" />
     <Compile Include="LicenseKey.cs" />
     <Compile Include="MVCamera.cs" />
     <Compile Include="Resources\LanguageDic.Designer.cs">
@@ -178,6 +187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormZero.resx">
       <DependentUpon>FormZero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IO\HslForm.resx">
+      <DependentUpon>HslForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
