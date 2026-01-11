@@ -122,6 +122,7 @@
       <DependentUpon>FormZero.cs</DependentUpon>
     </Compile>
     <Compile Include="LicenseKey.cs" />
+    <Compile Include="MVCamera.cs" />
     <Compile Include="Resources\LanguageDic.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
