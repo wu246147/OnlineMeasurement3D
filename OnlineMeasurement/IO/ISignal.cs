@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,41 +12,41 @@ namespace OnlineMeasurement.IO
     /// </summary>
     public enum DO
     {
-        心跳,
-        准备好,
-        运行中,
-        测量结果,
-        测量结果完成,
-        拍照完成,
-        点位测量结果,
-        屏蔽视觉,
-        车型代码反馈 = 256,
-        点位号反馈,
-        x坐标实际值= 1280,
-        y坐标实际值,
-        z坐标实际值,
-        x坐标偏移值,
-        y坐标偏移值,
-        z坐标偏移值,
+        HeartBeat,
+        Readily,
+        Running,
+        Result,
+        Check_Finish,
+        Acq_Finish,
+        Check_Point_Result,
+        Shielding_Vision,
+        Feedback_Car_Model = 256,
+        Feedback_Check_Point_NO,
+        X = 1024,
+        Y,
+        Z,
+        Dx,
+        Dy,
+        Dz,
 }
     /// <summary>
     /// bool(0~255),ushort(256~511),short(512~767),uint(768~1023),int(1024~1279),float(1280~1535), string(1536~1791)
     /// </summary>
     public enum DI
     {
-        开始,
-        重置流程 ,
-        已读信号 ,
-        空运行,
-        拍照姿态到位,
-        轨迹末点,
+        Start,
+        Reset ,
+        Readed ,
+        Empty_Run,
+        Arrive_Photo_Spot,
+        End_of_Check_Points,
 
-        车型代码 = 256,
-        托盘号,
-        连番信息,
-        点位号,
+        Car_Model = 256,
+        Pallet_Number,
+        Batch_Number,
+        Check_Point_NO,
 
-        车身编号 = 1536,
+        Car_NO = 1536,
     }
 
 }

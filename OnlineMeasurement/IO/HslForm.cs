@@ -1,4 +1,4 @@
-﻿using HalconDotNet;
+using HalconDotNet;
 using HslCommunication.Core;
 using System;
 using System.Collections.Generic;
@@ -36,6 +36,10 @@ namespace OnlineMeasurement.IO
         public HslForm(IHsl signal, bool DA2)
         {
             InitializeComponent();
+
+            // 初始化界面
+            GeneralFunc.ChangeLanguateFun(typeof(HslForm), this);
+
             numericUpDownDA2.Enabled = DA2;
             comboBox_DataFormat.Items.AddRange(Enum.GetNames(typeof(DataFormat)));
 
@@ -136,7 +140,7 @@ namespace OnlineMeasurement.IO
                     }
                     if (ios == null)
                     {
-                        ShowMessage($"PLC IO 参数读取失败");
+                        ShowMessage($"PLC IO {Resources.LanguageDic.Para_read_fail}");
                     }
                     else
                     {
@@ -148,7 +152,7 @@ namespace OnlineMeasurement.IO
                 }
                 else
                 {
-                    ShowMessage($"{paramPath}文件不存在");
+                    ShowMessage($"{paramPath}{Resources.LanguageDic.file_not_exist}");
                 }
 
             }
@@ -218,7 +222,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage("读取失败:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
                         }
                     }
                     else if ((int)eIO < 512)
@@ -230,7 +234,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage("读取失败:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
                         }
                     }
                     else if ((int)eIO < 768)
@@ -242,7 +246,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage("读取失败:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
                         }
                     }
                     else if ((int)eIO < 1024)
@@ -254,7 +258,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage("读取失败:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
                         }
                     }
                     else if ((int)eIO < 1280)
@@ -266,7 +270,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage("读取失败:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
                         }
                     }
                     else if ((int)eIO < 1536)
@@ -278,7 +282,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage("读取失败:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
                         }
                     }
                     else if ((int)eIO < 1792)
@@ -290,7 +294,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage("读取失败:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
                         }
                     }
 
@@ -314,12 +318,12 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage("写入失败:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
                             }
                         }
                         else
                         {
-                            ShowMessage("输入bool格式有误，转换失败！");
+                            ShowMessage($"bool {Resources.LanguageDic.Incorrect_format_conversion_failed}！");
                         }
                     }
                     else if ((int)eIO < 512)
@@ -329,12 +333,12 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage("写入失败:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
                             }
                         }
                         else
                         {
-                            ShowMessage("输入uint16格式有误，转换失败！");
+                            ShowMessage($"uint16 {Resources.LanguageDic.Incorrect_format_conversion_failed}！");
                         }
                     }
                     else if ((int)eIO < 768)
@@ -344,12 +348,12 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage("写入失败:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
                             }
                         }
                         else
                         {
-                            ShowMessage("输入int16格式有误，转换失败！");
+                            ShowMessage($"int16 {Resources.LanguageDic.Incorrect_format_conversion_failed}！");
                         }
                     }
                     else if ((int)eIO < 1024)
@@ -359,12 +363,12 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage("写入失败:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
                             }
                         }
                         else
                         {
-                            ShowMessage("输入uint32格式有误，转换失败！");
+                            ShowMessage($"uint32 {Resources.LanguageDic.Incorrect_format_conversion_failed}！");
                         }
                     }
                     else if ((int)eIO < 1280)
@@ -374,12 +378,12 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage("写入失败:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
                             }
                         }
                         else
                         {
-                            ShowMessage("输入int32格式有误，转换失败！");
+                            ShowMessage($"int32 {Resources.LanguageDic.Incorrect_format_conversion_failed}！");
                         }
                     }
                     else if ((int)eIO < 1536)
@@ -389,12 +393,12 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage("写入失败:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
                             }
                         }
                         else
                         {
-                            ShowMessage("输入float格式有误，转换失败！");
+                            ShowMessage($"float {Resources.LanguageDic.Incorrect_format_conversion_failed}！");
                         }
                     }
                     else if ((int)eIO < 1792)
@@ -405,12 +409,12 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage("写入失败:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
                             }
                         }
                         else
                         {
-                            ShowMessage("输入长度过长！");
+                            ShowMessage($"{Resources.LanguageDic.too_long}！");
                         }
                     }
                 }
@@ -421,12 +425,12 @@ namespace OnlineMeasurement.IO
         {
             if (isAlter)
             {
-                DialogResult dialogResult = MessageBox.Show("是否保存参数？", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                DialogResult dialogResult = MessageBox.Show($"{Resources.LanguageDic.is_save_para}？", $"{Resources.LanguageDic.tip}", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.Yes)
                 {
                     if (!signal.Save())
                     {
-                        MessageBox.Show("保存失败！！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show($"{Resources.LanguageDic.save_fail}！！", $"{Resources.LanguageDic.tip}", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         e.Cancel = true;
                         return;
                     }
@@ -451,12 +455,12 @@ namespace OnlineMeasurement.IO
                 button_Open.Enabled = false;
                 if (signal.Open())
                 {
-                    ShowMessage("连接成功");
+                    ShowMessage($"{Resources.LanguageDic.connection_successful}");
                     button_Close.Enabled = true;
                 }
                 else
                 {
-                    ShowMessage("连接失败");
+                    ShowMessage($"{Resources.LanguageDic.connection_failed}");
                     button_Open.Enabled = true;
                 }
             }
@@ -467,7 +471,7 @@ namespace OnlineMeasurement.IO
             signal.Close();
             button_Close.Enabled = false;
             button_Open.Enabled = true;
-            ShowMessage("关闭成功");
+            ShowMessage($"{Resources.LanguageDic.close_success}");
         }
         void ShowMessage(string message)
         {
@@ -516,12 +520,12 @@ namespace OnlineMeasurement.IO
             //判断是否需要保存
             if (isAlter)
             {
-                DialogResult dialogResult = MessageBox.Show("是否保存参数？", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                DialogResult dialogResult = MessageBox.Show($"{Resources.LanguageDic.is_save_para}？", $"{Resources.LanguageDic.tip}", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.Yes)
                 {
                     if (!Save() || !signal.Save())
                     {
-                        MessageBox.Show("保存失败！！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show($"{Resources.LanguageDic.save_fail}！！", $"{Resources.LanguageDic.tip}", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {

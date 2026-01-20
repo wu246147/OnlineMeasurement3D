@@ -188,6 +188,9 @@
     <EmbeddedResource Include="FormZero.resx">
       <DependentUpon>FormZero.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IO\HslForm.en.resx">
+      <DependentUpon>HslForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IO\HslForm.resx">
       <DependentUpon>HslForm.cs</DependentUpon>
     </EmbeddedResource>

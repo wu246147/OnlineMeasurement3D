@@ -1,4 +1,4 @@
-﻿namespace OnlineMeasurement.IO
+namespace OnlineMeasurement.IO
 {
     partial class HslForm
     {
@@ -58,150 +58,98 @@
             // 
             // button_Close
             // 
-            this.button_Close.Location = new System.Drawing.Point(652, 62);
+            resources.ApplyResources(this.button_Close, "button_Close");
             this.button_Close.Name = "button_Close";
-            this.button_Close.Size = new System.Drawing.Size(75, 23);
-            this.button_Close.TabIndex = 25;
-            this.button_Close.Text = "断开";
             this.button_Close.UseVisualStyleBackColor = true;
             this.button_Close.Click += new System.EventHandler(this.button_Close_Click);
             // 
             // button_Open
             // 
-            this.button_Open.Location = new System.Drawing.Point(652, 27);
+            resources.ApplyResources(this.button_Open, "button_Open");
             this.button_Open.Name = "button_Open";
-            this.button_Open.Size = new System.Drawing.Size(75, 23);
-            this.button_Open.TabIndex = 26;
-            this.button_Open.Text = "连接";
             this.button_Open.UseVisualStyleBackColor = true;
             this.button_Open.Click += new System.EventHandler(this.button_Open_Click);
             // 
             // numericUpDownPort
             // 
-            this.numericUpDownPort.Location = new System.Drawing.Point(70, 51);
+            resources.ApplyResources(this.numericUpDownPort, "numericUpDownPort");
             this.numericUpDownPort.Maximum = new decimal(new int[] {
             99999999,
             0,
             0,
             0});
             this.numericUpDownPort.Name = "numericUpDownPort";
-            this.numericUpDownPort.Size = new System.Drawing.Size(88, 21);
-            this.numericUpDownPort.TabIndex = 24;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(23, 55);
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
-            this.label2.TabIndex = 22;
-            this.label2.Text = "Port：";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 25);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
-            this.label1.TabIndex = 23;
-            this.label1.Text = "Ip：";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(184, 25);
+            resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 12);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "DA2：";
             // 
             // numericUpDownDA2
             // 
-            this.numericUpDownDA2.Location = new System.Drawing.Point(225, 21);
+            resources.ApplyResources(this.numericUpDownDA2, "numericUpDownDA2");
             this.numericUpDownDA2.Maximum = new decimal(new int[] {
             99999999,
             0,
             0,
             0});
             this.numericUpDownDA2.Name = "numericUpDownDA2";
-            this.numericUpDownDA2.Size = new System.Drawing.Size(77, 21);
-            this.numericUpDownDA2.TabIndex = 24;
             // 
             // textBoxIpAddress
             // 
-            this.textBoxIpAddress.Location = new System.Drawing.Point(58, 21);
+            resources.ApplyResources(this.textBoxIpAddress, "textBoxIpAddress");
             this.textBoxIpAddress.Name = "textBoxIpAddress";
-            this.textBoxIpAddress.Size = new System.Drawing.Size(100, 21);
-            this.textBoxIpAddress.TabIndex = 27;
             // 
             // labelInName
             // 
-            this.labelInName.AutoSize = true;
+            resources.ApplyResources(this.labelInName, "labelInName");
             this.labelInName.BackColor = System.Drawing.Color.Transparent;
-            this.labelInName.Location = new System.Drawing.Point(14, 110);
             this.labelInName.Name = "labelInName";
-            this.labelInName.Size = new System.Drawing.Size(53, 12);
-            this.labelInName.TabIndex = 28;
-            this.labelInName.Text = "信号名称";
             // 
             // labelOutName
             // 
-            this.labelOutName.AutoSize = true;
+            resources.ApplyResources(this.labelOutName, "labelOutName");
             this.labelOutName.BackColor = System.Drawing.Color.Transparent;
-            this.labelOutName.Location = new System.Drawing.Point(288, 110);
             this.labelOutName.Name = "labelOutName";
-            this.labelOutName.Size = new System.Drawing.Size(53, 12);
-            this.labelOutName.TabIndex = 29;
-            this.labelOutName.Text = "信号名称";
             // 
             // labelInAddress
             // 
-            this.labelInAddress.AutoSize = true;
+            resources.ApplyResources(this.labelInAddress, "labelInAddress");
             this.labelInAddress.BackColor = System.Drawing.Color.Transparent;
-            this.labelInAddress.Location = new System.Drawing.Point(91, 110);
             this.labelInAddress.Name = "labelInAddress";
-            this.labelInAddress.Size = new System.Drawing.Size(29, 12);
-            this.labelInAddress.TabIndex = 30;
-            this.labelInAddress.Text = "地址";
             // 
             // labelInValue
             // 
-            this.labelInValue.AutoSize = true;
+            resources.ApplyResources(this.labelInValue, "labelInValue");
             this.labelInValue.BackColor = System.Drawing.Color.Transparent;
-            this.labelInValue.Location = new System.Drawing.Point(186, 110);
             this.labelInValue.Name = "labelInValue";
-            this.labelInValue.Size = new System.Drawing.Size(17, 12);
-            this.labelInValue.TabIndex = 30;
-            this.labelInValue.Text = "值";
             // 
             // textBoxLog
             // 
-            this.textBoxLog.Location = new System.Drawing.Point(567, 134);
-            this.textBoxLog.Multiline = true;
+            resources.ApplyResources(this.textBoxLog, "textBoxLog");
             this.textBoxLog.Name = "textBoxLog";
-            this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxLog.Size = new System.Drawing.Size(212, 415);
-            this.textBoxLog.TabIndex = 27;
             // 
             // labelOutAddress
             // 
-            this.labelOutAddress.AutoSize = true;
+            resources.ApplyResources(this.labelOutAddress, "labelOutAddress");
             this.labelOutAddress.BackColor = System.Drawing.Color.Transparent;
-            this.labelOutAddress.Location = new System.Drawing.Point(365, 110);
             this.labelOutAddress.Name = "labelOutAddress";
-            this.labelOutAddress.Size = new System.Drawing.Size(29, 12);
-            this.labelOutAddress.TabIndex = 30;
-            this.labelOutAddress.Text = "地址";
             // 
             // labelOutValue
             // 
-            this.labelOutValue.AutoSize = true;
+            resources.ApplyResources(this.labelOutValue, "labelOutValue");
             this.labelOutValue.BackColor = System.Drawing.Color.Transparent;
-            this.labelOutValue.Location = new System.Drawing.Point(460, 110);
             this.labelOutValue.Name = "labelOutValue";
-            this.labelOutValue.Size = new System.Drawing.Size(17, 12);
-            this.labelOutValue.TabIndex = 30;
-            this.labelOutValue.Text = "值";
             // 
             // groupBox1
             // 
@@ -217,75 +165,51 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(16, 7);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(573, 88);
-            this.groupBox1.TabIndex = 31;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "连接参数";
             // 
             // checkBox_IsStringReverseByteWord
             // 
-            this.checkBox_IsStringReverseByteWord.AutoSize = true;
-            this.checkBox_IsStringReverseByteWord.Location = new System.Drawing.Point(186, 54);
+            resources.ApplyResources(this.checkBox_IsStringReverseByteWord, "checkBox_IsStringReverseByteWord");
             this.checkBox_IsStringReverseByteWord.Name = "checkBox_IsStringReverseByteWord";
-            this.checkBox_IsStringReverseByteWord.Size = new System.Drawing.Size(96, 16);
-            this.checkBox_IsStringReverseByteWord.TabIndex = 29;
-            this.checkBox_IsStringReverseByteWord.Text = "字符按字反转";
             this.checkBox_IsStringReverseByteWord.UseVisualStyleBackColor = true;
             // 
             // comboBox_cam
             // 
             this.comboBox_cam.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_cam.FormattingEnabled = true;
-            this.comboBox_cam.Location = new System.Drawing.Point(410, 55);
+            resources.ApplyResources(this.comboBox_cam, "comboBox_cam");
             this.comboBox_cam.Name = "comboBox_cam";
-            this.comboBox_cam.Size = new System.Drawing.Size(72, 20);
-            this.comboBox_cam.TabIndex = 28;
             this.comboBox_cam.SelectedIndexChanged += new System.EventHandler(this.comboBox_cam_SelectedIndexChanged);
             // 
             // comboBox_DataFormat
             // 
             this.comboBox_DataFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_DataFormat.FormattingEnabled = true;
-            this.comboBox_DataFormat.Location = new System.Drawing.Point(410, 21);
+            resources.ApplyResources(this.comboBox_DataFormat, "comboBox_DataFormat");
             this.comboBox_DataFormat.Name = "comboBox_DataFormat";
-            this.comboBox_DataFormat.Size = new System.Drawing.Size(72, 20);
-            this.comboBox_DataFormat.TabIndex = 28;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(339, 58);
+            resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 12);
-            this.label6.TabIndex = 22;
-            this.label6.Text = "相机：";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(339, 25);
+            resources.ApplyResources(this.label5, "label5");
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 12);
-            this.label5.TabIndex = 22;
-            this.label5.Text = "数据格式：";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
+            resources.ApplyResources(this.label4, "label4");
             this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Location = new System.Drawing.Point(565, 110);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(29, 12);
-            this.label4.TabIndex = 32;
-            this.label4.Text = "日志";
             // 
             // HslForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 621);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.labelOutValue);
@@ -297,10 +221,7 @@
             this.Controls.Add(this.textBoxLog);
             this.Controls.Add(this.button_Close);
             this.Controls.Add(this.button_Open);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HslForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "通信设置";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HslForm_FormClosing);
             this.Load += new System.EventHandler(this.HslForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.HslForm_Paint);

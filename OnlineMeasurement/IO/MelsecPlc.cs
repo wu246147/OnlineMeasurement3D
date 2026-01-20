@@ -1,4 +1,4 @@
-﻿using HslCommunication;
+using HslCommunication;
 using HslCommunication.Profinet.Melsec;
 using System;
 using System.Collections.Generic;
@@ -56,14 +56,14 @@ namespace OnlineMeasurement.IO
                         else
                         {
                             result = false;
-                            _errMsg = $"{paramPath}文件格式异常";
+                            _errMsg = $"{paramPath} {Resources.LanguageDic.file_format_error}";
                         }
                     }
                 }
                 else
                 {
                     result = false;
-                    _errMsg = $"{paramPath}文件不存在";
+                    _errMsg = $"{paramPath} {Resources.LanguageDic.file_not_exist}";
                 }
             }
             catch (Exception ex)
