@@ -1,11 +1,6 @@
 #define GW
 
-using BaslerCamera;
 using HalconDotNet;
-using HslCommunication;
-using HslCommunication.Profinet.Melsec;
-using HslCommunication.Profinet.Omron;
-using MySqlX.XDevAPI.Common;
 using OnlineMeasurement.IO;
 using System;
 using System.Collections.Generic;
@@ -14,17 +9,10 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Runtime.Remoting.Contexts;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using System.Xml.Serialization;
-using static BaslerCamera.Cam;
-using static BaslerCamera.MvCamera;
-using static OnlineMeasurement.IO.IHsl;
 
 namespace OnlineMeasurement
 {
@@ -45,7 +33,7 @@ namespace OnlineMeasurement
         Dictionary<string, CamSetting> 相机参数 = new Dictionary<string, CamSetting>();
         Dictionary<string, BaslerCamera.Cam> 相机 = new Dictionary<string, BaslerCamera.Cam>();
 
-        Dictionary<string, OLM>TempareCalib = new Dictionary<string, OLM>();
+        Dictionary<string, OLM> TempareCalib = new Dictionary<string, OLM>();
 
         OtherSet otherSet = new OtherSet();
 
@@ -58,7 +46,7 @@ namespace OnlineMeasurement
         FormShow formShow = null;
 
         public Dictionary<string, Dictionary<string, IoAddress>> camIODict = new Dictionary<string, Dictionary<string, IoAddress>>();
-    public FormRun()
+        public FormRun()
         {
             InitializeComponent();
 
@@ -204,7 +192,7 @@ namespace OnlineMeasurement
             string[] camPaths = Directory.GetDirectories("Data\\Cam");
             foreach (var item in camPaths)
             {
-                Dictionary<string, IoAddress> ioDict = new Dictionary<string, IoAddress>() ;
+                Dictionary<string, IoAddress> ioDict = new Dictionary<string, IoAddress>();
                 string name = Path.GetFileNameWithoutExtension(item);
 
                 string paramPath = item + "\\IoParam.xml";
@@ -310,7 +298,7 @@ namespace OnlineMeasurement
                     OLM oLM = new OLM();
                     //机器人文件路径、机器人名（这里用L\R)、onnx模型路径
                     oLM.init("./Data/config/robot", name, "./Data/model.onnx");
-                    TempareCalib.Add(name,oLM);
+                    TempareCalib.Add(name, oLM);
                 }
 
                 otherSet.Load();
@@ -688,7 +676,7 @@ namespace OnlineMeasurement
 
 
                             string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                            var writeXRef = plc.Write("D" + address, (int)(point3d.X*100));
+                            var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
                             address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
                             var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
                             address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
@@ -702,7 +690,7 @@ namespace OnlineMeasurement
                         }
                         IOName = "R";
                         carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
-                        
+
                         foreach (var item in carSetting.gSets.Keys)
                         {
                             var point3d = new Point3D(0, 0, 0);
@@ -752,14 +740,14 @@ namespace OnlineMeasurement
                         {
                             if (相机参数.ContainsKey(key) && 车型参数.ContainsKey($"{carKind.Content}-{TRnum}") && 车型参数[$"{carKind.Content}-{TRnum}"].car.ContainsKey(key))
                             {
-                                RobotRun(path, 相机[key], 相机参数[key],  车型参数[$"{carKind.Content}-{TRnum}"].car[key], TempareCalib[key], key, camIODict[key], out point3dL, out point3dBaseL, out sqlValuePairsL, ref 检测异常L, ref 数据超差L);
+                                RobotRun(path, 相机[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], TempareCalib[key], key, camIODict[key], out point3dL, out point3dBaseL, out sqlValuePairsL, ref 检测异常L, ref 数据超差L);
                             }
                             else
                             {
-                                RobotRun(path, 相机[key], null, null,null, key, camIODict[key], out point3dL, out point3dBaseL, out sqlValuePairsL, ref 检测异常L, ref 数据超差L);
+                                RobotRun(path, 相机[key], null, null, null, key, camIODict[key], out point3dL, out point3dBaseL, out sqlValuePairsL, ref 检测异常L, ref 数据超差L);
                             }
                         }
-                        
+
                     }));
                     bool 检测异常R = true; bool 数据超差R = true;
                     Dictionary<int, Point3D> point3dR = new Dictionary<int, Point3D>();
@@ -789,10 +777,10 @@ namespace OnlineMeasurement
                             }
                             else
                             {
-                                RobotRun(path, 相机[key], null, null,null, key, camIODict[key], out point3dR, out point3dBaseR, out sqlValuePairsR, ref 检测异常R, ref 数据超差R);
+                                RobotRun(path, 相机[key], null, null, null, key, camIODict[key], out point3dR, out point3dBaseR, out sqlValuePairsR, ref 检测异常R, ref 数据超差R);
                             }
                         }
-                       
+
                     }));
 
 
@@ -1245,7 +1233,7 @@ namespace OnlineMeasurement
                             string dir1 = $"./Data/TempareCalib/{camName}/dir1";
 
                             string dir2 = $"./Data/TempareCalib/{camName}/dir2";
-                            string camXYZMapPath, lightXYZMapPath, lightInCamPath,toolInCamPath;
+                            string camXYZMapPath, lightXYZMapPath, lightInCamPath, toolInCamPath;
                             camXYZMapPath = $"./Data/Cam/{camName}/camImage.tiff";
                             lightXYZMapPath = $"./Data/Cam/{camName}/lightImage.tiff";
 
@@ -1375,8 +1363,8 @@ namespace OnlineMeasurement
             }
         }
 
-        private void RobotRun(string path, BaslerCamera.Cam cam, CamSetting camSetting, CarSetting carSetting,OLM oLM, string camName ,
-            Dictionary<string,IoAddress> IO, out Dictionary<int, Point3D> point3d, out Dictionary<int, Point3D> point3dBase, out Dictionary<int, Dictionary<string, string>> sqlValuePairs, 
+        private void RobotRun(string path, BaslerCamera.Cam cam, CamSetting camSetting, CarSetting carSetting, OLM oLM, string camName,
+            Dictionary<string, IoAddress> IO, out Dictionary<int, Point3D> point3d, out Dictionary<int, Point3D> point3dBase, out Dictionary<int, Dictionary<string, string>> sqlValuePairs,
             ref bool 检测异常, ref bool 数据超差)
         {
             point3d = new Dictionary<int, Point3D>();
@@ -1410,10 +1398,10 @@ namespace OnlineMeasurement
                         if (pointNumList.Content != 0)
                         {
                             pointNum = (int)(pointNumList.Content);
-                            ShowMessage($"{camName} { Resources.LanguageDic.success_get_point_NO} {pointNum}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
+                            ShowMessage($"{camName} {Resources.LanguageDic.success_get_point_NO} {pointNum}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
                             break;
                         }
-                    } 
+                    }
                     else
                     {
                         ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}", Color.Red);
@@ -1464,7 +1452,7 @@ namespace OnlineMeasurement
                         ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}", Color.Red);
                         return;
                     }
-                    var abort = plc.ReadBool(camIODict["L"]["Reset"].Address );
+                    var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
                     if (!abort.IsSuccess)
                     {
                         ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
@@ -1517,7 +1505,7 @@ namespace OnlineMeasurement
                 ShowMessage(camName + $" Pose:({PoseX.Content},{PoseY.Content},{PoseZ.Content},{PoseRX.Content},{PoseRY.Content},{PoseRZ.Content})" + pointNum);
                 ShowMessage(camName + $" Joint:({A1.Content},{A2.Content},{A3.Content},{A4.Content},{A5.Content},{A6.Content})" + pointNum);
 
-               
+
 
                 // 这里用的是kuka机器人，默认pose是xyz
                 HOperatorSet.CreatePose(PoseX.Content, PoseY.Content, PoseZ.Content, PoseRX.Content, PoseRY.Content, PoseRZ.Content, "Rp+T", "gba", "point", out Pose);
@@ -1529,7 +1517,7 @@ namespace OnlineMeasurement
                 Angle.Append(A6.Content);
 
                 // 后面看要不要用这个测出来的坐标
-                double robotXOpt, robotYOpt, robotZOpt,robotRXOpt, robotRYOpt, robotRZOpt;
+                double robotXOpt, robotYOpt, robotZOpt, robotRXOpt, robotRYOpt, robotRZOpt;
                 //调用温漂函数
                 {
                     oLM.run(true, Angle[0], Angle[1], Angle[2], Angle[3], Angle[4], Angle[5], out robotXOpt, out robotYOpt, out robotZOpt, out robotRXOpt, out robotRYOpt, out robotRZOpt);
@@ -1843,7 +1831,7 @@ namespace OnlineMeasurement
                         ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}", Color.Red);
                         return;
                     }
-                    var abort = plc.ReadBool(camIODict["L"]["Reset"].Address );
+                    var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
                     if (!abort.IsSuccess)
                     {
                         ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
@@ -1947,7 +1935,7 @@ namespace OnlineMeasurement
                         double toolZ1_mm = toolZ1 * 1000;
 
                         //工具转基座标
-                        HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, 
+                        HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
                             carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
                         double rbX1 = 工具转基座标.AffineTransPoint3d(toolX1_mm, toolY1_mm, toolZ1_mm, out double rbY1, out double rbZ1);
 
@@ -1966,7 +1954,7 @@ namespace OnlineMeasurement
                             double toolZ2_mm = toolZ2 * 1000;
 
                             //工具转基座标
-                            HHomMat3D 工具转基座标2 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, 
+                            HHomMat3D 工具转基座标2 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
                                 carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
                             double rbX2 = 工具转基座标2.AffineTransPoint3d(toolX2_mm, toolY2_mm, toolZ2_mm, out double rbY2, out double rbZ2);
 
@@ -2222,7 +2210,7 @@ namespace OnlineMeasurement
         }
 
 
-        private void RobotRunTempareCalib(string path,BaslerCamera.Cam cam, CamSetting camSetting, CarSetting carSetting, string camName, Dictionary<string, IoAddress> IO)
+        private void RobotRunTempareCalib(string path, BaslerCamera.Cam cam, CamSetting camSetting, CarSetting carSetting, string camName, Dictionary<string, IoAddress> IO)
         {
             int pictureBoxIndex = 0;
             System.Diagnostics.Stopwatch sp = new System.Diagnostics.Stopwatch();
@@ -2331,7 +2319,7 @@ namespace OnlineMeasurement
                 var A4 = plc.ReadFloat(IO["A4"].Address);
                 var A5 = plc.ReadFloat(IO["A5"].Address);
                 var A6 = plc.ReadFloat(IO["A6"].Address);
-                if (!X.IsSuccess|| !Y.IsSuccess || !Z.IsSuccess || !RX.IsSuccess || !RY.IsSuccess || !RZ.IsSuccess
+                if (!X.IsSuccess || !Y.IsSuccess || !Z.IsSuccess || !RX.IsSuccess || !RY.IsSuccess || !RZ.IsSuccess
                     || !A1.IsSuccess || !A2.IsSuccess || !A3.IsSuccess || !A4.IsSuccess || !A5.IsSuccess || !A6.IsSuccess)
                 {
                     ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail}", Color.Red);
@@ -2341,7 +2329,7 @@ namespace OnlineMeasurement
                 ShowMessage(camName + $" Joint:({A1.Content},{A2.Content},{A3.Content},{A4.Content},{A5.Content},{A6.Content})" + pointNum);
 
                 // 这里用的是kuka机器人，默认pose是xyz
-                HOperatorSet.CreatePose(X.Content,Y.Content, Z.Content, RX.Content, RY.Content, RZ.Content, "Rp+T", "gba", "point",out Pose);
+                HOperatorSet.CreatePose(X.Content, Y.Content, Z.Content, RX.Content, RY.Content, RZ.Content, "Rp+T", "gba", "point", out Pose);
                 Angle.Append(A1.Content);
                 Angle.Append(A2.Content);
                 Angle.Append(A3.Content);
@@ -2373,13 +2361,13 @@ namespace OnlineMeasurement
                 sp.Restart();
                 try
                 {
-                    string dir,save2DImagePath, save2DTransformImagePath, 
+                    string dir, save2DImagePath, save2DTransformImagePath,
                         saveLightImagePath, saveLightTransformImagePath,
-                        savePosePath,saveJointPath;
+                        savePosePath, saveJointPath;
                     //判断是上位还是下位
                     if (pointNum > carSetting.gSets.Count / 2)
                     {
-                        
+
                         dir = $"./Data/TempareCalib/{camName}/dir2";
                     }
                     else
@@ -2496,7 +2484,7 @@ namespace OnlineMeasurement
                     }
 
                     //保存姿态文件
-                    HOperatorSet.WritePose(Pose,savePosePath);
+                    HOperatorSet.WritePose(Pose, savePosePath);
                     HOperatorSet.WriteTuple(Angle, saveJointPath);
 
                 }
@@ -3572,6 +3560,39 @@ namespace OnlineMeasurement
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
+
+
+            ////测试温漂接口
+            //String camName = "L";
+            //OLM oLM = new OLM();
+            ////机器人文件路径、机器人名（这里用L\R)、onnx模型路径
+            //oLM.init("./Data/config/robot", camName, "./Data/model.onnx");
+
+            //string dir1 = $"./Data/TempareCalib/{camName}/dir1";
+
+            //string dir2 = $"./Data/TempareCalib/{camName}/dir2";
+            //string camXYZMapPath, lightXYZMapPath, lightInCamPath, toolInCamPath;
+            //camXYZMapPath = $"./Data/Cam/{camName}/camImage.tiff";
+            //lightXYZMapPath = $"./Data/Cam/{camName}/lightImage.tiff";
+
+
+            //lightInCamPath = $"./Data/Cam/{camName}/LightInCam.dat";
+            //toolInCamPath = $"./Data/Cam/{camName}/ToolInCam.dat";
+
+
+            //bool rt = oLM.calib(dir1, dir2, camXYZMapPath, lightXYZMapPath, lightInCamPath, toolInCamPath);
+            //if (!rt)
+            //{
+            //    ShowMessage($"{Resources.LanguageDic.robot_tempareture_calib_fail}");
+            //}
+            //else
+            //{
+            //    ShowMessage($"{Resources.LanguageDic.robot_tempareture_calib_success}");
+
+            //}
+            //double robotXOpt, robotYOpt, robotZOpt, robotRXOpt, robotRYOpt, robotRZOpt;
+            //oLM.run(true, 0, 0, 0, 0, 0, 0, out robotXOpt, out robotYOpt, out robotZOpt, out robotRXOpt, out robotRYOpt, out robotRZOpt);
+
         }
 
         private void 仿真计算(string IOName, string[] Lfiles, Dictionary<int, Point3D> point3d, Dictionary<int, Point3D> point3dBase, Dictionary<int, Point3D> rb)
@@ -3827,7 +3848,7 @@ namespace OnlineMeasurement
                             double toolY_mm = toolY * 1000;
                             double toolZ_mm = toolZ * 1000;
                             //工具转基座标
-                            HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, 
+                            HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
                                 carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
                             double rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out double rbY, out double rbZ);
 
@@ -3880,7 +3901,7 @@ namespace OnlineMeasurement
                                 double toolY2_mm = toolY2 * 1000;
                                 double toolZ2_mm = toolZ2 * 1000;
                                 //工具转基座标
-                                HHomMat3D 工具转基座标2 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, 
+                                HHomMat3D 工具转基座标2 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
                                     carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
                                 double rbX2 = 工具转基座标2.AffineTransPoint3d(toolX2_mm, toolY2_mm, toolZ2_mm, out double rbY2, out double rbZ2);
 
@@ -4333,7 +4354,7 @@ namespace OnlineMeasurement
 
         private void button3_Click(object sender, EventArgs e)
         {
-            var writeYRef = plc.Write("D1410", (int)(99999*100));
+            var writeYRef = plc.Write("D1410", (int)(99999 * 100));
 
         }
     }
@@ -4419,7 +4440,7 @@ namespace OnlineMeasurement
 
     //}
 
-   
+
 
 #else
     public class DIO

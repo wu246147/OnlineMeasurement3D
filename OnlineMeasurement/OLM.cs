@@ -211,7 +211,8 @@ namespace OnlineMeasurement
 
             // 设置参数
             float sphereRadius = 15.0f;
-            float sphereSegConfThresh = 0.3f;
+            float sphereSegConfThresh = 0.2f;
+            //float sphereSegConfThresh = 0.1f;
 
             float scaleSphereRegion = 0.95f;
             int laserMaxWidth = 25;
@@ -259,7 +260,7 @@ namespace OnlineMeasurement
                 return false;
             }
 
-            if (!File.Exists(Path.ChangeExtension(urdfFiles[0], $".{m_robotName}")))
+            if (!File.Exists(urdfFiles[0]+ $".{m_robotName}"))
             {
                 bool ret2 = OLM_RobotCalib_CalibInitKine(m_robotDir, m_robotName, m_dataDir1, m_dataDir2);
 
@@ -273,8 +274,8 @@ namespace OnlineMeasurement
 
 
             //判断是否需要优化手眼标定
-            m_toolInCamOptmzdPath = Path.GetDirectoryName(m_toolInCamPath) + "ToolInCamOptmzd.dat";
-            m_ballInBaseSavePath = Path.GetDirectoryName(m_toolInCamPath) + "ballsInBase.json";
+            m_toolInCamOptmzdPath = Path.GetDirectoryName(m_toolInCamPath) + "\\ToolInCamOptmzd.dat";
+            m_ballInBaseSavePath = Path.GetDirectoryName(m_toolInCamPath) + "\\ballsInBase.json";
             if (!File.Exists(m_toolInCamOptmzdPath) || !File.Exists(m_ballInBaseSavePath))
             {
                 float biasTranslation, biasRotation;

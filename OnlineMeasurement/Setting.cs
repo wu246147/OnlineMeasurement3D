@@ -1009,18 +1009,21 @@ namespace OnlineMeasurement
 
                 if (File.Exists(filePath))
                 {
+                    if (!File.Exists(saveLightPath) || !File.Exists(saveWorldPath))
+                    {
+                        HOperatorSet.ReadCamPar(filePath, out HTuple hv_CamParIn);
+                        // 1. 转换
+                        camParIn = new HCamPar(hv_CamParIn);
 
-                    HOperatorSet.ReadCamPar(filePath, out HTuple hv_CamParIn);
-                    // 1. 转换
-                    camParIn = new HCamPar(hv_CamParIn);
 
+                        OLM.TransformImageLight(camParIn[7].I, camParIn[8].I, mapImage, camParIn, LightInCam, out HObject ho_LightMapped);
 
-                    OLM.TransformImageLight(camParIn[6].I, camParIn[7].I, mapImage, camParIn, LightInCam, out HObject ho_LightMapped);
+                        OLM.TransformImageWorld(camParIn[7].I, camParIn[8].I, mapImage, camParIn, LightInCam, LightToCam, out HObject worldImageMapped);
 
-                    OLM.TransformImageWorld(camParIn[6].I, camParIn[7].I, mapImage, camParIn, LightInCam,LightToCam,out HObject worldImageMapped);
-
-                    HOperatorSet.WriteImage(ho_LightMapped, "tiff", 0, saveLightPath);
-                    HOperatorSet.WriteImage(worldImageMapped, "tiff", 0, saveWorldPath);
+                        HOperatorSet.WriteImage(ho_LightMapped, "tiff", 0, saveLightPath);
+                        HOperatorSet.WriteImage(worldImageMapped, "tiff", 0, saveWorldPath);
+                    }
+                   
 
 
                 }
