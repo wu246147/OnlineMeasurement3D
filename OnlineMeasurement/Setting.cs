@@ -927,7 +927,7 @@ namespace OnlineMeasurement
         DataTable dtZ = null;   //这里没有做光平面标定，而是做了表格查询插值拟合的操作，来计算激光的z值
         Dictionary<float, HHomMat2D> XY = new Dictionary<float, HHomMat2D>(); //这里也没有直接根据z值来直接计算实际相机坐标的xy，而是通过z值来查询xy的转换矩阵
 
-        public HPose camInTool = null;
+        public HPose toolInCam = null;
         public HHomMat3D cam2Tool = null;
         //public HHomMat3D cam2Tool = new HHomMat3D();
 
@@ -1054,8 +1054,9 @@ namespace OnlineMeasurement
                     {
                         var hWorldPose = new HPose();
                         hWorldPose.ReadPose(filePath);
-                        camInTool = hWorldPose;
-                        cam2Tool = camInTool.PoseToHomMat3d();
+                        toolInCam = hWorldPose;
+                        //这里要先求逆，再转换
+                        cam2Tool = toolInCam.PoseInvert().PoseToHomMat3d();
                     }
                 }
                 else
