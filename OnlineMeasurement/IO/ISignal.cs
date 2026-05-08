@@ -46,6 +46,20 @@ namespace OnlineMeasurement.IO
         Batch_Number,
         Check_Point_NO,
 
+        X= 1280,
+        Y,
+        Z,
+        RX,
+        RY,
+        RZ,
+
+        A1,
+        A2,
+        A3,
+        A4,
+        A5,
+        A6,
+
         Car_NO = 1536,
     }
 

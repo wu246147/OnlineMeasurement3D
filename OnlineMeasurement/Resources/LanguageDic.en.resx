@@ -579,4 +579,13 @@
   <data name="result_write_fail" xml:space="preserve">
     <value>result write fail</value>
   </data>
+  <data name="Read_pose_fail" xml:space="preserve">
+    <value>Read robot pose fail</value>
+  </data>
+  <data name="robot_tempareture_calib_fail" xml:space="preserve">
+    <value>Robot tempareture calibration fail</value>
+  </data>
+  <data name="robot_tempareture_calib_success" xml:space="preserve">
+    <value>Robot tempareture calibration success</value>
+  </data>
 </root>

@@ -845,7 +845,7 @@ namespace OnlineMeasurement
     {
         public int key;//
         public int sleepTime = 1000;//延时拍照
-        public string type;//类型
+        public string type = "孔";//类型
         public bool isBase;//是否重建坐标点
         public float X, Y, Z;//数模坐标
         public float offsetX = 0, offsetY = 0, offsetZ = 0;//补偿坐标
@@ -974,54 +974,6 @@ namespace OnlineMeasurement
                 File.AppendAllText("Error.log", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss  ") + ex.ToString() + "\r\n\r\n");
             }
 
-            //读取z转换表
-            bool result2 = true;
-            try
-            {
-                string filePath = basePath + "\\h.dt";
-                if (File.Exists(filePath))
-                {
-                    using (FileStream stream = new FileStream(filePath, FileMode.Open))
-                    {
-                        BinaryFormatter bf = new BinaryFormatter();
-                        dtZ = (DataTable)bf.Deserialize(stream);
-                    }
-                }
-                else
-                {
-                    result2 = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                result2 = false;
-                File.AppendAllText("Error.log", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss  ") + ex.ToString() + "\r\n\r\n");
-            }
-
-            //读取xy转换表
-            bool result3 = true;
-            try
-            {
-                string filePath = basePath + "\\xy.dic";
-                if (File.Exists(filePath))
-                {
-                    using (FileStream stream = new FileStream(filePath, FileMode.Open))
-                    {
-                        BinaryFormatter bf = new BinaryFormatter();
-                        XY = (Dictionary<float, HHomMat2D>)bf.Deserialize(stream);
-                    }
-                }
-                else
-                {
-                    result3 = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                result3 = false;
-                File.AppendAllText("Error.log", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss  ") + ex.ToString() + "\r\n\r\n");
-            }
-
             //读取光面标定矩阵
             bool result5 = true;
             try
@@ -1044,6 +996,42 @@ namespace OnlineMeasurement
             catch (Exception ex)
             {
                 result5 = false;
+                File.AppendAllText("Error.log", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss  ") + ex.ToString() + "\r\n\r\n");
+            }
+
+            // 内存文件转换
+            bool result2 = true;
+            try
+            {
+                string filePath = basePath + "\\camparam.cal";
+                string saveLightPath = basePath + "\\lightImage.tiff";
+                string saveWorldPath = basePath + "\\camImage.tiff";
+
+                if (File.Exists(filePath))
+                {
+
+                    HOperatorSet.ReadCamPar(filePath, out HTuple hv_CamParIn);
+                    // 1. 转换
+                    camParIn = new HCamPar(hv_CamParIn);
+
+
+                    OLM.TransformImageLight(camParIn[6].I, camParIn[7].I, mapImage, camParIn, LightInCam, out HObject ho_LightMapped);
+
+                    OLM.TransformImageWorld(camParIn[6].I, camParIn[7].I, mapImage, camParIn, LightInCam,LightToCam,out HObject worldImageMapped);
+
+                    HOperatorSet.WriteImage(ho_LightMapped, "tiff", 0, saveLightPath);
+                    HOperatorSet.WriteImage(worldImageMapped, "tiff", 0, saveWorldPath);
+
+
+                }
+                else
+                {
+                    result2 = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                result2 = false;
                 File.AppendAllText("Error.log", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss  ") + ex.ToString() + "\r\n\r\n");
             }
 
@@ -2414,12 +2402,12 @@ namespace OnlineMeasurement
         }
     }
 
-   
 
 
 
 
-[Serializable]
+
+    [Serializable]
     public class CarID
     {
         public string Name;

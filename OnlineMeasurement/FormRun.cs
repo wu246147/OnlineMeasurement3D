@@ -20,6 +20,7 @@ using System.Runtime.Remoting.Contexts;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 using static BaslerCamera.Cam;
 using static BaslerCamera.MvCamera;
@@ -43,6 +44,9 @@ namespace OnlineMeasurement
         Dictionary<string, Car> 车型参数 = new Dictionary<string, Car>();
         Dictionary<string, CamSetting> 相机参数 = new Dictionary<string, CamSetting>();
         Dictionary<string, BaslerCamera.Cam> 相机 = new Dictionary<string, BaslerCamera.Cam>();
+
+        Dictionary<string, OLM>TempareCalib = new Dictionary<string, OLM>();
+
         OtherSet otherSet = new OtherSet();
 
         wSql sql = null;
@@ -284,6 +288,7 @@ namespace OnlineMeasurement
 
                 相机.Clear();
                 相机参数.Clear();
+                TempareCalib.Clear();
                 string[] camPaths = Directory.GetDirectories("Data\\Cam");
                 foreach (var item in camPaths)
                 {
@@ -301,6 +306,11 @@ namespace OnlineMeasurement
                     {
                         ShowMessage($"{name}{Resources.LanguageDic.cam}{Resources.LanguageDic.para_load_fail}", Color.Red);
                     }
+
+                    OLM oLM = new OLM();
+                    //机器人文件路径、机器人名（这里用L\R)、onnx模型路径
+                    oLM.init("./Data/config/robot", name, "./Data/model.onnx");
+                    TempareCalib.Add(name,oLM);
                 }
 
                 otherSet.Load();
@@ -725,14 +735,31 @@ namespace OnlineMeasurement
                     taskL = Task.Run(new Action(() =>
                     {
                         string key = "L";
-                        if (相机参数.ContainsKey(key) && 车型参数.ContainsKey($"{carKind.Content}-{TRnum}") && 车型参数[$"{carKind.Content}-{TRnum}"].car.ContainsKey(key))
+                        //判断是做温漂还是检测
+                        if (carKind.Content == 0)
                         {
-                            RobotRun(path, 相机[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], key, camIODict[key], out point3dL, out point3dBaseL, out sqlValuePairsL, ref 检测异常L, ref 数据超差L);
+                            if (相机参数.ContainsKey(key) && 车型参数.ContainsKey($"{carKind.Content}-{TRnum}") && 车型参数[$"{carKind.Content}-{TRnum}"].car.ContainsKey(key))
+                            {
+                                RobotRunTempareCalib(path, 相机[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], key, camIODict[key]);
+                            }
+                            else
+                            {
+                                ShowMessage(Resources.LanguageDic.no_cam_calib, Color.Red);
+                                return;
+                            }
                         }
                         else
                         {
-                            RobotRun(path, 相机[key], null, null, key, camIODict[key], out point3dL, out point3dBaseL, out sqlValuePairsL, ref 检测异常L, ref 数据超差L);
+                            if (相机参数.ContainsKey(key) && 车型参数.ContainsKey($"{carKind.Content}-{TRnum}") && 车型参数[$"{carKind.Content}-{TRnum}"].car.ContainsKey(key))
+                            {
+                                RobotRun(path, 相机[key], 相机参数[key],  车型参数[$"{carKind.Content}-{TRnum}"].car[key], TempareCalib[key], key, camIODict[key], out point3dL, out point3dBaseL, out sqlValuePairsL, ref 检测异常L, ref 数据超差L);
+                            }
+                            else
+                            {
+                                RobotRun(path, 相机[key], null, null,null, key, camIODict[key], out point3dL, out point3dBaseL, out sqlValuePairsL, ref 检测异常L, ref 数据超差L);
+                            }
                         }
+                        
                     }));
                     bool 检测异常R = true; bool 数据超差R = true;
                     Dictionary<int, Point3D> point3dR = new Dictionary<int, Point3D>();
@@ -741,14 +768,31 @@ namespace OnlineMeasurement
                     taskR = Task.Run(new Action(() =>
                     {
                         string key = "R";
-                        if (相机参数.ContainsKey(key) && 车型参数.ContainsKey($"{carKind.Content}-{TRnum}") && 车型参数[$"{carKind.Content}-{TRnum}"].car.ContainsKey(key))
+
+                        if (carKind.Content == 0)
                         {
-                            RobotRun(path, 相机[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key],key, camIODict[key], out point3dR, out point3dBaseR, out sqlValuePairsR, ref 检测异常R, ref 数据超差R);
+                            if (相机参数.ContainsKey(key) && 车型参数.ContainsKey($"{carKind.Content}-{TRnum}") && 车型参数[$"{carKind.Content}-{TRnum}"].car.ContainsKey(key))
+                            {
+                                RobotRunTempareCalib(path, 相机[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], key, camIODict[key]);
+                            }
+                            else
+                            {
+                                ShowMessage(Resources.LanguageDic.no_cam_calib, Color.Red);
+                                return;
+                            }
                         }
                         else
                         {
-                            RobotRun(path, 相机[key], null, null,key, camIODict[key], out point3dR, out point3dBaseR, out sqlValuePairsR, ref 检测异常R, ref 数据超差R);
+                            if (相机参数.ContainsKey(key) && 车型参数.ContainsKey($"{carKind.Content}-{TRnum}") && 车型参数[$"{carKind.Content}-{TRnum}"].car.ContainsKey(key))
+                            {
+                                RobotRun(path, 相机[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], TempareCalib[key], key, camIODict[key], out point3dR, out point3dBaseR, out sqlValuePairsR, ref 检测异常R, ref 数据超差R);
+                            }
+                            else
+                            {
+                                RobotRun(path, 相机[key], null, null,null, key, camIODict[key], out point3dR, out point3dBaseR, out sqlValuePairsR, ref 检测异常R, ref 数据超差R);
+                            }
                         }
+                       
                     }));
 
 
@@ -790,372 +834,374 @@ namespace OnlineMeasurement
                         ShowMessage($"{Resources.LanguageDic.R_robot_finish}");
                     }
 
-
-                    try
+                    if (carKind.Content != 0)
                     {
-                        Dictionary<int, Point3D> point3dLNew = new Dictionary<int, Point3D>();
-                        Dictionary<int, Point3D> point3dRNew = new Dictionary<int, Point3D>();
-
-
-                        if (point3dBaseL.Count() + point3dBaseR.Count() >= 3)
+                        //检测的重新计算
+                        try
                         {
-                            HTuple px = new HTuple();
-                            HTuple py = new HTuple();
-                            HTuple pz = new HTuple();
-                            HTuple qx = new HTuple();
-                            HTuple qy = new HTuple();
-                            HTuple qz = new HTuple();
-                            foreach (var item in point3dBaseL.Keys)
+                            Dictionary<int, Point3D> point3dLNew = new Dictionary<int, Point3D>();
+                            Dictionary<int, Point3D> point3dRNew = new Dictionary<int, Point3D>();
+
+
+                            if (point3dBaseL.Count() + point3dBaseR.Count() >= 3)
                             {
-                                if (point3dL.ContainsKey(item))
+                                HTuple px = new HTuple();
+                                HTuple py = new HTuple();
+                                HTuple pz = new HTuple();
+                                HTuple qx = new HTuple();
+                                HTuple qy = new HTuple();
+                                HTuple qz = new HTuple();
+                                foreach (var item in point3dBaseL.Keys)
                                 {
-                                    px.Append(point3dL[item].X);
-                                    py.Append(point3dL[item].Y);
-                                    pz.Append(point3dL[item].Z);
-                                    qx.Append(point3dBaseL[item].X);
-                                    qy.Append(point3dBaseL[item].Y);
-                                    qz.Append(point3dBaseL[item].Z);
+                                    if (point3dL.ContainsKey(item))
+                                    {
+                                        px.Append(point3dL[item].X);
+                                        py.Append(point3dL[item].Y);
+                                        pz.Append(point3dL[item].Z);
+                                        qx.Append(point3dBaseL[item].X);
+                                        qy.Append(point3dBaseL[item].Y);
+                                        qz.Append(point3dBaseL[item].Z);
+                                    }
+                                    else
+                                    {
+                                        ShowMessage($"{Resources.LanguageDic.exist}point3dBaseL[{item}]{Resources.LanguageDic.but_not_exist}point3dL[{item}", Color.Red);
+                                    }
+                                }
+                                foreach (var item in point3dBaseR.Keys)
+                                {
+                                    if (point3dR.ContainsKey(item))
+                                    {
+                                        px.Append(point3dR[item].X);
+                                        py.Append(point3dR[item].Y);
+                                        pz.Append(point3dR[item].Z);
+                                        qx.Append(point3dBaseR[item].X);
+                                        qy.Append(point3dBaseR[item].Y);
+                                        qz.Append(point3dBaseR[item].Z);
+                                    }
+                                    else
+                                    {
+                                        ShowMessage($"{Resources.LanguageDic.exist}point3dBaseR[{item}]{Resources.LanguageDic.but_not_exist}point3dR[{item}", Color.Red);
+                                    }
+                                }
+
+                                if (qz.Length >= 3)
+                                {
+                                    HHomMat3D hHomMat3D = new HHomMat3D();
+                                    hHomMat3D.VectorToHomMat3d("rigid", px, py, pz, qx, qy, qz);
+
+                                    数据超差L = true;
+                                    foreach (var item in point3dL.Keys)
+                                    {
+                                        double nx = hHomMat3D.AffineTransPoint3d(point3dL[item].X, point3dL[item].Y, point3dL[item].Z, out double ny, out double nz);
+                                        point3dLNew.Add(item, new Point3D(nx, ny, nz));
+
+                                        //重新计算
+                                        string IOName = "L";
+                                        var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
+                                        double dx = nx - carSetting.gSets[item].X;
+                                        double dy = ny - carSetting.gSets[item].Y;
+                                        double dz = nz - carSetting.gSets[item].Z;
+                                        double dd = Math.Sqrt(dx * dx + dy * dy + dz * dz);
+
+                                        var 测点数据表 = sqlValuePairsL[item];
+                                        测点数据表["X"] = nx.ToString("0.000");
+                                        测点数据表["Y"] = ny.ToString("0.000");
+                                        测点数据表["Z"] = nz.ToString("0.000");
+                                        测点数据表["DX"] = dx.ToString("0.000");
+                                        测点数据表["DY"] = dy.ToString("0.000");
+                                        测点数据表["DZ"] = dz.ToString("0.000");
+                                        测点数据表["DD"] = dd.ToString("0.000");
+
+                                        //重新显示
+                                        dataGridViewShow.BeginInvoke(new Action(() =>
+                                        {
+                                            int index = dataGridViewShow.Rows.Add("*" + IOName + item, nx.ToString("0.000"), ny.ToString("0.000"), nz.ToString("0.000"), dx.ToString("0.000"), dy.ToString("0.000"), dz.ToString("0.000"), dd.ToString("0.000"));
+                                            if (dx < carSetting.gSets[item].minDX || dx > carSetting.gSets[item].maxDX)
+                                            {
+                                                dataGridViewShow.Rows[index].Cells[4].Style.BackColor = Color.Red;
+                                            }
+                                            if (dy < carSetting.gSets[item].minDY || dy > carSetting.gSets[item].maxDY)
+                                            {
+                                                dataGridViewShow.Rows[index].Cells[5].Style.BackColor = Color.Red;
+                                            }
+                                            if (dz < carSetting.gSets[item].minDZ || dz > carSetting.gSets[item].maxDZ)
+                                            {
+                                                dataGridViewShow.Rows[index].Cells[6].Style.BackColor = Color.Red;
+                                            }
+                                        }));
+                                        if (dx < carSetting.gSets[item].minDX || dx > carSetting.gSets[item].maxDX)
+                                        {
+                                            数据超差L = false;
+                                        }
+                                        if (dy < carSetting.gSets[item].minDY || dy > carSetting.gSets[item].maxDY)
+                                        {
+                                            数据超差L = false;
+                                        }
+                                        if (dz < carSetting.gSets[item].minDZ || dz > carSetting.gSets[item].maxDZ)
+                                        {
+                                            数据超差L = false;
+                                        }
+                                        formShow?.UpDataXYZ(new Point3D(nx, ny, nz), IOName + item);////////////////////////
+                                    }
+                                    数据超差R = true;
+
+                                    foreach (var item in point3dR.Keys)
+                                    {
+                                        double nx = hHomMat3D.AffineTransPoint3d(point3dR[item].X, point3dR[item].Y, point3dR[item].Z, out double ny, out double nz);
+                                        point3dRNew.Add(item, new Point3D(nx, ny, nz));
+
+                                        //重新计算
+                                        string IOName = "R";
+                                        var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
+                                        double dx = nx - carSetting.gSets[item].X;
+                                        double dy = ny - carSetting.gSets[item].Y;
+                                        double dz = nz - carSetting.gSets[item].Z;
+                                        double dd = Math.Sqrt(dx * dx + dy * dy + dz * dz);
+
+                                        var 测点数据表 = sqlValuePairsR[item];
+                                        测点数据表["X"] = nx.ToString("0.000");
+                                        测点数据表["Y"] = ny.ToString("0.000");
+                                        测点数据表["Z"] = nz.ToString("0.000");
+                                        测点数据表["DX"] = dx.ToString("0.000");
+                                        测点数据表["DY"] = dy.ToString("0.000");
+                                        测点数据表["DZ"] = dz.ToString("0.000");
+                                        测点数据表["DD"] = dd.ToString("0.000");
+
+                                        //重新显示
+                                        dataGridViewShow.BeginInvoke(new Action(() =>
+                                        {
+                                            int index = dataGridViewShow.Rows.Add("*" + IOName + item, nx.ToString("0.000"), ny.ToString("0.000"), nz.ToString("0.000"), dx.ToString("0.000"), dy.ToString("0.000"), dz.ToString("0.000"), dd.ToString("0.000"));
+                                            if (dx < carSetting.gSets[item].minDX || dx > carSetting.gSets[item].maxDX)
+                                            {
+                                                dataGridViewShow.Rows[index].Cells[4].Style.BackColor = Color.Red;
+                                            }
+                                            if (dy < carSetting.gSets[item].minDY || dy > carSetting.gSets[item].maxDY)
+                                            {
+                                                dataGridViewShow.Rows[index].Cells[5].Style.BackColor = Color.Red;
+                                            }
+                                            if (dz < carSetting.gSets[item].minDZ || dz > carSetting.gSets[item].maxDZ)
+                                            {
+                                                dataGridViewShow.Rows[index].Cells[6].Style.BackColor = Color.Red;
+                                            }
+                                        }));
+                                        if (dx < carSetting.gSets[item].minDX || dx > carSetting.gSets[item].maxDX)
+                                        {
+                                            数据超差R = false;
+                                        }
+                                        if (dy < carSetting.gSets[item].minDY || dy > carSetting.gSets[item].maxDY)
+                                        {
+                                            数据超差R = false;
+                                        }
+                                        if (dz < carSetting.gSets[item].minDZ || dz > carSetting.gSets[item].maxDZ)
+                                        {
+                                            数据超差R = false;
+                                        }
+                                        formShow?.UpDataXYZ(new Point3D(nx, ny, nz), IOName + item);////////////////////////
+                                    }
                                 }
                                 else
                                 {
-                                    ShowMessage($"{Resources.LanguageDic.exist}point3dBaseL[{item}]{Resources.LanguageDic.but_not_exist}point3dL[{item}", Color.Red);
-                                }
-                            }
-                            foreach (var item in point3dBaseR.Keys)
-                            {
-                                if (point3dR.ContainsKey(item))
-                                {
-                                    px.Append(point3dR[item].X);
-                                    py.Append(point3dR[item].Y);
-                                    pz.Append(point3dR[item].Z);
-                                    qx.Append(point3dBaseR[item].X);
-                                    qy.Append(point3dBaseR[item].Y);
-                                    qz.Append(point3dBaseR[item].Z);
-                                }
-                                else
-                                {
-                                    ShowMessage($"{Resources.LanguageDic.exist}point3dBaseR[{item}]{Resources.LanguageDic.but_not_exist}point3dR[{item}", Color.Red);
+                                    ShowMessage($"{Resources.LanguageDic.The_number_of_coordinate_points_is_less_than}3，{Resources.LanguageDic.Unable_to_reconstruct_coordinates}", Color.Red);
                                 }
                             }
 
-                            if (qz.Length >= 3)
+                            // 判断结果数量与检测数量是否一致
                             {
-                                HHomMat3D hHomMat3D = new HHomMat3D();
-                                hHomMat3D.VectorToHomMat3d("rigid", px, py, pz, qx, qy, qz);
-
-                                数据超差L = true;
-                                foreach (var item in point3dL.Keys)
+                                string IOName = "L";
+                                var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
+                                if (carSetting.gSets.Keys.Count != point3dL.Count)
                                 {
-                                    double nx = hHomMat3D.AffineTransPoint3d(point3dL[item].X, point3dL[item].Y, point3dL[item].Z, out double ny, out double nz);
-                                    point3dLNew.Add(item, new Point3D(nx, ny, nz));
+                                    数据超差L = false;
+                                }
 
-                                    //重新计算
+                            }
+                            {
+                                string IOName = "R";
+                                var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
+                                if (carSetting.gSets.Keys.Count != point3dR.Count)
+                                {
+                                    数据超差R = false;
+                                }
+
+                            }
+
+                            // 输出前，先复位一下
+                            // 输出点结果信号,初始化
+                            {
+                                string IOName = "L";
+                                var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
+
+                                foreach (var item in carSetting.gSets.Keys)
+                                {
+                                    var point3d = new Point3D(0, 0, 0);
+
+                                    double dx = 0;
+                                    double dy = 0;
+                                    double dz = 0;
+
+
+                                    string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
+                                    address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
+                                    address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
+                                }
+                                IOName = "R";
+                                carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
+
+                                foreach (var item in carSetting.gSets.Keys)
+                                {
+                                    var point3d = new Point3D(0, 0, 0);
+
+                                    double dx = 0;
+                                    double dy = 0;
+                                    double dz = 0;
+
+                                    string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
+                                    address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
+                                    address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
+                                }
+                            }
+                            // 延时，不知道是否真的能把结果先复位
+                            Thread.Sleep(100);
+
+                            // 输出点结果信号
+                            if (point3dBaseL.Count() + point3dBaseR.Count() >= 3)
+                            {
+                                foreach (var item in point3dLNew.Keys)
+                                {
                                     string IOName = "L";
                                     var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
-                                    double dx = nx - carSetting.gSets[item].X;
-                                    double dy = ny - carSetting.gSets[item].Y;
-                                    double dz = nz - carSetting.gSets[item].Z;
-                                    double dd = Math.Sqrt(dx * dx + dy * dy + dz * dz);
+                                    var point3d = point3dLNew[item];
 
-                                    var 测点数据表 = sqlValuePairsL[item];
-                                    测点数据表["X"] = nx.ToString("0.000");
-                                    测点数据表["Y"] = ny.ToString("0.000");
-                                    测点数据表["Z"] = nz.ToString("0.000");
-                                    测点数据表["DX"] = dx.ToString("0.000");
-                                    测点数据表["DY"] = dy.ToString("0.000");
-                                    测点数据表["DZ"] = dz.ToString("0.000");
-                                    测点数据表["DD"] = dd.ToString("0.000");
+                                    double dx = point3d.X - carSetting.gSets[item].X;
+                                    double dy = point3d.Y - carSetting.gSets[item].Y;
+                                    double dz = point3d.Z - carSetting.gSets[item].Z;
 
-                                    //重新显示
-                                    dataGridViewShow.BeginInvoke(new Action(() =>
-                                    {
-                                        int index = dataGridViewShow.Rows.Add("*" + IOName + item, nx.ToString("0.000"), ny.ToString("0.000"), nz.ToString("0.000"), dx.ToString("0.000"), dy.ToString("0.000"), dz.ToString("0.000"), dd.ToString("0.000"));
-                                        if (dx < carSetting.gSets[item].minDX || dx > carSetting.gSets[item].maxDX)
-                                        {
-                                            dataGridViewShow.Rows[index].Cells[4].Style.BackColor = Color.Red;
-                                        }
-                                        if (dy < carSetting.gSets[item].minDY || dy > carSetting.gSets[item].maxDY)
-                                        {
-                                            dataGridViewShow.Rows[index].Cells[5].Style.BackColor = Color.Red;
-                                        }
-                                        if (dz < carSetting.gSets[item].minDZ || dz > carSetting.gSets[item].maxDZ)
-                                        {
-                                            dataGridViewShow.Rows[index].Cells[6].Style.BackColor = Color.Red;
-                                        }
-                                    }));
-                                    if (dx < carSetting.gSets[item].minDX || dx > carSetting.gSets[item].maxDX)
-                                    {
-                                        数据超差L = false;
-                                    }
-                                    if (dy < carSetting.gSets[item].minDY || dy > carSetting.gSets[item].maxDY)
-                                    {
-                                        数据超差L = false;
-                                    }
-                                    if (dz < carSetting.gSets[item].minDZ || dz > carSetting.gSets[item].maxDZ)
-                                    {
-                                        数据超差L = false;
-                                    }
-                                    formShow?.UpDataXYZ(new Point3D(nx, ny, nz), IOName + item);////////////////////////
+
+                                    string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
+                                    address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
+                                    address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
+
                                 }
-                                数据超差R = true;
-
-                                foreach (var item in point3dR.Keys)
+                                foreach (var item in point3dRNew.Keys)
                                 {
-                                    double nx = hHomMat3D.AffineTransPoint3d(point3dR[item].X, point3dR[item].Y, point3dR[item].Z, out double ny, out double nz);
-                                    point3dRNew.Add(item, new Point3D(nx, ny, nz));
-
-                                    //重新计算
                                     string IOName = "R";
                                     var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
-                                    double dx = nx - carSetting.gSets[item].X;
-                                    double dy = ny - carSetting.gSets[item].Y;
-                                    double dz = nz - carSetting.gSets[item].Z;
-                                    double dd = Math.Sqrt(dx * dx + dy * dy + dz * dz);
+                                    var point3d = point3dRNew[item];
 
-                                    var 测点数据表 = sqlValuePairsR[item];
-                                    测点数据表["X"] = nx.ToString("0.000");
-                                    测点数据表["Y"] = ny.ToString("0.000");
-                                    测点数据表["Z"] = nz.ToString("0.000");
-                                    测点数据表["DX"] = dx.ToString("0.000");
-                                    测点数据表["DY"] = dy.ToString("0.000");
-                                    测点数据表["DZ"] = dz.ToString("0.000");
-                                    测点数据表["DD"] = dd.ToString("0.000");
+                                    double dx = point3d.X - carSetting.gSets[item].X;
+                                    double dy = point3d.Y - carSetting.gSets[item].Y;
+                                    double dz = point3d.Z - carSetting.gSets[item].Z;
 
-                                    //重新显示
-                                    dataGridViewShow.BeginInvoke(new Action(() =>
-                                    {
-                                        int index = dataGridViewShow.Rows.Add("*" + IOName + item, nx.ToString("0.000"), ny.ToString("0.000"), nz.ToString("0.000"), dx.ToString("0.000"), dy.ToString("0.000"), dz.ToString("0.000"), dd.ToString("0.000"));
-                                        if (dx < carSetting.gSets[item].minDX || dx > carSetting.gSets[item].maxDX)
-                                        {
-                                            dataGridViewShow.Rows[index].Cells[4].Style.BackColor = Color.Red;
-                                        }
-                                        if (dy < carSetting.gSets[item].minDY || dy > carSetting.gSets[item].maxDY)
-                                        {
-                                            dataGridViewShow.Rows[index].Cells[5].Style.BackColor = Color.Red;
-                                        }
-                                        if (dz < carSetting.gSets[item].minDZ || dz > carSetting.gSets[item].maxDZ)
-                                        {
-                                            dataGridViewShow.Rows[index].Cells[6].Style.BackColor = Color.Red;
-                                        }
-                                    }));
-                                    if (dx < carSetting.gSets[item].minDX || dx > carSetting.gSets[item].maxDX)
-                                    {
-                                        数据超差R = false;
-                                    }
-                                    if (dy < carSetting.gSets[item].minDY || dy > carSetting.gSets[item].maxDY)
-                                    {
-                                        数据超差R = false;
-                                    }
-                                    if (dz < carSetting.gSets[item].minDZ || dz > carSetting.gSets[item].maxDZ)
-                                    {
-                                        数据超差R = false;
-                                    }
-                                    formShow?.UpDataXYZ(new Point3D(nx, ny, nz), IOName + item);////////////////////////
+
+                                    string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
+                                    address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
+                                    address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
                                 }
                             }
                             else
                             {
-                                ShowMessage($"{Resources.LanguageDic.The_number_of_coordinate_points_is_less_than}3，{Resources.LanguageDic.Unable_to_reconstruct_coordinates}", Color.Red);
-                            }
-                        }
-
-                        // 判断结果数量与检测数量是否一致
-                        {
-                            string IOName = "L";
-                            var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
-                            if (carSetting.gSets.Keys.Count != point3dL.Count)
-                            {
-                                数据超差L = false;
-                            }
-
-                        }
-                        {
-                            string IOName = "R";
-                            var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
-                            if (carSetting.gSets.Keys.Count != point3dR.Count)
-                            {
-                                数据超差R = false;
-                            }
-
-                        }
-
-                        // 输出前，先复位一下
-                        // 输出点结果信号,初始化
-                        {
-                            string IOName = "L";
-                            var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
-
-                            foreach (var item in carSetting.gSets.Keys)
-                            {
-                                var point3d = new Point3D(0, 0, 0);
-
-                                double dx = 0;
-                                double dy = 0;
-                                double dz = 0;
-
-
-                                string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
-                                address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
-                                address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
-                                address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
-                                address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
-                                address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
-                            }
-                            IOName = "R";
-                            carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
-
-                            foreach (var item in carSetting.gSets.Keys)
-                            {
-                                var point3d = new Point3D(0, 0, 0);
-
-                                double dx = 0;
-                                double dy = 0;
-                                double dz = 0;
-
-                                string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
-                                address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
-                                address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
-                                address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
-                                address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
-                                address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
-                            }
-                        }
-                        // 延时，不知道是否真的能把结果先复位
-                        Thread.Sleep(100);
-
-                        // 输出点结果信号
-                        if (point3dBaseL.Count() + point3dBaseR.Count() >= 3)
-                        {
-                            foreach (var item in point3dLNew.Keys)
-                            {
-                                string IOName = "L";
-                                var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
-                                var point3d = point3dLNew[item];
-
-                                double dx = point3d.X - carSetting.gSets[item].X;
-                                double dy = point3d.Y - carSetting.gSets[item].Y;
-                                double dz = point3d.Z - carSetting.gSets[item].Z;
-
-
-                                string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
-                                address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
-                                address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
-                                address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
-                                address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
-                                address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
-
-                            }
-                            foreach (var item in point3dRNew.Keys)
-                            {
-                                string IOName = "R";
-                                var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
-                                var point3d = point3dRNew[item];
-
-                                double dx = point3d.X - carSetting.gSets[item].X;
-                                double dy = point3d.Y - carSetting.gSets[item].Y;
-                                double dz = point3d.Z - carSetting.gSets[item].Z;
-
-
-                                string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
-                                address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
-                                address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
-                                address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
-                                address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
-                                address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
-                            }
-                        }
-                        else 
-                        {
-                            foreach (var item in point3dL.Keys)
-                            {
-                                string IOName = "L";
-                                var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
-                                var point3d = point3dL[item];
-
-                                double dx = point3d.X - carSetting.gSets[item].X;
-                                double dy = point3d.Y - carSetting.gSets[item].Y;
-                                double dz = point3d.Z - carSetting.gSets[item].Z;
-
-
-                                string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
-                                address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
-                                address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
-                                address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
-                                address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
-                                address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
-                            }
-                            foreach (var item in point3dR.Keys)
-                            {
-                                string IOName = "R";
-                                var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
-                                var point3d = point3dR[item];
-
-                                double dx = point3d.X - carSetting.gSets[item].X;
-                                double dy = point3d.Y - carSetting.gSets[item].Y;
-                                double dz = point3d.Z - carSetting.gSets[item].Z;
-
-
-                                string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
-                                address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
-                                address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
-                                address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
-                                address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
-                                address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        ShowMessage($"{Resources.LanguageDic.reconstruct_coordinates_error}：" + ex.ToString(), Color.Red);
-                    }
-
-                    if (!bDry_mode)
-                    {
-                        try
-                        {
-                            if (sqlEnable)
-                            {
-                                sql?.Open();
-                                sql?.BeginTransaction();
-                                try
+                                foreach (var item in point3dL.Keys)
                                 {
-                                    Dictionary<string, string> 车辆信息表 = new Dictionary<string, string>
+                                    string IOName = "L";
+                                    var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
+                                    var point3d = point3dL[item];
+
+                                    double dx = point3d.X - carSetting.gSets[item].X;
+                                    double dy = point3d.Y - carSetting.gSets[item].Y;
+                                    double dz = point3d.Z - carSetting.gSets[item].Z;
+
+
+                                    string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
+                                    address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
+                                    address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
+                                }
+                                foreach (var item in point3dR.Keys)
+                                {
+                                    string IOName = "R";
+                                    var carSetting = 车型参数[$"{carKind.Content}-{TRnum}"].car[IOName];
+                                    var point3d = point3dR[item];
+
+                                    double dx = point3d.X - carSetting.gSets[item].X;
+                                    double dy = point3d.Y - carSetting.gSets[item].Y;
+                                    double dz = point3d.Z - carSetting.gSets[item].Z;
+
+
+                                    string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
+                                    address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
+                                    address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
+                                    address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
+                                    var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            ShowMessage($"{Resources.LanguageDic.reconstruct_coordinates_error}：" + ex.ToString(), Color.Red);
+                        }
+
+                        if (!bDry_mode)
+                        {
+                            try
+                            {
+                                if (sqlEnable)
+                                {
+                                    sql?.Open();
+                                    sql?.BeginTransaction();
+                                    try
+                                    {
+                                        Dictionary<string, string> 车辆信息表 = new Dictionary<string, string>
                                     {
                                         { "时间", dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss") },
                                         { "车型", carKind.Content.ToString() },
@@ -1163,30 +1209,63 @@ namespace OnlineMeasurement
                                         { "托盘号", TRnum.ToString() },
                                         { "车架号", carNumString }
                                     };
-                                    int r = sql.InsertRow(sql.Database + ".车辆信息表", 车辆信息表);
+                                        int r = sql.InsertRow(sql.Database + ".车辆信息表", 车辆信息表);
 
-                                    foreach (var item in sqlValuePairsL.Keys)
-                                    {
-                                        sql.InsertRow(sql.Database + ".测点数据表", sqlValuePairsL[item]);
-                                    }
-                                    foreach (var item in sqlValuePairsR.Keys)
-                                    {
-                                        sql.InsertRow(sql.Database + ".测点数据表", sqlValuePairsR[item]);
-                                    }
+                                        foreach (var item in sqlValuePairsL.Keys)
+                                        {
+                                            sql.InsertRow(sql.Database + ".测点数据表", sqlValuePairsL[item]);
+                                        }
+                                        foreach (var item in sqlValuePairsR.Keys)
+                                        {
+                                            sql.InsertRow(sql.Database + ".测点数据表", sqlValuePairsR[item]);
+                                        }
 
-                                    sql.Commit();
+                                        sql.Commit();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        sql.Rollback();
+                                        ShowMessage(ex.ToString(), Color.Red);
+                                    }
+                                    sql?.Close();
                                 }
-                                catch (Exception ex)
-                                {
-                                    sql.Rollback();
-                                    ShowMessage(ex.ToString(), Color.Red);
-                                }
-                                sql?.Close();
+                            }
+                            catch (Exception ex)
+                            {
+                                ShowMessage($"{Resources.LanguageDic.database_write_error}：{ex}", Color.Red);
                             }
                         }
-                        catch (Exception ex)
+                    }
+                    else
+                    {
+                        //执行标定
+                        foreach (var camName in TempareCalib.Keys)
                         {
-                            ShowMessage($"{Resources.LanguageDic.database_write_error}：{ex}", Color.Red);
+                            var oLM = TempareCalib[camName];
+                            string dir1 = $"./Data/TempareCalib/{camName}/dir1";
+
+                            string dir2 = $"./Data/TempareCalib/{camName}/dir2";
+                            string camXYZMapPath, lightXYZMapPath, lightInCamPath,toolInCamPath;
+                            camXYZMapPath = $"./Data/Cam/{camName}/camImage.tiff";
+                            lightXYZMapPath = $"./Data/Cam/{camName}/lightImage.tiff";
+
+
+                            lightInCamPath = $"./Data/Cam/{camName}/LightInCam.dat";
+                            toolInCamPath = $"./Data/Cam/{camName}/ToolInCam.dat";
+
+
+                            bool rt = oLM.calib(dir1, dir2, camXYZMapPath, lightXYZMapPath, lightInCamPath, toolInCamPath);
+                            if (!rt)
+                            {
+                                ShowMessage($"{Resources.LanguageDic.robot_tempareture_calib_fail}");
+                                数据超差L = false;
+                                数据超差R = false;
+                            }
+                            else
+                            {
+                                ShowMessage($"{Resources.LanguageDic.robot_tempareture_calib_success}");
+
+                            }
                         }
                     }
 
@@ -1296,7 +1375,9 @@ namespace OnlineMeasurement
             }
         }
 
-        private void RobotRun(string path, BaslerCamera.Cam cam, CamSetting camSetting, CarSetting carSetting,string camName ,Dictionary<string,IoAddress> IO, out Dictionary<int, Point3D> point3d, out Dictionary<int, Point3D> point3dBase, out Dictionary<int, Dictionary<string, string>> sqlValuePairs, ref bool 检测异常, ref bool 数据超差)
+        private void RobotRun(string path, BaslerCamera.Cam cam, CamSetting camSetting, CarSetting carSetting,OLM oLM, string camName ,
+            Dictionary<string,IoAddress> IO, out Dictionary<int, Point3D> point3d, out Dictionary<int, Point3D> point3dBase, out Dictionary<int, Dictionary<string, string>> sqlValuePairs, 
+            ref bool 检测异常, ref bool 数据超差)
         {
             point3d = new Dictionary<int, Point3D>();
             point3dBase = new Dictionary<int, Point3D>();
@@ -1410,9 +1491,49 @@ namespace OnlineMeasurement
                 //pointNum += point.Content[2] ? 4 : 0;
                 //pointNum += point.Content[3] ? 8 : 0;
 
-                
+                //获取机器人姿态
+                HTuple Pose, Angle;
+                Pose = new HTuple();
+                Angle = new HTuple();
 
+                var PoseX = plc.ReadFloat(IO["X"].Address);
+                var PoseY = plc.ReadFloat(IO["Y"].Address);
+                var PoseZ = plc.ReadFloat(IO["Z"].Address);
+                var PoseRX = plc.ReadFloat(IO["RX"].Address);
+                var PoseRY = plc.ReadFloat(IO["RY"].Address);
+                var PoseRZ = plc.ReadFloat(IO["RZ"].Address);
+                var A1 = plc.ReadFloat(IO["A1"].Address);
+                var A2 = plc.ReadFloat(IO["A2"].Address);
+                var A3 = plc.ReadFloat(IO["A3"].Address);
+                var A4 = plc.ReadFloat(IO["A4"].Address);
+                var A5 = plc.ReadFloat(IO["A5"].Address);
+                var A6 = plc.ReadFloat(IO["A6"].Address);
+                if (!PoseX.IsSuccess || !PoseY.IsSuccess || !PoseZ.IsSuccess || !PoseRX.IsSuccess || !PoseRY.IsSuccess || !PoseRZ.IsSuccess
+                    || !A1.IsSuccess || !A2.IsSuccess || !A3.IsSuccess || !A4.IsSuccess || !A5.IsSuccess || !A6.IsSuccess)
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail}", Color.Red);
+                    return;
+                }
+                ShowMessage(camName + $" Pose:({PoseX.Content},{PoseY.Content},{PoseZ.Content},{PoseRX.Content},{PoseRY.Content},{PoseRZ.Content})" + pointNum);
+                ShowMessage(camName + $" Joint:({A1.Content},{A2.Content},{A3.Content},{A4.Content},{A5.Content},{A6.Content})" + pointNum);
 
+               
+
+                // 这里用的是kuka机器人，默认pose是xyz
+                HOperatorSet.CreatePose(PoseX.Content, PoseY.Content, PoseZ.Content, PoseRX.Content, PoseRY.Content, PoseRZ.Content, "Rp+T", "gba", "point", out Pose);
+                Angle.Append(A1.Content);
+                Angle.Append(A2.Content);
+                Angle.Append(A3.Content);
+                Angle.Append(A4.Content);
+                Angle.Append(A5.Content);
+                Angle.Append(A6.Content);
+
+                // 后面看要不要用这个测出来的坐标
+                double robotXOpt, robotYOpt, robotZOpt,robotRXOpt, robotRYOpt, robotRZOpt;
+                //调用温漂函数
+                {
+                    oLM.run(true, Angle[0], Angle[1], Angle[2], Angle[3], Angle[4], Angle[5], out robotXOpt, out robotYOpt, out robotZOpt, out robotRXOpt, out robotRYOpt, out robotRZOpt);
+                }
                 //是否末点
                 var endPoint = plc.ReadBool(IO["End_of_Check_Points"].Address);
                 if (!endPoint.IsSuccess)
@@ -1773,7 +1894,8 @@ namespace OnlineMeasurement
                         double toolZ_mm = toolZ * 1000;
 
                         //工具转基座标
-                        HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "abg", "point").PoseToHomMat3d();
+                        HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
+                            carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
                         double rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out double rbY, out double rbZ);
 
 
@@ -1825,7 +1947,8 @@ namespace OnlineMeasurement
                         double toolZ1_mm = toolZ1 * 1000;
 
                         //工具转基座标
-                        HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "abg", "point").PoseToHomMat3d();
+                        HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, 
+                            carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
                         double rbX1 = 工具转基座标.AffineTransPoint3d(toolX1_mm, toolY1_mm, toolZ1_mm, out double rbY1, out double rbZ1);
 
 
@@ -1843,7 +1966,8 @@ namespace OnlineMeasurement
                             double toolZ2_mm = toolZ2 * 1000;
 
                             //工具转基座标
-                            HHomMat3D 工具转基座标2 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "abg", "point").PoseToHomMat3d();
+                            HHomMat3D 工具转基座标2 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, 
+                                carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
                             double rbX2 = 工具转基座标2.AffineTransPoint3d(toolX2_mm, toolY2_mm, toolZ2_mm, out double rbY2, out double rbZ2);
 
                             //基座标转车身
@@ -1900,7 +2024,8 @@ namespace OnlineMeasurement
                                 double toolZ_mm = toolZ * 1000;
 
                                 //工具转基座标
-                                HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "abg", "point").PoseToHomMat3d();
+                                HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
+                                    carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
                                 double rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out double rbY, out double rbZ);
 
 
@@ -2095,6 +2220,365 @@ namespace OnlineMeasurement
                 }
             }
         }
+
+
+        private void RobotRunTempareCalib(string path,BaslerCamera.Cam cam, CamSetting camSetting, CarSetting carSetting, string camName, Dictionary<string, IoAddress> IO)
+        {
+            int pictureBoxIndex = 0;
+            System.Diagnostics.Stopwatch sp = new System.Diagnostics.Stopwatch();
+            while (true)
+            {
+                pictureBoxIndex++;
+
+                ShowMessage(camName + $"{Resources.LanguageDic.wait_for_point_NO}");
+
+                if (stop) return;
+                sp.Restart();
+                //等点位号
+                int pointNum = 0;
+                while (true)
+                {
+                    if (stop) return;
+                    var pointNumList = plc.ReadInt16(IO["Check_Point_NO"].Address);
+                    if (pointNumList.IsSuccess)
+                    {
+                        if (pointNumList.Content != 0)
+                        {
+                            pointNum = (int)(pointNumList.Content);
+                            ShowMessage($"{camName} {Resources.LanguageDic.success_get_point_NO} {pointNum}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}", Color.Red);
+                        return;
+                    }
+                    var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
+                    if (!abort.IsSuccess)
+                    {
+                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
+                        return;
+                    }
+                    if (bAbort || abort.Content)
+                    {
+                        bAbort = true;
+                        ShowMessage(camName + $"{Resources.LanguageDic.reserve_reset_signal}", Color.Yellow);
+                        return;
+                    }
+                    Thread.Sleep(50);
+                }
+
+                //点位号反馈
+                var writepointNumList = plc.Write(IO["Feedback_Check_Point_NO"].Address, pointNum);
+                if (!writepointNumList.IsSuccess)
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.Point_number_writing_failed}", Color.Red);
+                    return;
+                }
+
+                ShowMessage(camName + $"{Resources.LanguageDic.Waiting_for_the_signal_that_the_camera_posture_is_in_place}ON");
+
+                sp.Restart();
+
+                //等姿态到位
+                while (true)
+                {
+                    if (stop) return;
+                    var val = plc.ReadBool(IO["Arrive_Photo_Spot"].Address);
+                    if (val.IsSuccess)
+                    {
+                        if (val.Content == true)
+                        {
+                            ShowMessage($"{camName}{Resources.LanguageDic.reserve_the_signal_that_the_camera_posture_is_in_place}ON，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}", Color.Red);
+                        return;
+                    }
+                    var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
+                    if (!abort.IsSuccess)
+                    {
+                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
+                        return;
+                    }
+                    if (bAbort || abort.Content)
+                    {
+                        bAbort = true;
+                        ShowMessage(camName + $"{Resources.LanguageDic.reserve_reset_signal}", Color.Yellow);
+                        return;
+                    }
+                    Thread.Sleep(50);
+                }
+
+                //获取机器人姿态
+                HTuple Pose, Angle;
+                Pose = new HTuple();
+                Angle = new HTuple();
+
+                var X = plc.ReadFloat(IO["X"].Address);
+                var Y = plc.ReadFloat(IO["Y"].Address);
+                var Z = plc.ReadFloat(IO["Z"].Address);
+                var RX = plc.ReadFloat(IO["RX"].Address);
+                var RY = plc.ReadFloat(IO["RY"].Address);
+                var RZ = plc.ReadFloat(IO["RZ"].Address);
+                var A1 = plc.ReadFloat(IO["A1"].Address);
+                var A2 = plc.ReadFloat(IO["A2"].Address);
+                var A3 = plc.ReadFloat(IO["A3"].Address);
+                var A4 = plc.ReadFloat(IO["A4"].Address);
+                var A5 = plc.ReadFloat(IO["A5"].Address);
+                var A6 = plc.ReadFloat(IO["A6"].Address);
+                if (!X.IsSuccess|| !Y.IsSuccess || !Z.IsSuccess || !RX.IsSuccess || !RY.IsSuccess || !RZ.IsSuccess
+                    || !A1.IsSuccess || !A2.IsSuccess || !A3.IsSuccess || !A4.IsSuccess || !A5.IsSuccess || !A6.IsSuccess)
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail}", Color.Red);
+                    return;
+                }
+                ShowMessage(camName + $" Pose:({X.Content},{Y.Content},{Z.Content},{RX.Content},{RY.Content},{RZ.Content})" + pointNum);
+                ShowMessage(camName + $" Joint:({A1.Content},{A2.Content},{A3.Content},{A4.Content},{A5.Content},{A6.Content})" + pointNum);
+
+                // 这里用的是kuka机器人，默认pose是xyz
+                HOperatorSet.CreatePose(X.Content,Y.Content, Z.Content, RX.Content, RY.Content, RZ.Content, "Rp+T", "gba", "point",out Pose);
+                Angle.Append(A1.Content);
+                Angle.Append(A2.Content);
+                Angle.Append(A3.Content);
+                Angle.Append(A4.Content);
+                Angle.Append(A5.Content);
+                Angle.Append(A6.Content);
+
+                //是否末点
+                var endPoint = plc.ReadBool(IO["End_of_Check_Points"].Address);
+                if (!endPoint.IsSuccess)
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.Trajectory_endpoint_reading_failed}", Color.Red);
+                    return;
+                }
+                ShowMessage(camName + $"{Resources.LanguageDic.reserve_end_point}" + pointNum);
+
+                if (endPoint.Content)
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.end_point}");
+                }
+
+                formShow?.UpData灯(camName, true);///////////////////////////////////
+
+                //采图，计算
+                HImage hImage2D = null;
+                HImage hImageLight = null;
+
+
+                sp.Restart();
+                try
+                {
+                    string dir,save2DImagePath, save2DTransformImagePath, 
+                        saveLightImagePath, saveLightTransformImagePath,
+                        savePosePath,saveJointPath;
+                    //判断是上位还是下位
+                    if (pointNum > carSetting.gSets.Count / 2)
+                    {
+                        
+                        dir = $"./Data/TempareCalib/{camName}/dir2";
+                    }
+                    else
+                    {
+                        dir = $"./Data/TempareCalib/{camName}/dir1";
+                    }
+                    //创建文件夹
+                    if (!Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
+                    //文件保存路径
+                    save2DImagePath = $"{dir}\\{pointNum}_0.png";
+
+
+                    saveLightImagePath = $"{dir}\\{pointNum}_1.png";
+                    save2DTransformImagePath = $"{dir}\\{pointNum}_0_transform.png";
+                    saveLightTransformImagePath = $"{dir}\\{pointNum}_1_transform.png";
+
+                    savePosePath = $"{dir}\\{pointNum}_robotPose.dat";
+                    saveJointPath = $"{dir}\\{pointNum}_robotAngle.dat";
+
+
+
+                    Thread.Sleep(carSetting.gSets[pointNum].sleepTime);//到位后延时拍照
+
+                    //采集并保存激光图
+
+                    if (cam.SetExposure(carSetting.gSets[pointNum].lightExposure))
+                    {
+                        cam.SetLine1Inverter(true);
+
+                        Thread.Sleep(20);
+                        cam.OneShot(out hImageLight);
+                        cam.SetLine1Inverter(false);
+
+                        if (hImageLight != null)
+                        {
+                            formShow?.UpDataCamImage(hImageLight, camName + pictureBoxIndex);//////////////////////////
+                            try
+                            {
+                                //匹配计算
+                                if (camSetting != null)
+                                {
+                                    int flag = 0;
+                                    HImage map = hImageLight.MapImage(camSetting.mapImage);
+
+                                    hImageLight.WriteImage("png 1", 0, saveLightImagePath);
+                                    map.WriteImage("png 1", 0, saveLightTransformImagePath);
+
+                                }
+                                else
+                                {
+                                    ShowMessage($"{camName} {Resources.LanguageDic.no_cam_calib}", Color.Red);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                ShowMessage($"{camName}_{pointNum}_1 {Resources.LanguageDic.match_error}:{ex.Message}", Color.Red);
+                            }
+                        }
+                        else
+                        {
+                            ShowMessage(camName + $"{Resources.LanguageDic.cam1_fail}", Color.Red);
+                        }
+                    }
+                    else
+                    {
+                        ShowMessage(camName + $"{Resources.LanguageDic.set_cam1_export_fail}", Color.Red);
+                    }
+
+                    //采集并保存2D图
+                    if (cam.SetExposure(carSetting.gSets[pointNum].ledExposure))
+                    {
+                        cam.SetLine2Inverter(true);
+
+                        Thread.Sleep(20);
+                        cam.OneShot(out hImage2D);
+                        cam.SetLine2Inverter(false);
+
+                        if (hImage2D != null)
+                        {
+                            formShow?.UpDataCamImage(hImage2D, camName + pictureBoxIndex);//////////////////////////
+                            try
+                            {
+                                //匹配计算
+                                if (camSetting != null)
+                                {
+                                    int flag = 0;
+                                    HImage map = hImage2D.MapImage(camSetting.mapImage);
+
+                                    hImage2D.WriteImage("png 1", 0, save2DImagePath);
+                                    map.WriteImage("png 1", 0, save2DTransformImagePath);
+
+                                }
+                                else
+                                {
+                                    ShowMessage($"{camName} {Resources.LanguageDic.no_cam_calib}", Color.Red);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                ShowMessage($"{camName}_{pointNum}_1 {Resources.LanguageDic.match_error}:{ex.Message}", Color.Red);
+                            }
+                        }
+                        else
+                        {
+                            ShowMessage(camName + $"{Resources.LanguageDic.cam1_fail}", Color.Red);
+                        }
+                    }
+                    else
+                    {
+                        ShowMessage(camName + $"{Resources.LanguageDic.set_cam1_export_fail}", Color.Red);
+                    }
+
+                    //保存姿态文件
+                    HOperatorSet.WritePose(Pose,savePosePath);
+                    HOperatorSet.WriteTuple(Angle, saveJointPath);
+
+                }
+                catch (Exception ex)
+                {
+                    ShowMessage($"{camName}_{pointNum} {Resources.LanguageDic.take_photo_error}:{ex}", Color.Red);
+                }
+
+                //Led_Light(camName, false, false);
+                ShowMessage($"{camName}_{pointNum}{Resources.LanguageDic.take_photo_finish}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
+
+                if (!plc.Write(IO["Acq_Finish"].Address, true).IsSuccess)
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.take_photo_finish_write_fail}", Color.Red);
+                }
+                else
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.take_photo_finish_write}ON");
+                }
+                ShowMessage(camName + $"{Resources.LanguageDic.Waiting_for_the_signal_that_the_camera_posture_is_in_place}OFF");
+                sp.Restart();
+                while (true)
+                {
+                    if (stop) return;
+                    var val = plc.ReadBool(IO["Arrive_Photo_Spot"].Address);
+                    if (val.IsSuccess)
+                    {
+                        if (val.Content == false)
+                        {
+                            ShowMessage($"{camName}{Resources.LanguageDic.reserve_the_signal_that_the_camera_posture_is_in_place}OFF，耗时{sp.ElapsedMilliseconds}ms");
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}", Color.Red);
+                        return;
+                    }
+                    var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
+                    if (!abort.IsSuccess)
+                    {
+                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
+                        return;
+                    }
+                    if (bAbort || abort.Content)
+                    {
+                        bAbort = true;
+                        ShowMessage(camName + $"{Resources.LanguageDic.reserve_reset_signal}", Color.Yellow);
+                        return;
+                    }
+                    Thread.Sleep(10);
+                }
+
+                //反馈点位号
+                if (!plc.Write(IO["Feedback_Check_Point_NO"].Address, 0).IsSuccess)
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.Point_number_writing_failed}", Color.Red);
+                    return;
+                }
+
+
+                //拍照完成
+                if (!plc.Write(IO["Acq_Finish"].Address, false).IsSuccess)
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.take_photo_finish_write_fail}", Color.Red);
+                }
+                else
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.take_photo_finish_write}OFF");
+                }
+
+                formShow?.UpData灯(camName, false);/////////////////////////////////
+
+                if (endPoint.Content)
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.Process_ended}");
+                    break;
+                }
+            }
+        }
+
+
 
         object lockSaveImage = new object();
         List<string> ListImageKeys = new List<string>();
@@ -3343,7 +3827,8 @@ namespace OnlineMeasurement
                             double toolY_mm = toolY * 1000;
                             double toolZ_mm = toolZ * 1000;
                             //工具转基座标
-                            HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "abg", "point").PoseToHomMat3d();
+                            HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, 
+                                carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
                             double rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out double rbY, out double rbZ);
 
 
@@ -3378,7 +3863,8 @@ namespace OnlineMeasurement
                             double toolY1_mm = toolY1 * 1000;
                             double toolZ1_mm = toolZ1 * 1000;
                             //工具转基座标
-                            HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "abg", "point").PoseToHomMat3d();
+                            HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
+                                carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
                             double rbX1 = 工具转基座标.AffineTransPoint3d(toolX1_mm, toolY1_mm, toolZ1_mm, out double rbY1, out double rbZ1);
 
 
@@ -3394,7 +3880,8 @@ namespace OnlineMeasurement
                                 double toolY2_mm = toolY2 * 1000;
                                 double toolZ2_mm = toolZ2 * 1000;
                                 //工具转基座标
-                                HHomMat3D 工具转基座标2 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "abg", "point").PoseToHomMat3d();
+                                HHomMat3D 工具转基座标2 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, 
+                                    carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
                                 double rbX2 = 工具转基座标2.AffineTransPoint3d(toolX2_mm, toolY2_mm, toolZ2_mm, out double rbY2, out double rbZ2);
 
 
@@ -3438,7 +3925,8 @@ namespace OnlineMeasurement
                                     double toolZ_mm = toolZ * 1000;
 
                                     //工具转基座标
-                                    HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ, carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "abg", "point").PoseToHomMat3d();
+                                    HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
+                                        carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
                                     double rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out double rbY, out double rbZ);
 
 

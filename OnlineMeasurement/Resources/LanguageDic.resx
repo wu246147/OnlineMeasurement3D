@@ -384,6 +384,9 @@
   <data name="ready_write_fail" xml:space="preserve">
     <value>准备好写入失败</value>
   </data>
+  <data name="Read_pose_fail" xml:space="preserve">
+    <value>读取机器人位姿失败</value>
+  </data>
   <data name="read_signal_read_fail" xml:space="preserve">
     <value>已读信号读取失败</value>
   </data>
@@ -422,6 +425,12 @@
   </data>
   <data name="result_write_fail" xml:space="preserve">
     <value>结果写入失败</value>
+  </data>
+  <data name="robot_tempareture_calib_fail" xml:space="preserve">
+    <value>机器人温漂标定失败</value>
+  </data>
+  <data name="robot_tempareture_calib_success" xml:space="preserve">
+    <value>机器人温漂标定成功</value>
   </data>
   <data name="root_node" xml:space="preserve">
     <value>根节点</value>

@@ -132,6 +132,7 @@
     <Compile Include="IO\MelsecPlc.cs" />
     <Compile Include="LicenseKey.cs" />
     <Compile Include="MVCamera.cs" />
+    <Compile Include="OLM.cs" />
     <Compile Include="Resources\LanguageDic.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -169,6 +170,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSet.resx">
       <DependentUpon>FormSet.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormShow.en.resx">
       <DependentUpon>FormShow.cs</DependentUpon>

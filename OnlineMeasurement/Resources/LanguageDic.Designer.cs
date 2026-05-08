@@ -889,6 +889,15 @@ namespace OnlineMeasurement.Resources {
         }
         
         /// <summary>
+        ///   查找类似 读取机器人位姿失败 的本地化字符串。
+        /// </summary>
+        internal static string Read_pose_fail {
+            get {
+                return ResourceManager.GetString("Read_pose_fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 已读信号读取失败 的本地化字符串。
         /// </summary>
         internal static string read_signal_read_fail {
@@ -1011,6 +1020,24 @@ namespace OnlineMeasurement.Resources {
         internal static string result_write_fail {
             get {
                 return ResourceManager.GetString("result_write_fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 机器人温漂标定失败 的本地化字符串。
+        /// </summary>
+        internal static string robot_tempareture_calib_fail {
+            get {
+                return ResourceManager.GetString("robot_tempareture_calib_fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 机器人温漂标定成功 的本地化字符串。
+        /// </summary>
+        internal static string robot_tempareture_calib_success {
+            get {
+                return ResourceManager.GetString("robot_tempareture_calib_success", resourceCulture);
             }
         }
         
