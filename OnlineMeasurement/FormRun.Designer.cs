@@ -55,13 +55,14 @@
             this.textBoxTestNum = new System.Windows.Forms.TextBox();
             this.buttonTest = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.checkBoxZero = new System.Windows.Forms.CheckBox();
             this.checkBoxFrame = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.button_setPLC = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.checkBoxLedL = new System.Windows.Forms.CheckBox();
             this.checkBoxLightL = new System.Windows.Forms.CheckBox();
             this.checkBoxLightR = new System.Windows.Forms.CheckBox();
@@ -76,7 +77,8 @@
             this.buttonSkipStart = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.labelResult = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.button_setRobotL = new System.Windows.Forms.Button();
+            this.button_setRobotR = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewShow)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -262,6 +264,8 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.button_setRobotR);
+            this.groupBox1.Controls.Add(this.button_setRobotL);
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.buttonSave);
             this.groupBox1.Controls.Add(this.checkBoxZero);
@@ -274,19 +278,12 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
-            // button2
+            // button3
             // 
-            resources.ApplyResources(this.button2, "button2");
-            this.button2.Name = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            resources.ApplyResources(this.button3, "button3");
+            this.button3.Name = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // buttonSave
             // 
@@ -318,6 +315,20 @@
             this.button_setPLC.Name = "button_setPLC";
             this.button_setPLC.UseVisualStyleBackColor = true;
             this.button_setPLC.Click += new System.EventHandler(this.button_setPLC_Click);
+            // 
+            // button2
+            // 
+            resources.ApplyResources(this.button2, "button2");
+            this.button2.Name = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // checkBoxLedL
             // 
@@ -443,12 +454,19 @@
             this.labelResult.BackColor = System.Drawing.Color.Transparent;
             this.labelResult.Name = "labelResult";
             // 
-            // button3
+            // button_setRobotL
             // 
-            resources.ApplyResources(this.button3, "button3");
-            this.button3.Name = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            resources.ApplyResources(this.button_setRobotL, "button_setRobotL");
+            this.button_setRobotL.Name = "button_setRobotL";
+            this.button_setRobotL.UseVisualStyleBackColor = true;
+            this.button_setRobotL.Click += new System.EventHandler(this.button_setRobotL_Click);
+            // 
+            // button_setRobotR
+            // 
+            resources.ApplyResources(this.button_setRobotR, "button_setRobotR");
+            this.button_setRobotR.Name = "button_setRobotR";
+            this.button_setRobotR.UseVisualStyleBackColor = true;
+            this.button_setRobotR.Click += new System.EventHandler(this.button_setRobotR_Click);
             // 
             // FormRun
             // 
@@ -521,6 +539,8 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button_setPLC;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button_setRobotR;
+        private System.Windows.Forms.Button button_setRobotL;
     }
 }
 

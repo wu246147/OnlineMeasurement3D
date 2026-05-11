@@ -27,10 +27,7 @@ namespace OnlineMeasurement.IO
 
         public MelsecPlc()
         {
-            if (!HslCommunication.Authorization.SetAuthorizationCode("0293fde5-6e7c-4c76-bacd-e3bdb0ee6187"))
-            {
-                System.Windows.Forms.MessageBox.Show("active failed");
-            }
+           
             param.Port = 6000;
             param.DataFormat = plc.ByteTransform.DataFormat;
             param.IsStringReverseByteWord = plc.ByteTransform.IsStringReverseByteWord;

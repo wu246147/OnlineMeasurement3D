@@ -116,6 +116,16 @@ namespace OnlineMeasurement
             worldYImage.SetGrayval(yList, xList, (HTuple)(camY));
             worldZImage.SetGrayval(yList, xList, (HTuple)(camZ));
 
+            ////保存点云文件
+
+            //HTuple om3d;
+            //HOperatorSet.XyzToObjectModel3d(worldXImage, worldYImage, worldZImage, out om3d);
+
+            //string outputPlyPath = "cloud.ply";
+            
+            //HOperatorSet.WriteObjectModel3d(om3d, "ply", outputPlyPath, new HTuple(),new HTuple());
+
+
 
             HOperatorSet.Compose3(worldXImage, worldYImage, worldZImage, out HObject worldImage);
             //图片矫正
@@ -309,6 +319,7 @@ namespace OnlineMeasurement
             }
             Console.WriteLine($"biasFitBalls: {biasFitBalls:F3} mm\n" );
 
+            errMsg = $"biasFitBalls: {biasFitBalls:F3} mm\n";
 
             return true;
         }

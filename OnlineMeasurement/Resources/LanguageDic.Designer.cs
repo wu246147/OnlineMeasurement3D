@@ -61,6 +61,24 @@ namespace OnlineMeasurement.Resources {
         }
         
         /// <summary>
+        ///   查找类似 地址格式不匹配 的本地化字符串。
+        /// </summary>
+        internal static string Address_format_mismatch {
+            get {
+                return ResourceManager.GetString("Address_format_mismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 地址未分配 的本地化字符串。
+        /// </summary>
+        internal static string Address_not_assigned {
+            get {
+                return ResourceManager.GetString("Address_not_assigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 却不存 的本地化字符串。
         /// </summary>
         internal static string but_not_exist {
@@ -646,6 +664,15 @@ namespace OnlineMeasurement.Resources {
         }
         
         /// <summary>
+        ///   查找类似 不支持字符串 的本地化字符串。
+        /// </summary>
+        internal static string not_support_strings {
+            get {
+                return ResourceManager.GetString("not_support_strings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 非值类型 的本地化字符串。
         /// </summary>
         internal static string not_value {
@@ -1020,6 +1047,24 @@ namespace OnlineMeasurement.Resources {
         internal static string result_write_fail {
             get {
                 return ResourceManager.GetString("result_write_fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 机器人连接失败 的本地化字符串。
+        /// </summary>
+        internal static string robot_connect_fail {
+            get {
+                return ResourceManager.GetString("robot_connect_fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 机器人连接成功 的本地化字符串。
+        /// </summary>
+        internal static string robot_connect_success {
+            get {
+                return ResourceManager.GetString("robot_connect_success", resourceCulture);
             }
         }
         
@@ -1551,6 +1596,15 @@ namespace OnlineMeasurement.Resources {
         internal static string Waiting_for_the_signal_that_the_camera_posture_is_in_place {
             get {
                 return ResourceManager.GetString("Waiting_for_the_signal_that_the_camera_posture_is_in_place", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 写入格式不支持 的本地化字符串。
+        /// </summary>
+        internal static string Writing_format_not_supported {
+            get {
+                return ResourceManager.GetString("Writing_format_not_supported", resourceCulture);
             }
         }
     }

@@ -1,5 +1,6 @@
 #define GW
 
+using BaslerCamera;
 using HalconDotNet;
 using OnlineMeasurement.IO;
 using System;
@@ -9,6 +10,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -33,6 +35,10 @@ namespace OnlineMeasurement
         Dictionary<string, CamSetting> 相机参数 = new Dictionary<string, CamSetting>();
         Dictionary<string, BaslerCamera.Cam> 相机 = new Dictionary<string, BaslerCamera.Cam>();
 
+        //机器人
+        Dictionary<string, KukaRobot> robots = new Dictionary<string, KukaRobot>();
+
+        //温漂工件
         Dictionary<string, OLM> TempareCalib = new Dictionary<string, OLM>();
 
         OtherSet otherSet = new OtherSet();
@@ -48,6 +54,12 @@ namespace OnlineMeasurement
         public Dictionary<string, Dictionary<string, IoAddress>> camIODict = new Dictionary<string, Dictionary<string, IoAddress>>();
         public FormRun()
         {
+
+            if (!HslCommunication.Authorization.SetAuthorizationCode("0293fde5-6e7c-4c76-bacd-e3bdb0ee6187"))
+            {
+                System.Windows.Forms.MessageBox.Show("active failed");
+            }
+
             InitializeComponent();
 
             //读取语言id
@@ -277,11 +289,12 @@ namespace OnlineMeasurement
                 相机.Clear();
                 相机参数.Clear();
                 TempareCalib.Clear();
+                robots.Clear();
                 string[] camPaths = Directory.GetDirectories("Data\\Cam");
                 foreach (var item in camPaths)
                 {
                     string name = Path.GetFileNameWithoutExtension(item);
-
+                    //相机
                     相机.Add(name, new BaslerCamera.Cam());
 
                     CamSetting camSetting = new CamSetting(name);
@@ -295,6 +308,12 @@ namespace OnlineMeasurement
                         ShowMessage($"{name}{Resources.LanguageDic.cam}{Resources.LanguageDic.para_load_fail}", Color.Red);
                     }
 
+                    //机器人
+                    KukaRobot robot = new KukaRobot();
+                    robot.robotName = name;
+                    robots.Add(name,robot);
+
+                    //温漂
                     OLM oLM = new OLM();
                     //机器人文件路径、机器人名（这里用L\R)、onnx模型路径
                     oLM.init("./Data/config/robot", name, "./Data/model.onnx");
@@ -308,33 +327,6 @@ namespace OnlineMeasurement
                     return;
                 }
                 ////连接设备
-                //OperateResult connect = plc.ConnectServer();
-                //if (connect.IsSuccess)
-                //{
-                //    ShowMessage($"PLC{Resources.LanguageDic.connection_successful}");
-                //}
-                //else
-                //{
-                //    ShowMessage($"PLC{Resources.LanguageDic.connection_failed}:" + connect.ToMessageShowString(), Color.Red);
-                //    return;
-                //}
-                //try
-                //{
-                //    if (!sp.IsOpen)
-                //    {
-                //        sp.Open();
-                //        ShowMessage(Resources.LanguageDic.Serial_port_successfully_opened);
-                //    }
-                //    else
-                //    {
-                //        ShowMessage(Resources.LanguageDic.Serial_port_already_opened);
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    ShowMessage($"{Resources.LanguageDic.Serial_port_failly_opened}：" + ex.Message, Color.Red);
-                //    return;
-                //}
                 foreach (var item in 相机.Keys)
                 {
                     if (相机[item].OpenByName(item))
@@ -344,6 +336,18 @@ namespace OnlineMeasurement
                     else
                     {
                         ShowMessage(item + $"{Resources.LanguageDic.cam_open_fail}", Color.Red);
+                        return;
+                    }
+                }
+                foreach (var item in robots.Keys)
+                {
+                    if (robots[item].Open())
+                    {
+                        ShowMessage(item + $" {Resources.LanguageDic.robot_connect_success}");
+                    }
+                    else
+                    {
+                        ShowMessage(item + $" {Resources.LanguageDic.robot_connect_fail}", Color.Red);
                         return;
                     }
                 }
@@ -728,7 +732,7 @@ namespace OnlineMeasurement
                         {
                             if (相机参数.ContainsKey(key) && 车型参数.ContainsKey($"{carKind.Content}-{TRnum}") && 车型参数[$"{carKind.Content}-{TRnum}"].car.ContainsKey(key))
                             {
-                                RobotRunTempareCalib(path, 相机[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], key, camIODict[key]);
+                                RobotRunTempareCalib(path, 相机[key], robots[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], key, camIODict[key]);
                             }
                             else
                             {
@@ -740,11 +744,11 @@ namespace OnlineMeasurement
                         {
                             if (相机参数.ContainsKey(key) && 车型参数.ContainsKey($"{carKind.Content}-{TRnum}") && 车型参数[$"{carKind.Content}-{TRnum}"].car.ContainsKey(key))
                             {
-                                RobotRun(path, 相机[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], TempareCalib[key], key, camIODict[key], out point3dL, out point3dBaseL, out sqlValuePairsL, ref 检测异常L, ref 数据超差L);
+                                RobotRun(path, 相机[key], robots[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], TempareCalib[key], key, camIODict[key], out point3dL, out point3dBaseL, out sqlValuePairsL, ref 检测异常L, ref 数据超差L);
                             }
                             else
                             {
-                                RobotRun(path, 相机[key], null, null, null, key, camIODict[key], out point3dL, out point3dBaseL, out sqlValuePairsL, ref 检测异常L, ref 数据超差L);
+                                RobotRun(path, 相机[key], robots[key], null, null, null, key, camIODict[key], out point3dL, out point3dBaseL, out sqlValuePairsL, ref 检测异常L, ref 数据超差L);
                             }
                         }
 
@@ -761,7 +765,7 @@ namespace OnlineMeasurement
                         {
                             if (相机参数.ContainsKey(key) && 车型参数.ContainsKey($"{carKind.Content}-{TRnum}") && 车型参数[$"{carKind.Content}-{TRnum}"].car.ContainsKey(key))
                             {
-                                RobotRunTempareCalib(path, 相机[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], key, camIODict[key]);
+                                RobotRunTempareCalib(path, 相机[key], robots[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], key, camIODict[key]);
                             }
                             else
                             {
@@ -773,11 +777,11 @@ namespace OnlineMeasurement
                         {
                             if (相机参数.ContainsKey(key) && 车型参数.ContainsKey($"{carKind.Content}-{TRnum}") && 车型参数[$"{carKind.Content}-{TRnum}"].car.ContainsKey(key))
                             {
-                                RobotRun(path, 相机[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], TempareCalib[key], key, camIODict[key], out point3dR, out point3dBaseR, out sqlValuePairsR, ref 检测异常R, ref 数据超差R);
+                                RobotRun(path, 相机[key], robots[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], TempareCalib[key], key, camIODict[key], out point3dR, out point3dBaseR, out sqlValuePairsR, ref 检测异常R, ref 数据超差R);
                             }
                             else
                             {
-                                RobotRun(path, 相机[key], null, null, null, key, camIODict[key], out point3dR, out point3dBaseR, out sqlValuePairsR, ref 检测异常R, ref 数据超差R);
+                                RobotRun(path, 相机[key], robots[key], null, null, null, key, camIODict[key], out point3dR, out point3dBaseR, out sqlValuePairsR, ref 检测异常R, ref 数据超差R);
                             }
                         }
 
@@ -1252,7 +1256,7 @@ namespace OnlineMeasurement
                             else
                             {
                                 ShowMessage($"{Resources.LanguageDic.robot_tempareture_calib_success}");
-
+                                ShowMessage($"calib precision {oLM.errMsg}");
                             }
                         }
                     }
@@ -1363,7 +1367,7 @@ namespace OnlineMeasurement
             }
         }
 
-        private void RobotRun(string path, BaslerCamera.Cam cam, CamSetting camSetting, CarSetting carSetting, OLM oLM, string camName,
+        private void RobotRun(string path, BaslerCamera.Cam cam,IRobot robot, CamSetting camSetting, CarSetting carSetting, OLM oLM, string camName,
             Dictionary<string, IoAddress> IO, out Dictionary<int, Point3D> point3d, out Dictionary<int, Point3D> point3dBase, out Dictionary<int, Dictionary<string, string>> sqlValuePairs,
             ref bool 检测异常, ref bool 数据超差)
         {
@@ -1480,45 +1484,58 @@ namespace OnlineMeasurement
                 //pointNum += point.Content[3] ? 8 : 0;
 
                 //获取机器人姿态
-                HTuple Pose, Angle;
-                Pose = new HTuple();
+                HPose Pose;
+                HTuple Angle;
+                Pose = new HPose();
                 Angle = new HTuple();
-
-                var PoseX = plc.ReadFloat(IO["X"].Address);
-                var PoseY = plc.ReadFloat(IO["Y"].Address);
-                var PoseZ = plc.ReadFloat(IO["Z"].Address);
-                var PoseRX = plc.ReadFloat(IO["RX"].Address);
-                var PoseRY = plc.ReadFloat(IO["RY"].Address);
-                var PoseRZ = plc.ReadFloat(IO["RZ"].Address);
-                var A1 = plc.ReadFloat(IO["A1"].Address);
-                var A2 = plc.ReadFloat(IO["A2"].Address);
-                var A3 = plc.ReadFloat(IO["A3"].Address);
-                var A4 = plc.ReadFloat(IO["A4"].Address);
-                var A5 = plc.ReadFloat(IO["A5"].Address);
-                var A6 = plc.ReadFloat(IO["A6"].Address);
-                if (!PoseX.IsSuccess || !PoseY.IsSuccess || !PoseZ.IsSuccess || !PoseRX.IsSuccess || !PoseRY.IsSuccess || !PoseRZ.IsSuccess
-                    || !A1.IsSuccess || !A2.IsSuccess || !A3.IsSuccess || !A4.IsSuccess || !A5.IsSuccess || !A6.IsSuccess)
+                if (robot != null)
                 {
-                    ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail}", Color.Red);
-                    return;
+                    bool rt = robot.ReadPose(out Pose);
+                    bool rt2 = robot.ReadAngle(out Angle);
+                    if (!rt || !rt2)
+                    {
+                        ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail}", Color.Red);
+                        return;
+                    }
                 }
-                ShowMessage(camName + $" Pose:({PoseX.Content},{PoseY.Content},{PoseZ.Content},{PoseRX.Content},{PoseRY.Content},{PoseRZ.Content})" + pointNum);
-                ShowMessage(camName + $" Joint:({A1.Content},{A2.Content},{A3.Content},{A4.Content},{A5.Content},{A6.Content})" + pointNum);
+                
+
+                //var PoseX = plc.ReadFloat(IO["X"].Address);
+                //var PoseY = plc.ReadFloat(IO["Y"].Address);
+                //var PoseZ = plc.ReadFloat(IO["Z"].Address);
+                //var PoseRX = plc.ReadFloat(IO["RX"].Address);
+                //var PoseRY = plc.ReadFloat(IO["RY"].Address);
+                //var PoseRZ = plc.ReadFloat(IO["RZ"].Address);
+                //var A1 = plc.ReadFloat(IO["A1"].Address);
+                //var A2 = plc.ReadFloat(IO["A2"].Address);
+                //var A3 = plc.ReadFloat(IO["A3"].Address);
+                //var A4 = plc.ReadFloat(IO["A4"].Address);
+                //var A5 = plc.ReadFloat(IO["A5"].Address);
+                //var A6 = plc.ReadFloat(IO["A6"].Address);
+                //if (!PoseX.IsSuccess || !PoseY.IsSuccess || !PoseZ.IsSuccess || !PoseRX.IsSuccess || !PoseRY.IsSuccess || !PoseRZ.IsSuccess
+                //    || !A1.IsSuccess || !A2.IsSuccess || !A3.IsSuccess || !A4.IsSuccess || !A5.IsSuccess || !A6.IsSuccess)
+                //{
+                //    ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail}", Color.Red);
+                //    return;
+                //}
+                //ShowMessage(camName + $" Pose:({PoseX.Content},{PoseY.Content},{PoseZ.Content},{PoseRX.Content},{PoseRY.Content},{PoseRZ.Content})" + pointNum);
+                //ShowMessage(camName + $" Joint:({A1.Content},{A2.Content},{A3.Content},{A4.Content},{A5.Content},{A6.Content})" + pointNum);
 
 
 
-                // 这里用的是kuka机器人，默认pose是xyz
-                HOperatorSet.CreatePose(PoseX.Content, PoseY.Content, PoseZ.Content, PoseRX.Content, PoseRY.Content, PoseRZ.Content, "Rp+T", "gba", "point", out Pose);
-                Angle.Append(A1.Content);
-                Angle.Append(A2.Content);
-                Angle.Append(A3.Content);
-                Angle.Append(A4.Content);
-                Angle.Append(A5.Content);
-                Angle.Append(A6.Content);
+                //// 这里用的是kuka机器人，默认pose是xyz
+                //HOperatorSet.CreatePose(PoseX.Content, PoseY.Content, PoseZ.Content, PoseRX.Content, PoseRY.Content, PoseRZ.Content, "Rp+T", "gba", "point", out Pose);
+                //Angle.Append(A1.Content);
+                //Angle.Append(A2.Content);
+                //Angle.Append(A3.Content);
+                //Angle.Append(A4.Content);
+                //Angle.Append(A5.Content);
+                //Angle.Append(A6.Content);
 
                 // 后面看要不要用这个测出来的坐标
                 double robotXOpt, robotYOpt, robotZOpt, robotRXOpt, robotRYOpt, robotRZOpt;
                 //调用温漂函数
+                if(oLM != null)
                 {
                     oLM.run(true, Angle[0], Angle[1], Angle[2], Angle[3], Angle[4], Angle[5], out robotXOpt, out robotYOpt, out robotZOpt, out robotRXOpt, out robotRYOpt, out robotRZOpt);
                 }
@@ -2210,7 +2227,7 @@ namespace OnlineMeasurement
         }
 
 
-        private void RobotRunTempareCalib(string path, BaslerCamera.Cam cam, CamSetting camSetting, CarSetting carSetting, string camName, Dictionary<string, IoAddress> IO)
+        private void RobotRunTempareCalib(string path, BaslerCamera.Cam cam,IRobot robot, CamSetting camSetting, CarSetting carSetting, string camName, Dictionary<string, IoAddress> IO)
         {
             int pictureBoxIndex = 0;
             System.Diagnostics.Stopwatch sp = new System.Diagnostics.Stopwatch();
@@ -2303,39 +2320,56 @@ namespace OnlineMeasurement
                 }
 
                 //获取机器人姿态
-                HTuple Pose, Angle;
-                Pose = new HTuple();
+                //HTuple Pose, Angle;
+                //Pose = new HTuple();
+                //Angle = new HTuple();
+
+                //var X = plc.ReadFloat(IO["X"].Address);
+                //var Y = plc.ReadFloat(IO["Y"].Address);
+                //var Z = plc.ReadFloat(IO["Z"].Address);
+                //var RX = plc.ReadFloat(IO["RX"].Address);
+                //var RY = plc.ReadFloat(IO["RY"].Address);
+                //var RZ = plc.ReadFloat(IO["RZ"].Address);
+                //var A1 = plc.ReadFloat(IO["A1"].Address);
+                //var A2 = plc.ReadFloat(IO["A2"].Address);
+                //var A3 = plc.ReadFloat(IO["A3"].Address);
+                //var A4 = plc.ReadFloat(IO["A4"].Address);
+                //var A5 = plc.ReadFloat(IO["A5"].Address);
+                //var A6 = plc.ReadFloat(IO["A6"].Address);
+
+                //if (!X.IsSuccess || !Y.IsSuccess || !Z.IsSuccess || !RX.IsSuccess || !RY.IsSuccess || !RZ.IsSuccess
+                //    || !A1.IsSuccess || !A2.IsSuccess || !A3.IsSuccess || !A4.IsSuccess || !A5.IsSuccess || !A6.IsSuccess)
+                //{
+                //    ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail}", Color.Red);
+                //    return;
+                //}
+                //ShowMessage(camName + $" Pose:({X.Content},{Y.Content},{Z.Content},{RX.Content},{RY.Content},{RZ.Content})" + pointNum);
+                //ShowMessage(camName + $" Joint:({A1.Content},{A2.Content},{A3.Content},{A4.Content},{A5.Content},{A6.Content})" + pointNum);
+
+                //// 这里用的是kuka机器人，默认pose是xyz
+                //HOperatorSet.CreatePose(X.Content, Y.Content, Z.Content, RX.Content, RY.Content, RZ.Content, "Rp+T", "gba", "point", out Pose);
+                //Angle.Append(A1.Content);
+                //Angle.Append(A2.Content);
+                //Angle.Append(A3.Content);
+                //Angle.Append(A4.Content);
+                //Angle.Append(A5.Content);
+                //Angle.Append(A6.Content);
+
+                //获取机器人姿态
+                HPose Pose;
+                HTuple Angle;
+                Pose = new HPose();
                 Angle = new HTuple();
 
-                var X = plc.ReadFloat(IO["X"].Address);
-                var Y = plc.ReadFloat(IO["Y"].Address);
-                var Z = plc.ReadFloat(IO["Z"].Address);
-                var RX = plc.ReadFloat(IO["RX"].Address);
-                var RY = plc.ReadFloat(IO["RY"].Address);
-                var RZ = plc.ReadFloat(IO["RZ"].Address);
-                var A1 = plc.ReadFloat(IO["A1"].Address);
-                var A2 = plc.ReadFloat(IO["A2"].Address);
-                var A3 = plc.ReadFloat(IO["A3"].Address);
-                var A4 = plc.ReadFloat(IO["A4"].Address);
-                var A5 = plc.ReadFloat(IO["A5"].Address);
-                var A6 = plc.ReadFloat(IO["A6"].Address);
-                if (!X.IsSuccess || !Y.IsSuccess || !Z.IsSuccess || !RX.IsSuccess || !RY.IsSuccess || !RZ.IsSuccess
-                    || !A1.IsSuccess || !A2.IsSuccess || !A3.IsSuccess || !A4.IsSuccess || !A5.IsSuccess || !A6.IsSuccess)
+                bool rt = robot.ReadPose(out Pose);
+                bool rt2 = robot.ReadAngle(out Angle);
+                if (!rt || !rt2)
                 {
                     ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail}", Color.Red);
                     return;
                 }
-                ShowMessage(camName + $" Pose:({X.Content},{Y.Content},{Z.Content},{RX.Content},{RY.Content},{RZ.Content})" + pointNum);
-                ShowMessage(camName + $" Joint:({A1.Content},{A2.Content},{A3.Content},{A4.Content},{A5.Content},{A6.Content})" + pointNum);
-
-                // 这里用的是kuka机器人，默认pose是xyz
-                HOperatorSet.CreatePose(X.Content, Y.Content, Z.Content, RX.Content, RY.Content, RZ.Content, "Rp+T", "gba", "point", out Pose);
-                Angle.Append(A1.Content);
-                Angle.Append(A2.Content);
-                Angle.Append(A3.Content);
-                Angle.Append(A4.Content);
-                Angle.Append(A5.Content);
-                Angle.Append(A6.Content);
+                ShowMessage(camName + $" Pose:({Pose[0]},{Pose[1]},{Pose[2]},{Pose[3]},{Pose[4]},{Pose[5]})" + pointNum);
+                ShowMessage(camName + $" Joint:({Angle[0]},{Angle[1]},{Angle[2]},{Angle[3]},{Angle[4]},{Angle[5]})" + pointNum);
 
                 //是否末点
                 var endPoint = plc.ReadBool(IO["End_of_Check_Points"].Address);
@@ -3154,95 +3188,72 @@ namespace OnlineMeasurement
             }
         }
 
+        public static void SaveAsPly(HTuple hv_X, HTuple hv_Y, HTuple hv_Z, string filePath)
+        {
+            int count = hv_X.Length;
+
+            var sb = new StringBuilder();
+            sb.AppendLine("ply");
+            sb.AppendLine("format ascii 1.0");
+            sb.AppendLine($"element vertex {count}");
+            sb.AppendLine("property float x");
+            sb.AppendLine("property float y");
+            sb.AppendLine("property float z");
+            sb.AppendLine("end_header");
+
+            for (int i = 0; i < count; i++)
+            {
+                double x = hv_X[i].D;
+                double y = hv_Y[i].D;
+                double z = hv_Z[i].D;
+
+                // 过滤无效点（NaN 或 Inf）
+                if (double.IsNaN(x) || double.IsNaN(y) || double.IsNaN(z))
+                    continue;
+                if (double.IsInfinity(x) || double.IsInfinity(y) || double.IsInfinity(z))
+                    continue;
+
+                sb.AppendLine($"{x:F6} {y:F6} {z:F6}");
+            }
+
+            File.WriteAllText(filePath, sb.ToString());
+        }
+
         #region 仿真
         Thread thread = null;
         private void buttonTest_Click(object sender, EventArgs e)
         {
-            if (thread != null && thread.IsAlive)
+            //仿真测试
+            if(true)
             {
-                return;
-            }
-            //RunState();
-            thread = new Thread(() =>
-            {
-                //threadSaveImage = new Thread(SaveImage);
-                //threadSaveImage.Start();
-
-                //加载参数
-                if (预载车型参数)
+                if (thread != null && thread.IsAlive)
                 {
-                    车型号转名称.Clear();
-                    车型参数.Clear();
-                    车型参数排序key.Clear();
-                    string[] carPaths = Directory.GetDirectories("Data\\Car");
-                    foreach (var item in carPaths)
-                    {
-                        string dirName = Path.GetFileNameWithoutExtension(item);
-                        string[] strings = dirName.Split('-');
-                        if (strings.Length == 3 && int.TryParse(strings[0], out int 车型号) && int.TryParse(strings[1], out int 托盘号))
-                        {
-                            车型号转名称.Add(车型号, strings[2]);
-
-                            Car car = new Car(dirName);
-                            if (car.Load())
-                            {
-                                车型参数.Add($"{车型号}-{托盘号}", car);
-                                车型参数排序key.Add($"{车型号}-{托盘号}");
-                                ShowMessage($"{dirName}{Resources.LanguageDic.para_load_success}");
-                            }
-                            else
-                            {
-                                ShowMessage($"{dirName}{Resources.LanguageDic.para_load_fail}", Color.Red);
-                            }
-                        }
-                    }
+                    return;
                 }
-
-                相机参数.Clear();
-                string[] camPaths = Directory.GetDirectories("Data\\Cam");
-                foreach (var item in camPaths)
+                //RunState();
+                thread = new Thread(() =>
                 {
-                    string name = Path.GetFileNameWithoutExtension(item);
+                    //threadSaveImage = new Thread(SaveImage);
+                    //threadSaveImage.Start();
 
-                    CamSetting camSet = new CamSetting(name);
-                    if (camSet.Load(item))
+                    //加载参数
+                    if (预载车型参数)
                     {
-                        相机参数.Add(name, camSet);
-                        ShowMessage($"{name}{Resources.LanguageDic.cam}{Resources.LanguageDic.para_load_success}");
-                    }
-                    else
-                    {
-                        ShowMessage($"{name}{Resources.LanguageDic.cam}{Resources.LanguageDic.para_load_fail}", Color.Red);
-                    }
-                }
-                dataGridViewShow.Invoke(new Action(() =>
-                {
-                    dataGridViewShow.Rows.Clear();
-                }));
-
-                if (!预载车型参数)
-                {
-                    string[] carPaths = Directory.GetDirectories("Data\\Car", $"{textBoxTestNum.Text}-*");
-                    if (carPaths.Length > 0)
-                    {
-                        string dirName = Path.GetFileNameWithoutExtension(carPaths[0]);
-                        string[] strings = dirName.Split('-');
-                        if (strings.Length == 3 && int.TryParse(strings[0], out int 车型号) && int.TryParse(strings[1], out int 托盘号))
+                        车型号转名称.Clear();
+                        车型参数.Clear();
+                        车型参数排序key.Clear();
+                        string[] carPaths = Directory.GetDirectories("Data\\Car");
+                        foreach (var item in carPaths)
                         {
-                            if (!车型号转名称.ContainsKey(车型号))
+                            string dirName = Path.GetFileNameWithoutExtension(item);
+                            string[] strings = dirName.Split('-');
+                            if (strings.Length == 3 && int.TryParse(strings[0], out int 车型号) && int.TryParse(strings[1], out int 托盘号))
                             {
                                 车型号转名称.Add(车型号, strings[2]);
-                            }
-                            if (!车型参数.ContainsKey($"{车型号}-{托盘号}"))
-                            {
+
                                 Car car = new Car(dirName);
                                 if (car.Load())
                                 {
-                                    if (车型参数.Count >= 8)
-                                    {
-                                        车型参数.Remove(车型参数排序key[0]);
-                                        车型参数排序key.Remove(车型参数排序key[0]);
-                                    }
                                     车型参数.Add($"{车型号}-{托盘号}", car);
                                     车型参数排序key.Add($"{车型号}-{托盘号}");
                                     ShowMessage($"{dirName}{Resources.LanguageDic.para_load_success}");
@@ -3252,346 +3263,520 @@ namespace OnlineMeasurement
                                     ShowMessage($"{dirName}{Resources.LanguageDic.para_load_fail}", Color.Red);
                                 }
                             }
-                            else
+                        }
+                    }
+
+                    相机参数.Clear();
+                    string[] camPaths = Directory.GetDirectories("Data\\Cam");
+                    foreach (var item in camPaths)
+                    {
+                        string name = Path.GetFileNameWithoutExtension(item);
+
+                        CamSetting camSet = new CamSetting(name);
+                        if (camSet.Load(item))
+                        {
+                            相机参数.Add(name, camSet);
+                            ShowMessage($"{name}{Resources.LanguageDic.cam}{Resources.LanguageDic.para_load_success}");
+                        }
+                        else
+                        {
+                            ShowMessage($"{name}{Resources.LanguageDic.cam}{Resources.LanguageDic.para_load_fail}", Color.Red);
+                        }
+                    }
+                    dataGridViewShow.Invoke(new Action(() =>
+                    {
+                        dataGridViewShow.Rows.Clear();
+                    }));
+
+                    if (!预载车型参数)
+                    {
+                        string[] carPaths = Directory.GetDirectories("Data\\Car", $"{textBoxTestNum.Text}-*");
+                        if (carPaths.Length > 0)
+                        {
+                            string dirName = Path.GetFileNameWithoutExtension(carPaths[0]);
+                            string[] strings = dirName.Split('-');
+                            if (strings.Length == 3 && int.TryParse(strings[0], out int 车型号) && int.TryParse(strings[1], out int 托盘号))
                             {
-                                ShowMessage($"{dirName}{Resources.LanguageDic.para_already_load}", Color.Red);
+                                if (!车型号转名称.ContainsKey(车型号))
+                                {
+                                    车型号转名称.Add(车型号, strings[2]);
+                                }
+                                if (!车型参数.ContainsKey($"{车型号}-{托盘号}"))
+                                {
+                                    Car car = new Car(dirName);
+                                    if (car.Load())
+                                    {
+                                        if (车型参数.Count >= 8)
+                                        {
+                                            车型参数.Remove(车型参数排序key[0]);
+                                            车型参数排序key.Remove(车型参数排序key[0]);
+                                        }
+                                        车型参数.Add($"{车型号}-{托盘号}", car);
+                                        车型参数排序key.Add($"{车型号}-{托盘号}");
+                                        ShowMessage($"{dirName}{Resources.LanguageDic.para_load_success}");
+                                    }
+                                    else
+                                    {
+                                        ShowMessage($"{dirName}{Resources.LanguageDic.para_load_fail}", Color.Red);
+                                    }
+                                }
+                                else
+                                {
+                                    ShowMessage($"{dirName}{Resources.LanguageDic.para_already_load}", Color.Red);
+                                }
                             }
                         }
                     }
-                }
-                if (!车型参数.ContainsKey(textBoxTestNum.Text))
-                {
-                    MessageBox.Show("车型参数不存在");
-                    return;
-                }
-
-                string carName = textBoxTestNum.Text.Split('-')[0];
-                if (int.TryParse(carName, out int num))
-                {
-                    if (车型号转名称.ContainsKey(num))
+                    if (!车型参数.ContainsKey(textBoxTestNum.Text))
                     {
-                        carName = 车型号转名称[num];
+                        MessageBox.Show("车型参数不存在");
+                        return;
                     }
-                }
-                string carNum = "P02345678";
-                formShow?.UpDataCamImage(null, "Clear");///////////////////////////
-                formShow?.UpDataCarInform(carName, carNum);/////////////////////////
-                Dictionary<int, Point3D> rbL = new Dictionary<int, Point3D>();
-                Dictionary<int, Point3D> point3dL = new Dictionary<int, Point3D>();
-                Dictionary<int, Point3D> point3dBaseL = new Dictionary<int, Point3D>();
-                {
-                    string IOName = "L";
-                    string[] files = Directory.GetFiles("test-Image", "L_*_1.png");
-                    Dictionary<int, Point3D> rb = rbL;
-                    Dictionary<int, Point3D> point3d = point3dL;
-                    Dictionary<int, Point3D> point3dBase = point3dBaseL;
 
-                    taskL = Task.Run(new Action(() =>
+                    string carName = textBoxTestNum.Text.Split('-')[0];
+                    if (int.TryParse(carName, out int num))
                     {
-                        仿真计算(IOName, files, point3d, point3dBase, rb);
-                    }));
-                }
-
-                Dictionary<int, Point3D> rbR = new Dictionary<int, Point3D>();
-                Dictionary<int, Point3D> point3dR = new Dictionary<int, Point3D>();
-                Dictionary<int, Point3D> point3dBaseR = new Dictionary<int, Point3D>();
-                {
-                    string IOName = "R";
-                    string[] files = Directory.GetFiles("test-Image", "R_*_1.png");
-                    Dictionary<int, Point3D> rb = rbR;
-                    Dictionary<int, Point3D> point3d = point3dR;
-                    Dictionary<int, Point3D> point3dBase = point3dBaseR;
-
-                    taskR = Task.Run(new Action(() =>
-                    {
-                        仿真计算(IOName, files, point3d, point3dBase, rb);
-                    }));
-                }
-
-
-                // 重定位 结果显示
-                while (!(taskL.IsCompleted && taskR.IsCompleted))
-                {
-                    Thread.Sleep(7);
-                }
-                if (point3dBaseL.Count() + point3dBaseR.Count() >= 3)
-                {
-                    HTuple px = new HTuple();
-                    HTuple py = new HTuple();
-                    HTuple pz = new HTuple();
-                    HTuple qx = new HTuple();
-                    HTuple qy = new HTuple();
-                    HTuple qz = new HTuple();
-                    foreach (var item in point3dBaseL.Keys)
-                    {
-                        px.Append(point3dL[item].X);
-                        py.Append(point3dL[item].Y);
-                        pz.Append(point3dL[item].Z);
-                        qx.Append(point3dBaseL[item].X);
-                        qy.Append(point3dBaseL[item].Y);
-                        qz.Append(point3dBaseL[item].Z);
+                        if (车型号转名称.ContainsKey(num))
+                        {
+                            carName = 车型号转名称[num];
+                        }
                     }
-                    foreach (var item in point3dBaseR.Keys)
+                    string carNum = "P02345678";
+                    formShow?.UpDataCamImage(null, "Clear");///////////////////////////
+                    formShow?.UpDataCarInform(carName, carNum);/////////////////////////
+                    Dictionary<int, Point3D> rbL = new Dictionary<int, Point3D>();
+                    Dictionary<int, Point3D> point3dL = new Dictionary<int, Point3D>();
+                    Dictionary<int, Point3D> point3dBaseL = new Dictionary<int, Point3D>();
                     {
-                        px.Append(point3dR[item].X);
-                        py.Append(point3dR[item].Y);
-                        pz.Append(point3dR[item].Z);
-                        qx.Append(point3dBaseR[item].X);
-                        qy.Append(point3dBaseR[item].Y);
-                        qz.Append(point3dBaseR[item].Z);
-                    }
-                    HHomMat3D hHomMat3D = new HHomMat3D();
-                    hHomMat3D.VectorToHomMat3d("rigid", px, py, pz, qx, qy, qz);
-
-                    Dictionary<int, Point3D> newPoint3dBaseL = new Dictionary<int, Point3D>();
-                    foreach (var item in point3dL.Keys)
-                    {
-                        double nx = hHomMat3D.AffineTransPoint3d(point3dL[item].X, point3dL[item].Y, point3dL[item].Z, out double ny, out double nz);
-                        newPoint3dBaseL.Add(item, new Point3D(nx, ny, nz));
-
-                        //重新显示
                         string IOName = "L";
-                        var carSetting = 车型参数[textBoxTestNum.Text].car[IOName];
-                        double dx = nx - carSetting.gSets[item].X;
-                        double dy = ny - carSetting.gSets[item].Y;
-                        double dz = nz - carSetting.gSets[item].Z;
-                        double dd = Math.Sqrt(dx * dx + dy * dy + dz * dz);
-                        dataGridViewShow.BeginInvoke(new Action(() =>
-                        {
-                            int index = dataGridViewShow.Rows.Add("*" + IOName + item, nx.ToString("0.000"), ny.ToString("0.000"), nz.ToString("0.000"), dx.ToString("0.000"), dy.ToString("0.000"), dz.ToString("0.000"), dd.ToString("0.000"));
-                            if (dx < carSetting.gSets[item].minDX || dx > carSetting.gSets[item].maxDX)
-                            {
-                                dataGridViewShow.Rows[index].Cells[4].Style.BackColor = Color.Red;
-                            }
-                            if (dy < carSetting.gSets[item].minDY || dy > carSetting.gSets[item].maxDY)
-                            {
-                                dataGridViewShow.Rows[index].Cells[5].Style.BackColor = Color.Red;
-                            }
-                            if (dz < carSetting.gSets[item].minDZ || dz > carSetting.gSets[item].maxDZ)
-                            {
-                                dataGridViewShow.Rows[index].Cells[6].Style.BackColor = Color.Red;
-                            }
-                        }));
-                        formShow?.UpDataXYZ(new Point3D(nx, ny, nz), IOName + item);////////////////////////
-                    }
-                    Dictionary<int, Point3D> newPoint3dBaseR = new Dictionary<int, Point3D>();
-                    foreach (var item in point3dR.Keys)
-                    {
-                        double nx = hHomMat3D.AffineTransPoint3d(point3dR[item].X, point3dR[item].Y, point3dR[item].Z, out double ny, out double nz);
-                        newPoint3dBaseR.Add(item, new Point3D(nx, ny, nz));
+                        string[] files = Directory.GetFiles("test-Image", "L_*_1.png");
+                        Dictionary<int, Point3D> rb = rbL;
+                        Dictionary<int, Point3D> point3d = point3dL;
+                        Dictionary<int, Point3D> point3dBase = point3dBaseL;
 
-                        //重新显示
+                        taskL = Task.Run(new Action(() =>
+                        {
+                            仿真计算(IOName, files, point3d, point3dBase, rb);
+                        }));
+                    }
+
+                    Dictionary<int, Point3D> rbR = new Dictionary<int, Point3D>();
+                    Dictionary<int, Point3D> point3dR = new Dictionary<int, Point3D>();
+                    Dictionary<int, Point3D> point3dBaseR = new Dictionary<int, Point3D>();
+                    {
                         string IOName = "R";
-                        var carSetting = 车型参数[textBoxTestNum.Text].car[IOName];
-                        double dx = nx - carSetting.gSets[item].X;
-                        double dy = ny - carSetting.gSets[item].Y;
-                        double dz = nz - carSetting.gSets[item].Z;
-                        double dd = Math.Sqrt(dx * dx + dy * dy + dz * dz);
-                        dataGridViewShow.BeginInvoke(new Action(() =>
+                        string[] files = Directory.GetFiles("test-Image", "R_*_1.png");
+                        Dictionary<int, Point3D> rb = rbR;
+                        Dictionary<int, Point3D> point3d = point3dR;
+                        Dictionary<int, Point3D> point3dBase = point3dBaseR;
+
+                        taskR = Task.Run(new Action(() =>
                         {
-                            int index = dataGridViewShow.Rows.Add("*" + IOName + item, nx.ToString("0.000"), ny.ToString("0.000"), nz.ToString("0.000"), dx.ToString("0.000"), dy.ToString("0.000"), dz.ToString("0.000"), dd.ToString("0.000"));
-                            if (dx < carSetting.gSets[item].minDX || dx > carSetting.gSets[item].maxDX)
-                            {
-                                dataGridViewShow.Rows[index].Cells[4].Style.BackColor = Color.Red;
-                            }
-                            if (dy < carSetting.gSets[item].minDY || dy > carSetting.gSets[item].maxDY)
-                            {
-                                dataGridViewShow.Rows[index].Cells[5].Style.BackColor = Color.Red;
-                            }
-                            if (dz < carSetting.gSets[item].minDZ || dz > carSetting.gSets[item].maxDZ)
-                            {
-                                dataGridViewShow.Rows[index].Cells[6].Style.BackColor = Color.Red;
-                            }
-                        }));
-                        formShow?.UpDataXYZ(new Point3D(nx, ny, nz), IOName + item);////////////////////////
-                    }
-                }
-
-                if (checkBoxFrame.Checked)
-                {
-                    FormZero form = new FormZero(true);
-                    HTuple pxL = new HTuple();
-                    HTuple pyL = new HTuple();
-                    HTuple pzL = new HTuple();
-                    foreach (var item in rbL.Keys)
-                    {
-                        form.dL.Add(item, null);
-                        pxL.Append(rbL[item].X);
-                        pyL.Append(rbL[item].Y);
-                        pzL.Append(rbL[item].Z);
-                    }
-                    HTuple pxR = new HTuple();
-                    HTuple pyR = new HTuple();
-                    HTuple pzR = new HTuple();
-                    foreach (var item in rbR.Keys)
-                    {
-                        form.dR.Add(item, null);
-                        pxR.Append(rbR[item].X);
-                        pyR.Append(rbR[item].Y);
-                        pzR.Append(rbR[item].Z);
-                    }
-                    if (form.ShowDialog() == DialogResult.OK)
-                    {
-                        {
-                            var carSetting = 车型参数[textBoxTestNum.Text].car["L"];
-                            HTuple qx = new HTuple();
-                            HTuple qy = new HTuple();
-                            HTuple qz = new HTuple();
-                            foreach (var item in form.dL.Keys)
-                            {
-                                qx.Append(carSetting.gSets[item].X + form.dL[item].X);
-                                qy.Append(carSetting.gSets[item].Y + form.dL[item].Y);
-                                qz.Append(carSetting.gSets[item].Z + form.dL[item].Z);
-                            }
-                            if (qx.Length > 0)
-                            {
-                                HHomMat3D hHomMat3D = new HHomMat3D();
-                                hHomMat3D.VectorToHomMat3d("rigid", pxL, pyL, pzL, qx, qy, qz);
-
-                                HTuple x = hHomMat3D.AffineTransPoint3d(pxL, pyL, pzL, out HTuple y, out HTuple z);
-                                HTuple dx = qx - x;
-                                HTuple dy = qy - y;
-                                HTuple dz = qz - z;
-
-                                //修改补偿
-                                var keys = rbL.Keys.ToArray();
-                                for (int i = 0; i < keys.Length; i++)
-                                {
-                                    carSetting.gSets[keys[i]].offsetX = (float)dx[i].D;
-                                    carSetting.gSets[keys[i]].offsetY = (float)dy[i].D;
-                                    carSetting.gSets[keys[i]].offsetZ = (float)dz[i].D;
-                                }
-                                //修改坐标转换
-                                carSetting.robot2Car = hHomMat3D;
-                            }
-
-                        }
-                        {
-
-                            var carSetting = 车型参数[textBoxTestNum.Text].car["R"];
-                            HTuple qx = new HTuple();
-                            HTuple qy = new HTuple();
-                            HTuple qz = new HTuple();
-                            foreach (var item in form.dR.Keys)
-                            {
-                                qx.Append(carSetting.gSets[item].X + form.dR[item].X);
-                                qy.Append(carSetting.gSets[item].Y + form.dR[item].Y);
-                                qz.Append(carSetting.gSets[item].Z + form.dR[item].Z);
-                            }
-
-                            if (qx.Length > 0)
-                            {
-                                HHomMat3D hHomMat3D = new HHomMat3D();
-                                hHomMat3D.VectorToHomMat3d("rigid", pxR, pyR, pzR, qx, qy, qz);
-
-                                HTuple x = hHomMat3D.AffineTransPoint3d(pxR, pyR, pzR, out HTuple y, out HTuple z);
-                                HTuple dx = qx - x;
-                                HTuple dy = qy - y;
-                                HTuple dz = qz - z;
-
-                                //修改补偿
-                                var keys = rbR.Keys.ToArray();
-                                for (int i = 0; i < keys.Length; i++)
-                                {
-                                    carSetting.gSets[keys[i]].offsetX = (float)dx[i].D;
-                                    carSetting.gSets[keys[i]].offsetY = (float)dy[i].D;
-                                    carSetting.gSets[keys[i]].offsetZ = (float)dz[i].D;
-                                }
-                                //修改坐标转换
-                                carSetting.robot2Car = hHomMat3D;
-                            }
-                        }
-                        checkBoxZero.Invoke(new Action(() =>
-                        {
-                            checkBoxZero.Checked = false;
-                            checkBoxFrame.Checked = false;
+                            仿真计算(IOName, files, point3d, point3dBase, rb);
                         }));
                     }
-                }
-                if (checkBoxZero.Checked)
-                {
-                    FormZero form = new FormZero(false);
-                    foreach (var item in point3dL.Keys)
+
+
+                    // 重定位 结果显示
+                    while (!(taskL.IsCompleted && taskR.IsCompleted))
                     {
-                        form.dL.Add(item, null);
+                        Thread.Sleep(7);
                     }
-                    foreach (var item in point3dR.Keys)
+                    if (point3dBaseL.Count() + point3dBaseR.Count() >= 3)
                     {
-                        form.dR.Add(item, null);
-                    }
-                    if (form.ShowDialog() == DialogResult.OK)
-                    {
+                        HTuple px = new HTuple();
+                        HTuple py = new HTuple();
+                        HTuple pz = new HTuple();
+                        HTuple qx = new HTuple();
+                        HTuple qy = new HTuple();
+                        HTuple qz = new HTuple();
+                        foreach (var item in point3dBaseL.Keys)
                         {
-                            var carSetting = 车型参数[textBoxTestNum.Text].car["L"];
-                            foreach (var item in form.dL.Keys)
+                            px.Append(point3dL[item].X);
+                            py.Append(point3dL[item].Y);
+                            pz.Append(point3dL[item].Z);
+                            qx.Append(point3dBaseL[item].X);
+                            qy.Append(point3dBaseL[item].Y);
+                            qz.Append(point3dBaseL[item].Z);
+                        }
+                        foreach (var item in point3dBaseR.Keys)
+                        {
+                            px.Append(point3dR[item].X);
+                            py.Append(point3dR[item].Y);
+                            pz.Append(point3dR[item].Z);
+                            qx.Append(point3dBaseR[item].X);
+                            qy.Append(point3dBaseR[item].Y);
+                            qz.Append(point3dBaseR[item].Z);
+                        }
+                        HHomMat3D hHomMat3D = new HHomMat3D();
+                        hHomMat3D.VectorToHomMat3d("rigid", px, py, pz, qx, qy, qz);
+
+                        Dictionary<int, Point3D> newPoint3dBaseL = new Dictionary<int, Point3D>();
+                        foreach (var item in point3dL.Keys)
+                        {
+                            double nx = hHomMat3D.AffineTransPoint3d(point3dL[item].X, point3dL[item].Y, point3dL[item].Z, out double ny, out double nz);
+                            newPoint3dBaseL.Add(item, new Point3D(nx, ny, nz));
+
+                            //重新显示
+                            string IOName = "L";
+                            var carSetting = 车型参数[textBoxTestNum.Text].car[IOName];
+                            double dx = nx - carSetting.gSets[item].X;
+                            double dy = ny - carSetting.gSets[item].Y;
+                            double dz = nz - carSetting.gSets[item].Z;
+                            double dd = Math.Sqrt(dx * dx + dy * dy + dz * dz);
+                            dataGridViewShow.BeginInvoke(new Action(() =>
                             {
-                                if (carSetting.gSets.ContainsKey(item))
+                                int index = dataGridViewShow.Rows.Add("*" + IOName + item, nx.ToString("0.000"), ny.ToString("0.000"), nz.ToString("0.000"), dx.ToString("0.000"), dy.ToString("0.000"), dz.ToString("0.000"), dd.ToString("0.000"));
+                                if (dx < carSetting.gSets[item].minDX || dx > carSetting.gSets[item].maxDX)
                                 {
-                                    carSetting.gSets[item].offsetX += carSetting.gSets[item].X - point3dL[item].X + form.dL[item].X;
-                                    carSetting.gSets[item].offsetY += carSetting.gSets[item].Y - point3dL[item].Y + form.dL[item].Y;
-                                    carSetting.gSets[item].offsetZ += carSetting.gSets[item].Z - point3dL[item].Z + form.dL[item].Z;
+                                    dataGridViewShow.Rows[index].Cells[4].Style.BackColor = Color.Red;
+                                }
+                                if (dy < carSetting.gSets[item].minDY || dy > carSetting.gSets[item].maxDY)
+                                {
+                                    dataGridViewShow.Rows[index].Cells[5].Style.BackColor = Color.Red;
+                                }
+                                if (dz < carSetting.gSets[item].minDZ || dz > carSetting.gSets[item].maxDZ)
+                                {
+                                    dataGridViewShow.Rows[index].Cells[6].Style.BackColor = Color.Red;
+                                }
+                            }));
+                            formShow?.UpDataXYZ(new Point3D(nx, ny, nz), IOName + item);////////////////////////
+                        }
+                        Dictionary<int, Point3D> newPoint3dBaseR = new Dictionary<int, Point3D>();
+                        foreach (var item in point3dR.Keys)
+                        {
+                            double nx = hHomMat3D.AffineTransPoint3d(point3dR[item].X, point3dR[item].Y, point3dR[item].Z, out double ny, out double nz);
+                            newPoint3dBaseR.Add(item, new Point3D(nx, ny, nz));
+
+                            //重新显示
+                            string IOName = "R";
+                            var carSetting = 车型参数[textBoxTestNum.Text].car[IOName];
+                            double dx = nx - carSetting.gSets[item].X;
+                            double dy = ny - carSetting.gSets[item].Y;
+                            double dz = nz - carSetting.gSets[item].Z;
+                            double dd = Math.Sqrt(dx * dx + dy * dy + dz * dz);
+                            dataGridViewShow.BeginInvoke(new Action(() =>
+                            {
+                                int index = dataGridViewShow.Rows.Add("*" + IOName + item, nx.ToString("0.000"), ny.ToString("0.000"), nz.ToString("0.000"), dx.ToString("0.000"), dy.ToString("0.000"), dz.ToString("0.000"), dd.ToString("0.000"));
+                                if (dx < carSetting.gSets[item].minDX || dx > carSetting.gSets[item].maxDX)
+                                {
+                                    dataGridViewShow.Rows[index].Cells[4].Style.BackColor = Color.Red;
+                                }
+                                if (dy < carSetting.gSets[item].minDY || dy > carSetting.gSets[item].maxDY)
+                                {
+                                    dataGridViewShow.Rows[index].Cells[5].Style.BackColor = Color.Red;
+                                }
+                                if (dz < carSetting.gSets[item].minDZ || dz > carSetting.gSets[item].maxDZ)
+                                {
+                                    dataGridViewShow.Rows[index].Cells[6].Style.BackColor = Color.Red;
+                                }
+                            }));
+                            formShow?.UpDataXYZ(new Point3D(nx, ny, nz), IOName + item);////////////////////////
+                        }
+                    }
+
+                    if (checkBoxFrame.Checked)
+                    {
+                        FormZero form = new FormZero(true);
+                        HTuple pxL = new HTuple();
+                        HTuple pyL = new HTuple();
+                        HTuple pzL = new HTuple();
+                        foreach (var item in rbL.Keys)
+                        {
+                            form.dL.Add(item, null);
+                            pxL.Append(rbL[item].X);
+                            pyL.Append(rbL[item].Y);
+                            pzL.Append(rbL[item].Z);
+                        }
+                        HTuple pxR = new HTuple();
+                        HTuple pyR = new HTuple();
+                        HTuple pzR = new HTuple();
+                        foreach (var item in rbR.Keys)
+                        {
+                            form.dR.Add(item, null);
+                            pxR.Append(rbR[item].X);
+                            pyR.Append(rbR[item].Y);
+                            pzR.Append(rbR[item].Z);
+                        }
+                        if (form.ShowDialog() == DialogResult.OK)
+                        {
+                            {
+                                var carSetting = 车型参数[textBoxTestNum.Text].car["L"];
+                                HTuple qx = new HTuple();
+                                HTuple qy = new HTuple();
+                                HTuple qz = new HTuple();
+                                foreach (var item in form.dL.Keys)
+                                {
+                                    qx.Append(carSetting.gSets[item].X + form.dL[item].X);
+                                    qy.Append(carSetting.gSets[item].Y + form.dL[item].Y);
+                                    qz.Append(carSetting.gSets[item].Z + form.dL[item].Z);
+                                }
+                                if (qx.Length > 0)
+                                {
+                                    HHomMat3D hHomMat3D = new HHomMat3D();
+                                    hHomMat3D.VectorToHomMat3d("rigid", pxL, pyL, pzL, qx, qy, qz);
+
+                                    HTuple x = hHomMat3D.AffineTransPoint3d(pxL, pyL, pzL, out HTuple y, out HTuple z);
+                                    HTuple dx = qx - x;
+                                    HTuple dy = qy - y;
+                                    HTuple dz = qz - z;
+
+                                    //修改补偿
+                                    var keys = rbL.Keys.ToArray();
+                                    for (int i = 0; i < keys.Length; i++)
+                                    {
+                                        carSetting.gSets[keys[i]].offsetX = (float)dx[i].D;
+                                        carSetting.gSets[keys[i]].offsetY = (float)dy[i].D;
+                                        carSetting.gSets[keys[i]].offsetZ = (float)dz[i].D;
+                                    }
+                                    //修改坐标转换
+                                    carSetting.robot2Car = hHomMat3D;
+                                }
+
+                            }
+                            {
+
+                                var carSetting = 车型参数[textBoxTestNum.Text].car["R"];
+                                HTuple qx = new HTuple();
+                                HTuple qy = new HTuple();
+                                HTuple qz = new HTuple();
+                                foreach (var item in form.dR.Keys)
+                                {
+                                    qx.Append(carSetting.gSets[item].X + form.dR[item].X);
+                                    qy.Append(carSetting.gSets[item].Y + form.dR[item].Y);
+                                    qz.Append(carSetting.gSets[item].Z + form.dR[item].Z);
+                                }
+
+                                if (qx.Length > 0)
+                                {
+                                    HHomMat3D hHomMat3D = new HHomMat3D();
+                                    hHomMat3D.VectorToHomMat3d("rigid", pxR, pyR, pzR, qx, qy, qz);
+
+                                    HTuple x = hHomMat3D.AffineTransPoint3d(pxR, pyR, pzR, out HTuple y, out HTuple z);
+                                    HTuple dx = qx - x;
+                                    HTuple dy = qy - y;
+                                    HTuple dz = qz - z;
+
+                                    //修改补偿
+                                    var keys = rbR.Keys.ToArray();
+                                    for (int i = 0; i < keys.Length; i++)
+                                    {
+                                        carSetting.gSets[keys[i]].offsetX = (float)dx[i].D;
+                                        carSetting.gSets[keys[i]].offsetY = (float)dy[i].D;
+                                        carSetting.gSets[keys[i]].offsetZ = (float)dz[i].D;
+                                    }
+                                    //修改坐标转换
+                                    carSetting.robot2Car = hHomMat3D;
                                 }
                             }
-                        }
-                        {
-                            var carSetting = 车型参数[textBoxTestNum.Text].car["R"];
-                            foreach (var item in form.dR.Keys)
+                            checkBoxZero.Invoke(new Action(() =>
                             {
-                                if (carSetting.gSets.ContainsKey(item))
+                                checkBoxZero.Checked = false;
+                                checkBoxFrame.Checked = false;
+                            }));
+                        }
+                    }
+                    if (checkBoxZero.Checked)
+                    {
+                        FormZero form = new FormZero(false);
+                        foreach (var item in point3dL.Keys)
+                        {
+                            form.dL.Add(item, null);
+                        }
+                        foreach (var item in point3dR.Keys)
+                        {
+                            form.dR.Add(item, null);
+                        }
+                        if (form.ShowDialog() == DialogResult.OK)
+                        {
+                            {
+                                var carSetting = 车型参数[textBoxTestNum.Text].car["L"];
+                                foreach (var item in form.dL.Keys)
                                 {
-                                    carSetting.gSets[item].offsetX += carSetting.gSets[item].X - point3dR[item].X + form.dR[item].X;
-                                    carSetting.gSets[item].offsetY += carSetting.gSets[item].Y - point3dR[item].Y + form.dR[item].Y;
-                                    carSetting.gSets[item].offsetZ += carSetting.gSets[item].Z - point3dR[item].Z + form.dR[item].Z;
+                                    if (carSetting.gSets.ContainsKey(item))
+                                    {
+                                        carSetting.gSets[item].offsetX += carSetting.gSets[item].X - point3dL[item].X + form.dL[item].X;
+                                        carSetting.gSets[item].offsetY += carSetting.gSets[item].Y - point3dL[item].Y + form.dL[item].Y;
+                                        carSetting.gSets[item].offsetZ += carSetting.gSets[item].Z - point3dL[item].Z + form.dL[item].Z;
+                                    }
                                 }
                             }
+                            {
+                                var carSetting = 车型参数[textBoxTestNum.Text].car["R"];
+                                foreach (var item in form.dR.Keys)
+                                {
+                                    if (carSetting.gSets.ContainsKey(item))
+                                    {
+                                        carSetting.gSets[item].offsetX += carSetting.gSets[item].X - point3dR[item].X + form.dR[item].X;
+                                        carSetting.gSets[item].offsetY += carSetting.gSets[item].Y - point3dR[item].Y + form.dR[item].Y;
+                                        carSetting.gSets[item].offsetZ += carSetting.gSets[item].Z - point3dR[item].Z + form.dR[item].Z;
+                                    }
+                                }
+                            }
+
+                            checkBoxZero.Invoke(new Action(() =>
+                            {
+                                checkBoxZero.Checked = false;
+                            }));
                         }
-
-                        checkBoxZero.Invoke(new Action(() =>
-                        {
-                            checkBoxZero.Checked = false;
-                        }));
                     }
-                }
 
-                //stop = true;
-                //threadSaveImage?.Join();
-                //StopState();
+                    //stop = true;
+                    //threadSaveImage?.Join();
+                    //StopState();
 
-            });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
+                });
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();
+
+            }
 
 
             ////测试温漂接口
-            //String camName = "L";
-            //OLM oLM = new OLM();
-            ////机器人文件路径、机器人名（这里用L\R)、onnx模型路径
-            //oLM.init("./Data/config/robot", camName, "./Data/model.onnx");
+            if (false)
+            {
+                String camName = "L";
+                OLM oLM = new OLM();
+                //机器人文件路径、机器人名（这里用L\R)、onnx模型路径
+                oLM.init("./Data/config/robot", camName, "./Data/model.onnx");
 
-            //string dir1 = $"./Data/TempareCalib/{camName}/dir1";
+                string dir1 = $"./Data/TempareCalib/{camName}/dir1";
 
-            //string dir2 = $"./Data/TempareCalib/{camName}/dir2";
-            //string camXYZMapPath, lightXYZMapPath, lightInCamPath, toolInCamPath;
-            //camXYZMapPath = $"./Data/Cam/{camName}/camImage.tiff";
-            //lightXYZMapPath = $"./Data/Cam/{camName}/lightImage.tiff";
-
-
-            //lightInCamPath = $"./Data/Cam/{camName}/LightInCam.dat";
-            //toolInCamPath = $"./Data/Cam/{camName}/ToolInCam.dat";
+                string dir2 = $"./Data/TempareCalib/{camName}/dir2";
+                string camXYZMapPath, lightXYZMapPath, lightInCamPath, toolInCamPath;
+                camXYZMapPath = $"./Data/Cam/{camName}/camImage.tiff";
+                lightXYZMapPath = $"./Data/Cam/{camName}/lightImage.tiff";
 
 
-            //bool rt = oLM.calib(dir1, dir2, camXYZMapPath, lightXYZMapPath, lightInCamPath, toolInCamPath);
-            //if (!rt)
-            //{
-            //    ShowMessage($"{Resources.LanguageDic.robot_tempareture_calib_fail}");
-            //}
-            //else
-            //{
-            //    ShowMessage($"{Resources.LanguageDic.robot_tempareture_calib_success}");
+                lightInCamPath = $"./Data/Cam/{camName}/LightInCam.dat";
+                toolInCamPath = $"./Data/Cam/{camName}/ToolInCam.dat";
 
-            //}
-            //double robotXOpt, robotYOpt, robotZOpt, robotRXOpt, robotRYOpt, robotRZOpt;
-            //oLM.run(true, 0, 0, 0, 0, 0, 0, out robotXOpt, out robotYOpt, out robotZOpt, out robotRXOpt, out robotRYOpt, out robotRZOpt);
+
+                bool rt = oLM.calib(dir1, dir2, camXYZMapPath, lightXYZMapPath, lightInCamPath, toolInCamPath);
+                if (!rt)
+                {
+                    ShowMessage($"{Resources.LanguageDic.robot_tempareture_calib_fail}");
+                }
+                else
+                {
+                    ShowMessage($"{Resources.LanguageDic.robot_tempareture_calib_success}");
+
+                }
+                double robotXOpt, robotYOpt, robotZOpt, robotRXOpt, robotRYOpt, robotRZOpt;
+                oLM.run(true, 0, 0, 0, 0, 0, 0, out robotXOpt, out robotYOpt, out robotZOpt, out robotRXOpt, out robotRYOpt, out robotRZOpt);
+            }
+
+            ///
+            if (false)
+            {                
+                //内参文件，这里是为了对图片做矫正
+                string camInterParaPath = "E:\\data\\online_det\\P07250114_calib\\R_inter_calib_20260114_file\\camparam.cal";
+                //相机坐标系映射图片
+                string camImageMappedPath = "E:\\code\\project\\交接项目\\炯南\\0723ZY04 汽车焊装在线尺寸检测系统的研发\\P07220073 广本一厂在线计测\\OnlineMeasurement3 - 轮廓匹配\\OnlineMeasurement\\bin\\x64\\Debug\\Data\\Cam\\R\\camImage.tiff";
+                //手眼标定文件
+                string ToolInCamPath = "E:\\data\\online_det\\P07250114_calib\\R_eye_in_hand_20260508\\ToolInCam.dat";
+                //温漂标定数据
+                string warmDir = "E:\\data\\online_det\\P07250114_calib\\Right_Low_0518";
+
+                HCamPar camParIn = null; //相机内参
+                HCamPar camParOut = null; //相机内参做了去畸变处理
+                HImage mapImage; //用于畸变矫正
+                mapImage = new HImage();
+                HImage camImage = new HImage(camImageMappedPath);
+
+                //内参文件读取
+                HOperatorSet.ReadCamPar(camInterParaPath, out HTuple hv_CamParIn);
+                HOperatorSet.ChangeRadialDistortionCamPar("adaptive", hv_CamParIn, new HTuple(0), out HTuple hv_CamParOut);
+                camParIn = new HCamPar(hv_CamParIn);
+                camParOut = new HCamPar(hv_CamParOut);
+                mapImage.GenRadialDistortionMap(camParIn, camParOut, "bilinear");
+
+
+                //手眼标定文件读取
+                HPose toolInCam = null;
+                HHomMat3D cam2Tool = null;
+                toolInCam = new HPose();
+                cam2Tool = new HHomMat3D();
+                toolInCam.ReadPose(ToolInCamPath);
+                cam2Tool = toolInCam.PoseInvert().PoseToHomMat3d();
+
+
+                //温漂文件遍历
+                string[] lightImgPaths = Directory.GetFiles(warmDir, "*_1.png");
+                string[] posePaths = Directory.GetFiles(warmDir, "*_robotPose.dat");
+                for (int i = 0; i < lightImgPaths.Length; i++)
+                {
+
+                    //文件打开
+                    string lightImgPath = lightImgPaths[i];
+                    string posePath = posePaths[i];
+                    string saveCloudPath = lightImgPath.Replace(".png", ".ply");
+                    HPose robotPose = new HPose();
+                    HImage img = new HImage(lightImgPath);
+
+                    robotPose.ReadPose(posePath);
+
+                    //这里要放大1000倍,因为本来的pose是米
+                    robotPose[0] = robotPose[0] * 1000;
+                    robotPose[1] = robotPose[1] * 1000;
+                    robotPose[2] = robotPose[2] * 1000;
+
+
+                    //map转换
+                    HOperatorSet.MapImage(img, mapImage, out HObject imgMapped);
+
+                    //激光提取
+                    HTuple Py, Px;
+                    Px = new HTuple();
+                    Py = new HTuple();
+
+                    // 1. 阈值分割，提取灰度值 > threshold 的区域
+                    HObject ho_Region;
+                    HOperatorSet.Threshold(imgMapped, out ho_Region, 200, 255);
+
+                    // 2. 获取区域中所有点的坐标 (Row, Column)
+                    HTuple hv_Rows, hv_Columns;
+                    HOperatorSet.GetRegionPoints(ho_Region, out hv_Rows, out hv_Columns);
+
+                    // 3. 赋值给 px (列/X) 和 py (行/Y)
+                    Px = hv_Columns;
+                    Py = hv_Rows;
+
+                    ////转相机坐标
+                    HTuple camX, camY, camZ;
+
+                    // 分离三个通道
+                    HObject ho_ChX, ho_ChY, ho_ChZ;
+                    HOperatorSet.AccessChannel(camImage, out ho_ChX, 1);
+                    HOperatorSet.AccessChannel(camImage, out ho_ChY, 2);
+                    HOperatorSet.AccessChannel(camImage, out ho_ChZ, 3);
+
+                    // 获取指定坐标处的灰度值（即XYZ值）
+
+                    HOperatorSet.GetGrayval(ho_ChX, Py, Px, out camX);
+                    HOperatorSet.GetGrayval(ho_ChY, Py, Px, out camY);
+                    HOperatorSet.GetGrayval(ho_ChZ, Py, Px, out camZ);
+
+
+                    //相机转工具坐标系
+                    HTuple toolX = cam2Tool.AffineTransPoint3d(camX, camY, camZ, out HTuple toolY, out HTuple toolZ);
+
+                    // 转为mm为单位
+                    HTuple toolX_mm = toolX * 1000;
+                    HTuple toolY_mm = toolY * 1000;
+                    HTuple toolZ_mm = toolZ * 1000;
+
+
+                    //工具转基座标
+                    HHomMat3D 工具转基座标 = robotPose.PoseToHomMat3d();
+                    HTuple rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out HTuple rbY, out HTuple rbZ);
+
+                    SaveAsPly(rbX, rbY, rbZ, saveCloudPath);
+                }
+
+
+            }
+
 
         }
 
@@ -4356,6 +4541,21 @@ namespace OnlineMeasurement
         {
             var writeYRef = plc.Write("D1410", (int)(99999 * 100));
 
+        }
+
+        private void button_setRobotL_Click(object sender, EventArgs e)
+        {
+            KukaRobot robot = new KukaRobot();
+            robot.robotName = "L";
+            robot.ShowForm();
+
+        }
+
+        private void button_setRobotR_Click(object sender, EventArgs e)
+        {
+            KukaRobot robot = new KukaRobot();
+            robot.robotName = "R";
+            robot.ShowForm();
         }
     }
 #if GW

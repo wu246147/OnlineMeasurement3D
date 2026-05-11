@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Address_format_mismatch" xml:space="preserve">
+    <value>地址格式不匹配</value>
+  </data>
+  <data name="Address_not_assigned" xml:space="preserve">
+    <value>地址未分配</value>
+  </data>
   <data name="but_not_exist" xml:space="preserve">
     <value>却不存</value>
   </data>
@@ -306,6 +312,9 @@
   <data name="not_select_delete_item" xml:space="preserve">
     <value>未选择删除项</value>
   </data>
+  <data name="not_support_strings" xml:space="preserve">
+    <value>不支持字符串</value>
+  </data>
   <data name="not_value" xml:space="preserve">
     <value>非值类型</value>
   </data>
@@ -425,6 +434,12 @@
   </data>
   <data name="result_write_fail" xml:space="preserve">
     <value>结果写入失败</value>
+  </data>
+  <data name="robot_connect_fail" xml:space="preserve">
+    <value>机器人连接失败</value>
+  </data>
+  <data name="robot_connect_success" xml:space="preserve">
+    <value>机器人连接成功</value>
   </data>
   <data name="robot_tempareture_calib_fail" xml:space="preserve">
     <value>机器人温漂标定失败</value>
@@ -614,5 +629,8 @@
   </data>
   <data name="wait_start_signal" xml:space="preserve">
     <value>等待开始信号</value>
+  </data>
+  <data name="Writing_format_not_supported" xml:space="preserve">
+    <value>写入格式不支持</value>
   </data>
 </root>

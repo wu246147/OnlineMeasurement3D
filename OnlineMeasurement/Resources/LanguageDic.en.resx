@@ -588,4 +588,22 @@
   <data name="robot_tempareture_calib_success" xml:space="preserve">
     <value>Robot tempareture calibration success</value>
   </data>
+  <data name="Address_format_mismatch" xml:space="preserve">
+    <value>Address format mismatch</value>
+  </data>
+  <data name="Address_not_assigned" xml:space="preserve">
+    <value>Address not assigned</value>
+  </data>
+  <data name="not_support_strings" xml:space="preserve">
+    <value>Not support strings</value>
+  </data>
+  <data name="Writing_format_not_supported" xml:space="preserve">
+    <value>Writing format not supported</value>
+  </data>
+  <data name="robot_connect_fail" xml:space="preserve">
+    <value>robot connect fail</value>
+  </data>
+  <data name="robot_connect_success" xml:space="preserve">
+    <value>robot connect success</value>
+  </data>
 </root>
