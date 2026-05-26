@@ -18,6 +18,12 @@ using System.Xml.Serialization;
 
 namespace OnlineMeasurement
 {
+    enum PLC_Type
+    {
+        Melsec = 0,
+        Toyota = 1,
+    }
+
     public partial class FormRun : Form
     {
         Thread mainThread = null;
@@ -25,7 +31,11 @@ namespace OnlineMeasurement
         System.Timers.Timer alive = new System.Timers.Timer();
         //private OmronFinsNet omronFinsNet = null;
         //private MelsecMcNet plc = null;
-        private IHsl plc = new MelsecPlc();
+
+        PLC_Type pLC_Type = PLC_Type.Melsec;
+        private IHsl plc = null;
+
+        
 
 
         SerialPort sp = new SerialPort();
@@ -65,6 +75,10 @@ namespace OnlineMeasurement
             //读取语言id
             GlobalVarAndFunc.ReadLanguageID();
 
+            // PLC类型读取
+
+            //机器人类型读取
+
 
 #if GW
             Text += "（GW）";
@@ -99,6 +113,18 @@ namespace OnlineMeasurement
             alive.Interval = 500;
             alive.AutoReset = true;
             alive.Elapsed += alive_Tick;
+
+            switch (pLC_Type)
+            {
+                case PLC_Type.Melsec:
+                    plc = new MelsecPlc();
+                    break;
+                case PLC_Type.Toyota:
+                    plc = new ToyotaPlc();
+                    break;
+                default:
+                    break;
+            }
 
         }
         private void FormRun_Load(object sender, EventArgs e)
@@ -311,13 +337,17 @@ namespace OnlineMeasurement
                     //机器人
                     KukaRobot robot = new KukaRobot();
                     robot.robotName = name;
+                    robot.Load();
                     robots.Add(name,robot);
+                    ShowMessage($"{name}{Resources.LanguageDic.cam} 机器人参数加载成功");
 
                     //温漂
                     OLM oLM = new OLM();
                     //机器人文件路径、机器人名（这里用L\R)、onnx模型路径
                     oLM.init("./Data/config/robot", name, "./Data/model.onnx");
                     TempareCalib.Add(name, oLM);
+                    ShowMessage($"{name}{Resources.LanguageDic.cam} 温漂模型加载成功");
+
                 }
 
                 otherSet.Load();
@@ -550,7 +580,9 @@ namespace OnlineMeasurement
                             ShowMessage($"{Resources.LanguageDic.vin2}{Resources.LanguageDic.contains_illegal_characters}" + c, Color.Yellow);
                             //carVIN = "";
                             path = $"{otherSet.imagePath}\\{carKind.Content}\\{TRnum}\\{dateTimeNow:yyyy-MM-dd HH_mm_ss}";
-                            break;
+
+                            //临时屏蔽
+                            //break;
                         }
                     }
 
@@ -1498,7 +1530,7 @@ namespace OnlineMeasurement
                         return;
                     }
                 }
-                
+
 
                 //var PoseX = plc.ReadFloat(IO["X"].Address);
                 //var PoseY = plc.ReadFloat(IO["Y"].Address);
@@ -1532,13 +1564,21 @@ namespace OnlineMeasurement
                 //Angle.Append(A5.Content);
                 //Angle.Append(A6.Content);
 
+                ShowMessage(camName + $"Robot Pose:(x:{Pose[0]},y:{Pose[1]},z:{Pose[2]},rx:{Pose[3]},ry:{Pose[4]},rz:{Pose[5]})", Color.Red);
+                ShowMessage(camName + $"Robot Angle:(A1:{Angle[0]},A2:{Angle[1]},A3:{Angle[2]},A4:{Angle[3]},A5:{Angle[4]},A6:{Angle[5]})", Color.Red);
+
                 // 后面看要不要用这个测出来的坐标
-                double robotXOpt, robotYOpt, robotZOpt, robotRXOpt, robotRYOpt, robotRZOpt;
+                double robotXOpt=0, robotYOpt = 0, robotZOpt = 0, robotRXOpt = 0, robotRYOpt = 0, robotRZOpt = 0;
                 //调用温漂函数
                 if(oLM != null)
                 {
                     oLM.run(true, Angle[0], Angle[1], Angle[2], Angle[3], Angle[4], Angle[5], out robotXOpt, out robotYOpt, out robotZOpt, out robotRXOpt, out robotRYOpt, out robotRZOpt);
                 }
+                ShowMessage(camName + $"oLM Pose:(x:{robotXOpt},y:{robotYOpt},z:{robotZOpt},rx:{robotRXOpt},ry:{robotRYOpt},rz:{robotRZOpt})", Color.Red);
+
+                //给取像点赋值
+                
+
                 //是否末点
                 var endPoint = plc.ReadBool(IO["End_of_Check_Points"].Address);
                 if (!endPoint.IsSuccess)
@@ -1899,8 +1939,10 @@ namespace OnlineMeasurement
                         double toolZ_mm = toolZ * 1000;
 
                         //工具转基座标
-                        HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
-                            carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
+                        //HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
+                        //    carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
+                        HHomMat3D 工具转基座标 = Pose.PoseToHomMat3d(); //改为用当前获取的机器人坐标
+
                         double rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out double rbY, out double rbZ);
 
 
@@ -1952,8 +1994,10 @@ namespace OnlineMeasurement
                         double toolZ1_mm = toolZ1 * 1000;
 
                         //工具转基座标
-                        HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
-                            carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
+                        //HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
+                        //    carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
+                        HHomMat3D 工具转基座标 = Pose.PoseToHomMat3d();
+
                         double rbX1 = 工具转基座标.AffineTransPoint3d(toolX1_mm, toolY1_mm, toolZ1_mm, out double rbY1, out double rbZ1);
 
 
@@ -1971,8 +2015,10 @@ namespace OnlineMeasurement
                             double toolZ2_mm = toolZ2 * 1000;
 
                             //工具转基座标
-                            HHomMat3D 工具转基座标2 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
-                                carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
+                            //HHomMat3D 工具转基座标2 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
+                            //    carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
+                            HHomMat3D 工具转基座标2 = Pose.PoseToHomMat3d();
+
                             double rbX2 = 工具转基座标2.AffineTransPoint3d(toolX2_mm, toolY2_mm, toolZ2_mm, out double rbY2, out double rbZ2);
 
                             //基座标转车身
@@ -2029,8 +2075,9 @@ namespace OnlineMeasurement
                                 double toolZ_mm = toolZ * 1000;
 
                                 //工具转基座标
-                                HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
-                                    carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
+                                //HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
+                                //    carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
+                                HHomMat3D 工具转基座标 = Pose.PoseToHomMat3d();
                                 double rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out double rbY, out double rbZ);
 
 

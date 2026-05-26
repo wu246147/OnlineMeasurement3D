@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRun));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.buttonRun = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -55,6 +55,8 @@
             this.textBoxTestNum = new System.Windows.Forms.TextBox();
             this.buttonTest = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button_setRobotR = new System.Windows.Forms.Button();
+            this.button_setRobotL = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.checkBoxZero = new System.Windows.Forms.CheckBox();
@@ -77,8 +79,6 @@
             this.buttonSkipStart = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.labelResult = new System.Windows.Forms.Label();
-            this.button_setRobotL = new System.Windows.Forms.Button();
-            this.button_setRobotR = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewShow)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -138,9 +138,9 @@
             this.dataGridViewLog.Name = "dataGridViewLog";
             this.dataGridViewLog.ReadOnly = true;
             this.dataGridViewLog.RowHeadersVisible = false;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewLog.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewLog.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewLog.RowTemplate.Height = 23;
             // 
             // Column1
@@ -277,6 +277,20 @@
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // button_setRobotR
+            // 
+            resources.ApplyResources(this.button_setRobotR, "button_setRobotR");
+            this.button_setRobotR.Name = "button_setRobotR";
+            this.button_setRobotR.UseVisualStyleBackColor = true;
+            this.button_setRobotR.Click += new System.EventHandler(this.button_setRobotR_Click);
+            // 
+            // button_setRobotL
+            // 
+            resources.ApplyResources(this.button_setRobotL, "button_setRobotL");
+            this.button_setRobotL.Name = "button_setRobotL";
+            this.button_setRobotL.UseVisualStyleBackColor = true;
+            this.button_setRobotL.Click += new System.EventHandler(this.button_setRobotL_Click);
             // 
             // button3
             // 
@@ -453,20 +467,6 @@
             resources.ApplyResources(this.labelResult, "labelResult");
             this.labelResult.BackColor = System.Drawing.Color.Transparent;
             this.labelResult.Name = "labelResult";
-            // 
-            // button_setRobotL
-            // 
-            resources.ApplyResources(this.button_setRobotL, "button_setRobotL");
-            this.button_setRobotL.Name = "button_setRobotL";
-            this.button_setRobotL.UseVisualStyleBackColor = true;
-            this.button_setRobotL.Click += new System.EventHandler(this.button_setRobotL_Click);
-            // 
-            // button_setRobotR
-            // 
-            resources.ApplyResources(this.button_setRobotR, "button_setRobotR");
-            this.button_setRobotR.Name = "button_setRobotR";
-            this.button_setRobotR.UseVisualStyleBackColor = true;
-            this.button_setRobotR.Click += new System.EventHandler(this.button_setRobotR_Click);
             // 
             // FormRun
             // 

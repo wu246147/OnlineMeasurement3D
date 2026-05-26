@@ -428,7 +428,7 @@ namespace OnlineMeasurement.IO
                 DialogResult dialogResult = MessageBox.Show($"{Resources.LanguageDic.is_save_para}？", $"{Resources.LanguageDic.tip}", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    if (!signal.Save())
+                    if (!Save()||!signal.Save())
                     {
                         MessageBox.Show($"{Resources.LanguageDic.save_fail}！！", $"{Resources.LanguageDic.tip}", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         e.Cancel = true;
