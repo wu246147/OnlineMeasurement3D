@@ -103,7 +103,7 @@ namespace OnlineMeasurement
         }
         #endregion
     }
-
+    
     public static class GlobalVarAndFunc
     {
 

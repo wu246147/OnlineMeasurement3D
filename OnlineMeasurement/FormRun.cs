@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace OnlineMeasurement
@@ -23,6 +24,14 @@ namespace OnlineMeasurement
         Melsec = 0,
         Toyota = 1,
     }
+
+    enum Robot_Type
+    {
+        Kuka = 0,
+        Kawasaki = 1,
+    }
+
+
 
     public partial class FormRun : Form
     {
@@ -46,7 +55,9 @@ namespace OnlineMeasurement
         Dictionary<string, BaslerCamera.Cam> 相机 = new Dictionary<string, BaslerCamera.Cam>();
 
         //机器人
-        Dictionary<string, KukaRobot> robots = new Dictionary<string, KukaRobot>();
+        Robot_Type robot_Type = Robot_Type.Kuka;
+
+        Dictionary<string, IRobot> robots = new Dictionary<string, IRobot>();
 
         //温漂工件
         Dictionary<string, OLM> TempareCalib = new Dictionary<string, OLM>();
@@ -335,10 +346,23 @@ namespace OnlineMeasurement
                     }
 
                     //机器人
-                    KukaRobot robot = new KukaRobot();
+                    IRobot robot ;
+                    //默认库卡
+                    robot = new KukaRobot();
+                    switch (robot_Type)
+                    {
+                        case Robot_Type.Kuka:
+                            robot = new KukaRobot();
+                            break;
+
+                        case Robot_Type.Kawasaki:
+                            robot = new KawasakiRobot();
+                            break;
+                    }
                     robot.robotName = name;
                     robot.Load();
-                    robots.Add(name,robot);
+                    robots.Add(name, robot);
+
                     ShowMessage($"{name}{Resources.LanguageDic.cam} 机器人参数加载成功");
 
                     //温漂
@@ -4592,17 +4616,50 @@ namespace OnlineMeasurement
 
         private void button_setRobotL_Click(object sender, EventArgs e)
         {
-            KukaRobot robot = new KukaRobot();
-            robot.robotName = "L";
-            robot.ShowForm();
+            //机器人
+            IRobot robot;
+            //默认库卡
+            robot = new KukaRobot();
+            switch (robot_Type)
+            {
+                case Robot_Type.Kuka:
+                    robot = new KukaRobot();
+                    robot.robotName = "L";
+                    ((KukaRobot)robot).ShowForm();
+                    break;
+
+                case Robot_Type.Kawasaki:
+                    robot = new KawasakiRobot();
+                    robot.robotName = "L";
+                    ((KawasakiRobot)robot).ShowForm();
+                    break;
+            }
+
+            
 
         }
 
         private void button_setRobotR_Click(object sender, EventArgs e)
         {
-            KukaRobot robot = new KukaRobot();
-            robot.robotName = "R";
-            robot.ShowForm();
+            //机器人
+            IRobot robot;
+            //默认库卡
+            robot = new KukaRobot();
+            switch (robot_Type)
+            {
+                case Robot_Type.Kuka:
+                    robot = new KukaRobot();
+                    robot.robotName = "R";
+                    ((KukaRobot)robot).ShowForm();
+                    break;  
+
+                case Robot_Type.Kawasaki:
+                    robot = new KawasakiRobot();
+                    robot.robotName = "R";
+                    ((KawasakiRobot)robot).ShowForm();
+                    break;
+            }
+           
         }
     }
 #if GW
