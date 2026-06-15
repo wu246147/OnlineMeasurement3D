@@ -60,6 +60,9 @@ namespace OnlineMeasurement
         Dictionary<string, IRobot> robots = new Dictionary<string, IRobot>();
 
         //温漂工件
+
+        bool isUseOLM = false;
+
         Dictionary<string, OLM> TempareCalib = new Dictionary<string, OLM>();
 
         OtherSet otherSet = new OtherSet();
@@ -1597,11 +1600,32 @@ namespace OnlineMeasurement
                 if(oLM != null)
                 {
                     oLM.run(true, Angle[0], Angle[1], Angle[2], Angle[3], Angle[4], Angle[5], out robotXOpt, out robotYOpt, out robotZOpt, out robotRXOpt, out robotRYOpt, out robotRZOpt);
+
+                    if (robot_Type == Robot_Type.Kawasaki)
+                    {
+
+                        //zyz 转 xyz
+                        double transformRX = 0, transformRY = 0, transformRz = 0;
+                        int robot_r_type = 2;   //机器人的坐标系类型，0为xyz，1为zyx，2为zyz
+                        int alg_r_type = 0;      //相机的坐标系类型，默认都是0，0为xyz，1为zyx，2为zyz
+
+                        Tool.transformCartPose2(robotRXOpt, robotRYOpt, robotRZOpt, robot_r_type, ref transformRX, ref transformRY, ref transformRz, alg_r_type);
+
+                        robotRXOpt = (float)transformRX;
+                        robotRYOpt = (float)transformRY;
+                        robotRZOpt = (float)transformRz;
+                    }
                 }
                 ShowMessage(camName + $"oLM Pose:(x:{robotXOpt},y:{robotYOpt},z:{robotZOpt},rx:{robotRXOpt},ry:{robotRYOpt},rz:{robotRZOpt})", Color.Red);
 
-                //给取像点赋值
-                
+                //给取像点赋值,如果后面有需要，要替代掉pose
+                HPose transformPose;
+                transformPose = new HPose(robotRXOpt, robotRYOpt, robotRZOpt, robotRXOpt, robotRYOpt, robotRZOpt, "Rp+T", "abg", "point");
+                if (isUseOLM)
+                {
+                    //最好加个判断
+                    Pose = transformPose;
+                }
 
                 //是否末点
                 var endPoint = plc.ReadBool(IO["End_of_Check_Points"].Address);
