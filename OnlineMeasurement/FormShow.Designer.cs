@@ -1,4 +1,4 @@
-﻿namespace OnlineMeasurement
+namespace OnlineMeasurement
 {
     partial class FormShow
     {
@@ -70,6 +70,8 @@
             this.panel23 = new System.Windows.Forms.Panel();
             this.panel24 = new System.Windows.Forms.Panel();
             this.panel25 = new System.Windows.Forms.Panel();
+            this.comboBox_showPictureID = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox_raivas = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -90,6 +92,7 @@
             this.最小化ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.最大化ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.切换屏幕ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkBox_show_all = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel_Max.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -117,40 +120,42 @@
             // tableLayoutPanel_Max
             // 
             resources.ApplyResources(this.tableLayoutPanel_Max, "tableLayoutPanel_Max");
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox2, 1, 4);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox3, 1, 6);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox4, 1, 8);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox5, 1, 10);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox6, 3, 2);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox7, 3, 4);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox8, 3, 6);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox9, 3, 8);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox10, 3, 10);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox11, 5, 2);
+            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox2, 1, 6);
+            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox3, 1, 8);
+            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox4, 1, 10);
+            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox5, 1, 12);
+            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox6, 3, 4);
+            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox7, 3, 6);
+            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox8, 3, 8);
+            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox9, 3, 10);
+            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox10, 3, 12);
+            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox11, 5, 4);
             this.tableLayoutPanel_Max.Controls.Add(this.label_carNum, 6, 0);
             this.tableLayoutPanel_Max.Controls.Add(this.label_carName, 5, 0);
             this.tableLayoutPanel_Max.Controls.Add(this.panel2, 7, 0);
             this.tableLayoutPanel_Max.Controls.Add(this.panel1, 1, 0);
             this.tableLayoutPanel_Max.Controls.Add(this.panel3, 3, 0);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel4, 4, 2);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel_bian, 2, 2);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox1, 1, 2);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel5, 0, 2);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel6, 8, 2);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel7, 1, 3);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel8, 3, 3);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel9, 1, 5);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel10, 3, 5);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel16, 1, 7);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel17, 3, 7);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel18, 1, 9);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel19, 3, 9);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel4, 4, 4);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel_bian, 2, 4);
+            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox1, 1, 4);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel5, 0, 4);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel6, 8, 4);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel7, 1, 5);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel8, 3, 5);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel9, 1, 7);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel10, 3, 7);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel16, 1, 9);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel17, 3, 9);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel18, 1, 11);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel19, 3, 11);
             this.tableLayoutPanel_Max.Controls.Add(this.panel20, 1, 1);
             this.tableLayoutPanel_Max.Controls.Add(this.panel21, 3, 1);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel22, 1, 11);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel23, 3, 11);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel24, 5, 11);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel22, 1, 13);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel23, 3, 13);
+            this.tableLayoutPanel_Max.Controls.Add(this.panel24, 5, 13);
             this.tableLayoutPanel_Max.Controls.Add(this.panel25, 5, 1);
+            this.tableLayoutPanel_Max.Controls.Add(this.comboBox_showPictureID, 6, 2);
+            this.tableLayoutPanel_Max.Controls.Add(this.label4, 5, 2);
             this.tableLayoutPanel_Max.Name = "tableLayoutPanel_Max";
             this.tableLayoutPanel_Max.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel_Max_Paint);
             // 
@@ -419,6 +424,22 @@
             this.panel25.Name = "panel25";
             this.panel25.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
             // 
+            // comboBox_showPictureID
+            // 
+            this.tableLayoutPanel_Max.SetColumnSpan(this.comboBox_showPictureID, 2);
+            resources.ApplyResources(this.comboBox_showPictureID, "comboBox_showPictureID");
+            this.comboBox_showPictureID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_showPictureID.FormattingEnabled = true;
+            this.comboBox_showPictureID.Name = "comboBox_showPictureID";
+            this.comboBox_showPictureID.SelectedIndexChanged += new System.EventHandler(this.comboBox_showPictureID_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(50)))), ((int)(((byte)(125)))));
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Name = "label4";
+            // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
@@ -588,12 +609,23 @@
             resources.ApplyResources(this.切换屏幕ToolStripMenuItem, "切换屏幕ToolStripMenuItem");
             this.切换屏幕ToolStripMenuItem.Click += new System.EventHandler(this.切换屏幕ToolStripMenuItem_Click);
             // 
+            // checkBox_show_all
+            // 
+            resources.ApplyResources(this.checkBox_show_all, "checkBox_show_all");
+            this.checkBox_show_all.Checked = true;
+            this.checkBox_show_all.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_show_all.ForeColor = System.Drawing.Color.White;
+            this.checkBox_show_all.Name = "checkBox_show_all";
+            this.checkBox_show_all.UseVisualStyleBackColor = true;
+            this.checkBox_show_all.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // FormShow
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(50)))), ((int)(((byte)(125)))));
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.checkBox_show_all);
             this.Controls.Add(this.panel15);
             this.Controls.Add(this.panel14);
             this.Controls.Add(this.panel13);
@@ -643,6 +675,7 @@
             this.panel_MinimizeBox.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -683,7 +716,6 @@
         private System.Windows.Forms.PictureBox pictureBox8;
         private System.Windows.Forms.PictureBox pictureBox9;
         private System.Windows.Forms.PictureBox pictureBox10;
-        private System.Windows.Forms.PictureBox pictureBox11;
         private System.Windows.Forms.Label label_carNum;
         private System.Windows.Forms.Label label_time;
         private System.Windows.Forms.Label label_carName;
@@ -708,5 +740,9 @@
         private System.Windows.Forms.Panel panel23;
         private System.Windows.Forms.Panel panel24;
         private System.Windows.Forms.Panel panel25;
+        private System.Windows.Forms.CheckBox checkBox_show_all;
+        private System.Windows.Forms.PictureBox pictureBox11;
+        private System.Windows.Forms.ComboBox comboBox_showPictureID;
+        private System.Windows.Forms.Label label4;
     }
 }

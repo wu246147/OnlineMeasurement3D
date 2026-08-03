@@ -1048,43 +1048,56 @@ namespace OnlineMeasurement.IO
                     double x = dict["X"];
                     hPose[0] = x/1000;
                 }
-                else { return false; }
+                else {
+                    _errMsg = "接收信息为：info。err: 没有x参数";
+                    return false; }
 
                 if (dict.ContainsKey("Y"))
                 {
                     double y = dict["Y"];
                     hPose[1] = y/1000;
                 }
-                else { return false; }
+                else {
+                    _errMsg = "接收信息为：info。err: 没有y参数";
+                    return false; }
                 if (dict.ContainsKey("Z"))
                 {
                     double z = dict["Z"];
                     hPose[2] = z / 1000;
                 }
-                else { return false; }
+                else {
+                    _errMsg = "接收信息为：info。err: 没有z参数";
+                    return false; }
                 if (dict.ContainsKey("A"))
                 {
                     double a = dict["A"];
                     hPose[5] = a;
                 }
-                else { return false; }
+                else {
+                    _errMsg = "接收信息为：info。err: 没有A参数";
+                    return false; }
                 if (dict.ContainsKey("B"))
                 {
                     double b = dict["B"];
                     hPose[4] = b;
                 }
-                else { return false; }
+                else {
+                    _errMsg = "接收信息为：info。err: 没有B参数";
+                    return false; }
                 if (dict.ContainsKey("C"))
                 {
                     double c = dict["C"];
                     hPose[3] = c;
                 }
-                else { return false; }
+                else {
+                    _errMsg = "接收信息为：info。err: 没有C参数";
+                    return false; }
 
                 hPose[6] = 2;
             }
             catch (Exception ex)
             {
+                _errMsg = "接收信息为：info。err:" + ex.Message;
                 return false;
             }
 
@@ -1108,36 +1121,55 @@ namespace OnlineMeasurement.IO
                 {
                     hAngle[0] = dict["A1"];
                 }
-                else { return false; }
+                else
+                {
+                    _errMsg = "接收信息为：info。err: 没有A1参数";
+                    return false; }
 
                 if (dict.ContainsKey("A2"))
                 {
                     hAngle[1] = dict["A2"];
                 }
-                else { return false; }
+                else
+                {
+                    _errMsg = "接收信息为：info。err: 没有A2参数";
+                    return false; }
                 if (dict.ContainsKey("A3"))
                 {
                     hAngle[2] = dict["A3"];
                 }
-                else { return false; }
+                else
+                {
+                    _errMsg = "接收信息为：info。err: 没有A3参数";
+                    return false; }
                 if (dict.ContainsKey("A4"))
                 {
                     hAngle[3] = dict["A4"];
                 }
-                else { return false; }
+                else
+                {
+                    _errMsg = "接收信息为：info。err: 没有A4参数";
+                    return false; }
                 if (dict.ContainsKey("A5"))
                 {
                     hAngle[4] = dict["A5"];
                 }
-                else { return false; }
+                else
+                {
+                    _errMsg = "接收信息为：info。err: 没有A5参数";
+                    return false; }
                 if (dict.ContainsKey("A6"))
                 {
                     hAngle[5] = dict["A6"];
                 }
-                else { return false; }
+                else
+                {
+                    _errMsg = "接收信息为：info。err: 没有A6参数";
+                    return false; }
             }
             catch (Exception ex)
             {
+                _errMsg = "接收信息为：info。err:" + ex.Message;
                 return false;
             }
 
@@ -1152,11 +1184,14 @@ namespace OnlineMeasurement.IO
 
             if (rt)
             {
-                rt = FormatTransformPose(info, out hPose); 
+                rt = FormatTransformPose(info, out hPose);
             }
-            
+            else
+            {
+                _errMsg = "读取 $POS_ACT 失败:" + _errMsg;
+            }
 
-            return rt;
+                return rt;
         }
         public bool ReadAngle(out HTuple hAngle)
         {
@@ -1167,15 +1202,18 @@ namespace OnlineMeasurement.IO
             {
                 rt = FormatTransformAXIS(info, out hAngle);
             }
-
+            else
+            {
+                _errMsg = "读取 $AXIS_ACT 失败:" + _errMsg;
+            }
 
             return rt;
         }
         public bool Read(string key, out string info)
         {
             var value = robot.ReadString(key);
-
             info = value.Content;
+            _errMsg = value.Message;
             return value.IsSuccess;
         }
 

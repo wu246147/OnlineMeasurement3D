@@ -1553,7 +1553,7 @@ namespace OnlineMeasurement
                     bool rt2 = robot.ReadAngle(out Angle);
                     if (!rt || !rt2)
                     {
-                        ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail}", Color.Red);
+                        ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail},{robot.ErrMsg}", Color.Red);
                         return;
                     }
                 }
@@ -1581,7 +1581,7 @@ namespace OnlineMeasurement
                 //ShowMessage(camName + $" Joint:({A1.Content},{A2.Content},{A3.Content},{A4.Content},{A5.Content},{A6.Content})" + pointNum);
 
 
-
+                 
                 //// 这里用的是kuka机器人，默认pose是xyz
                 //HOperatorSet.CreatePose(PoseX.Content, PoseY.Content, PoseZ.Content, PoseRX.Content, PoseRY.Content, PoseRZ.Content, "Rp+T", "gba", "point", out Pose);
                 //Angle.Append(A1.Content);

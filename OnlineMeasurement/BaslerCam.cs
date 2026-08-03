@@ -1,4 +1,4 @@
-﻿using Basler.Pylon;
+using Basler.Pylon;
 using HalconDotNet;
 using System;
 using System.Collections.Generic;

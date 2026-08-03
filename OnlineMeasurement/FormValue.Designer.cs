@@ -1,4 +1,4 @@
-﻿namespace OnlineMeasurement
+namespace OnlineMeasurement
 {
     partial class FormValue
     {

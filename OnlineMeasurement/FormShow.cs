@@ -1,4 +1,4 @@
-﻿using HalconDotNet;
+using HalconDotNet;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -292,8 +292,15 @@ namespace OnlineMeasurement
             //GC.Collect();
         }
 
-        public Dictionary<string, ShowCarXYZ> ShowCarXYZs = new Dictionary<string, ShowCarXYZ>();
-        public Dictionary<string, Image> CarImages = new Dictionary<string, Image>();
+        //改为兼容一个车型，多组结果图片显示形式
+        public Dictionary<string, List<ShowCarXYZ>> ShowCarXYZs = new Dictionary<string, List<ShowCarXYZ>>();
+        public Dictionary<string, List<Image>> CarImages = new Dictionary<string, List<Image>>();
+        //一个队列，记录当前车型的结果图片
+
+        public List<Image> CarResultImages = new List<Image>();
+
+        public bool isShowAll = true;
+
         private void FormShow_Load(object sender, EventArgs e)
         {
             label1.Text = Text;
@@ -301,45 +308,52 @@ namespace OnlineMeasurement
             try
             {
                 ShowCarXYZs.Clear();
-                string[] cars = Directory.GetFiles("数模图", "*.xml");
-                foreach (string car in cars)
-                {
-                    ShowCarXYZ showCarXYZ = new ShowCarXYZ();
-                    if (showCarXYZ.Load(car))
-                    {
-                        ShowCarXYZs.Add(Path.GetFileNameWithoutExtension(car), showCarXYZ);
-                    }
-                    //showCarXYZ.Save(car);
-                }
-
                 CarImages.Clear();
-                string[] imagePaths = Directory.GetFiles("数模图", "*.png");
-                foreach (string path in imagePaths)
+
+
+                // 获取"数模图"下所有子目录，每个子目录代表一个车型
+                string basePath = "数模图";
+                if (!Directory.Exists(basePath))
+                    return;
+
+                string[] carFolders = Directory.GetDirectories(basePath);
+
+                foreach (string folder in carFolders)
                 {
-                    Stream stream = File.OpenRead(path);
-                    byte[] bytes = new byte[stream.Length];  
-                    stream.Read(bytes, 0, bytes.Length);
-                    Stream stream1 = new MemoryStream(bytes);
-                    CarImages.Add(Path.GetFileNameWithoutExtension(path), (Image)Bitmap.FromStream(stream1));
-                    stream.Close();
-                    stream.Dispose();
+                    string carName = Path.GetFileName(folder);
+
+                    // --- 加载该车型下所有 xml ---
+                    List<ShowCarXYZ> xyzList = new List<ShowCarXYZ>();
+                    string[] xmlFiles = Directory.GetFiles(folder, "*.xml");
+                    foreach (string xmlPath in xmlFiles)
+                    {
+                        ShowCarXYZ showCarXYZ = new ShowCarXYZ();
+                        if (showCarXYZ.Load(xmlPath))
+                        {
+                            xyzList.Add(showCarXYZ);
+                        }
+                    }
+                    if (xyzList.Count > 0)
+                    {
+                        ShowCarXYZs.Add(carName, xyzList);
+                    }
+
+                    // --- 加载该车型下所有 png ---
+                    List<Image> imageList = new List<Image>();
+                    string[] pngFiles = Directory.GetFiles(folder, "*.png");
+                    foreach (string pngPath in pngFiles)
+                    {
+                        // 使用 MemoryStream 做中转，避免文件被锁定
+                        byte[] bytes = File.ReadAllBytes(pngPath);
+                        MemoryStream ms = new MemoryStream(bytes);
+                        imageList.Add((Image)Bitmap.FromStream(ms));
+                    }
+                    if (imageList.Count > 0)
+                    {
+                        CarImages.Add(carName, imageList);
+                    }
                 }
 
-                //透明处理
-                //Bitmap image = new Bitmap("CRD-2UE-1.png");
-                //for (int h = 0; h < image.Height; h++)
-                //{
-                //    for (int w = 0; w < image.Width; w++)
-                //    {
-                //        Color color = image.GetPixel(w, h);
-                //        if (color == Color.FromArgb(255, 255, 0, 0))
-                //        {
-                //            image.SetPixel(w, h, Color.FromArgb(0, 0, 0, 0));
-                //        }
-                //    }
-                //}
-                //image.Save("CRD-2UE.png", ImageFormat.Png);
-                //pictureBox11.Image = image;
             }
             catch (Exception ex)
             {
@@ -395,18 +409,23 @@ namespace OnlineMeasurement
                 {
                     label_carName.Text = $"{Resources.LanguageDic.model_no}：" + CarNameNow;
                     label_carNum.Text = $"{Resources.LanguageDic.car_no}：" + CarNumNow;
-                    if (pictureBox11.Image != null)
-                    {
-                        pictureBox11.Image.Dispose();
-                    }
+
+                    CarResultImages.Clear();
                     if (CarImages.ContainsKey(CarNameNow))
                     {
-                        pictureBox11.Image = (Image)CarImages[CarNameNow].Clone();
+                        for (int i = 0; i < CarImages[CarNameNow].Count; i++)
+                        {
+                            CarResultImages.Add((Image)CarImages[CarNameNow][i].Clone());
+                        }
                     }
-                    else
+                    
+
+                    comboBox_showPictureID.Items.Clear();
+                    for (int i = 0; i < CarImages[CarNameNow].Count; i++)
                     {
-                        pictureBox11.Image = null;
+                        comboBox_showPictureID.Items.Add($"{i + 1}");
                     }
+                    comboBox_showPictureID.SelectedIndex = 0;
                 }
                 catch { }
             }));
@@ -486,78 +505,330 @@ namespace OnlineMeasurement
                 catch { }
             }));
         }
+
+        //public void UpDataXYZ(Point3D point3D, string pointName)
+        //{
+        //    BeginInvoke(new Action(() =>
+        //    {
+        //        try
+        //        {
+        //            //GC.Collect();
+        //            //GC.WaitForPendingFinalizers();
+
+
+
+        //            if (!ShowCarXYZs.ContainsKey(CarNameNow) || !ShowCarXYZs[CarNameNow].Points.ContainsKey(pointName)) return;
+        //            if (pictureBox11.Image == null) return;
+        //            Image image = (Image)pictureBox11.Image.Clone();
+
+
+        //            using (Graphics g = Graphics.FromImage(image))
+        //            {
+        //                g.SmoothingMode = SmoothingMode.AntiAlias;//抗锯齿
+
+        //                if (isShowAll)
+        //                {
+        //                    Rectangle rectangle = new Rectangle(ShowCarXYZs[CarNameNow].Points[pointName].Location.X, ShowCarXYZs[CarNameNow].Points[pointName].Location.Y, 120, 70);
+        //                    //背景
+        //                    g.FillRectangle(new SolidBrush(Color.LightGreen), rectangle);
+        //                    PointF connection = new PointF();
+        //                    switch (ShowCarXYZs[CarNameNow].Points[pointName].Connection)
+        //                    {
+        //                        case 1:
+        //                            connection.X = rectangle.Left;
+        //                            connection.Y = rectangle.Top;
+        //                            break;
+        //                        case 2:
+        //                            connection.X = (rectangle.Left + rectangle.Right) / 2;
+        //                            connection.Y = rectangle.Top;
+        //                            break;
+        //                        case 3:
+        //                            connection.X = rectangle.Right;
+        //                            connection.Y = rectangle.Top;
+        //                            break;
+        //                        case 4:
+        //                            connection.X = rectangle.Left;
+        //                            connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
+        //                            break;
+        //                        case 5:
+        //                            connection.X = rectangle.Right;
+        //                            connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
+        //                            break;
+        //                        case 6:
+        //                            connection.X = rectangle.Left;
+        //                            connection.Y = rectangle.Bottom;
+        //                            break;
+        //                        case 7:
+        //                            connection.X = (rectangle.Left + rectangle.Right) / 2;
+        //                            connection.Y = rectangle.Bottom;
+        //                            break;
+        //                        case 8:
+        //                            connection.X = rectangle.Right;
+        //                            connection.Y = rectangle.Bottom;
+        //                            break;
+        //                        default:
+        //                            connection.X = (rectangle.Left + rectangle.Right) / 2;
+        //                            connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
+        //                            break;
+        //                    }
+        //                    //连接线
+        //                    g.DrawLine(new Pen(Color.LightGreen), ShowCarXYZs[CarNameNow].Points[pointName].Point, connection);
+        //                    //边框
+        //                    g.DrawRectangle(new Pen(Color.Green), rectangle);
+        //                    //文字
+        //                    g.DrawString($"X:{point3D.X:0.00}\nY:{point3D.Y:0.00}\nZ:{point3D.Z:0.00}", new Font(new FontFamily("Arial"), 16, FontStyle.Italic), new SolidBrush(Color.Black), rectangle, StringFormat.GenericDefault);
+
+        //                }
+        //                else 
+        //                {
+        //                    Rectangle rectangle = new Rectangle(ShowCarXYZs[CarNameNow].Points[pointName].Location.X, ShowCarXYZs[CarNameNow].Points[pointName].Location.Y, 60, 25);
+        //                    //背景
+        //                    g.FillRectangle(new SolidBrush(Color.LightGreen), rectangle);
+        //                    PointF connection = new PointF();
+        //                    switch (ShowCarXYZs[CarNameNow].Points[pointName].Connection)
+        //                    {
+        //                        case 1:
+        //                            connection.X = rectangle.Left;
+        //                            connection.Y = rectangle.Top;
+        //                            break;
+        //                        case 2:
+        //                            connection.X = (rectangle.Left + rectangle.Right) / 2;
+        //                            connection.Y = rectangle.Top;
+        //                            break;
+        //                        case 3:
+        //                            connection.X = rectangle.Right;
+        //                            connection.Y = rectangle.Top;
+        //                            break;
+        //                        case 4:
+        //                            connection.X = rectangle.Left;
+        //                            connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
+        //                            break;
+        //                        case 5:
+        //                            connection.X = rectangle.Right;
+        //                            connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
+        //                            break;
+        //                        case 6:
+        //                            connection.X = rectangle.Left;
+        //                            connection.Y = rectangle.Bottom;
+        //                            break;
+        //                        case 7:
+        //                            connection.X = (rectangle.Left + rectangle.Right) / 2;
+        //                            connection.Y = rectangle.Bottom;
+        //                            break;
+        //                        case 8:
+        //                            connection.X = rectangle.Right;
+        //                            connection.Y = rectangle.Bottom;
+        //                            break;
+        //                        default:
+        //                            connection.X = (rectangle.Left + rectangle.Right) / 2;
+        //                            connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
+        //                            break;
+        //                    }
+        //                    //连接线
+        //                    g.DrawLine(new Pen(Color.LightGreen), ShowCarXYZs[CarNameNow].Points[pointName].Point, connection);
+        //                    //边框
+        //                    g.DrawRectangle(new Pen(Color.Green), rectangle);
+        //                    //文字
+        //                    g.DrawString($"{pointName}", new Font(new FontFamily("Arial"), 16, FontStyle.Italic), new SolidBrush(Color.Black), rectangle, StringFormat.GenericDefault);
+        //                }
+                        
+        //            }
+
+        //            if (pictureBox11.Image != null)
+        //            {
+        //                pictureBox11.Image.Dispose();
+        //            }
+        //            pictureBox11.Image = image;
+        //        }
+        //        catch (Exception ex) { Console.WriteLine(ex.Message); }
+        //    }));
+        //}
+       
         public void UpDataXYZ(Point3D point3D, string pointName)
         {
             BeginInvoke(new Action(() =>
             {
                 try
                 {
-                    //GC.Collect();
-                    //GC.WaitForPendingFinalizers();
-                    if (pictureBox11.Image == null) return;
-                    if (!ShowCarXYZs.ContainsKey(CarNameNow) || !ShowCarXYZs[CarNameNow].Points.ContainsKey(pointName)) return;
-                    Image image = (Image)pictureBox11.Image.Clone();
-                    using (Graphics g = Graphics.FromImage(image))
+                    // 检查当前车型是否存在
+                    if (!ShowCarXYZs.ContainsKey(CarNameNow)) return;
+
+                    List<ShowCarXYZ> xyzList = ShowCarXYZs[CarNameNow];
+
+
+                    int currentIndex = comboBox_showPictureID.SelectedIndex;
+
+
+                    // 遍历当前车型的每一组 ShowCarXYZ
+                    for (int i = 0; i < xyzList.Count; i++)
                     {
-                        g.SmoothingMode = SmoothingMode.AntiAlias;//抗锯齿
-                        Rectangle rectangle = new Rectangle(ShowCarXYZs[CarNameNow].Points[pointName].Location.X, ShowCarXYZs[CarNameNow].Points[pointName].Location.Y, 120, 70);
-                        //背景
-                        g.FillRectangle(new SolidBrush(Color.LightGreen), rectangle);
-                        PointF connection = new PointF();
-                        switch (ShowCarXYZs[CarNameNow].Points[pointName].Connection)
+                        ShowCarXYZ xyz = xyzList[i];
+
+                        // 该组不包含此点，跳过
+                        if (!xyz.Points.ContainsKey(pointName)) continue;
+                        // 索引越界保护
+                        if (i >= CarResultImages.Count) continue;
+                        // 当前结果图片为空，跳过
+                        if (CarResultImages[i] == null) continue;
+
+                        // 克隆当前结果图片（保留之前已绘制的标注）
+                        Image image = (Image)CarResultImages[i].Clone();
+
+                        using (Graphics g = Graphics.FromImage(image))
                         {
-                            case 1:
-                                connection.X = rectangle.Left;
-                                connection.Y = rectangle.Top;
-                                break;
-                            case 2:
-                                connection.X = (rectangle.Left + rectangle.Right) / 2;
-                                connection.Y = rectangle.Top;
-                                break;
-                            case 3:
-                                connection.X = rectangle.Right;
-                                connection.Y = rectangle.Top;
-                                break;
-                            case 4:
-                                connection.X = rectangle.Left;
-                                connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
-                                break;
-                            case 5:
-                                connection.X = rectangle.Right;
-                                connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
-                                break;
-                            case 6:
-                                connection.X = rectangle.Left;
-                                connection.Y = rectangle.Bottom;
-                                break;
-                            case 7:
-                                connection.X = (rectangle.Left + rectangle.Right) / 2;
-                                connection.Y = rectangle.Bottom;
-                                break;
-                            case 8:
-                                connection.X = rectangle.Right;
-                                connection.Y = rectangle.Bottom;
-                                break;
-                            default:
-                                connection.X = (rectangle.Left + rectangle.Right) / 2;
-                                connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
-                                break;
+                            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+                            if (isShowAll)
+                            {
+                                Rectangle rectangle = new Rectangle(
+                                    xyz.Points[pointName].Location.X,
+                                    xyz.Points[pointName].Location.Y,
+                                    120, 95);
+
+                                // 背景
+                                g.FillRectangle(new SolidBrush(Color.LightGreen), rectangle);
+
+                                PointF connection = new PointF();
+                                switch (xyz.Points[pointName].Connection)
+                                {
+                                    case 1:
+                                        connection.X = rectangle.Left;
+                                        connection.Y = rectangle.Top;
+                                        break;
+                                    case 2:
+                                        connection.X = (rectangle.Left + rectangle.Right) / 2;
+                                        connection.Y = rectangle.Top;
+                                        break;
+                                    case 3:
+                                        connection.X = rectangle.Right;
+                                        connection.Y = rectangle.Top;
+                                        break;
+                                    case 4:
+                                        connection.X = rectangle.Left;
+                                        connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
+                                        break;
+                                    case 5:
+                                        connection.X = rectangle.Right;
+                                        connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
+                                        break;
+                                    case 6:
+                                        connection.X = rectangle.Left;
+                                        connection.Y = rectangle.Bottom;
+                                        break;
+                                    case 7:
+                                        connection.X = (rectangle.Left + rectangle.Right) / 2;
+                                        connection.Y = rectangle.Bottom;
+                                        break;
+                                    case 8:
+                                        connection.X = rectangle.Right;
+                                        connection.Y = rectangle.Bottom;
+                                        break;
+                                    default:
+                                        connection.X = (rectangle.Left + rectangle.Right) / 2;
+                                        connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
+                                        break;
+                                }
+
+                                // 连接线
+                                g.DrawLine(new Pen(Color.LightGreen),
+                                    xyz.Points[pointName].Point, connection);
+                                // 边框
+                                g.DrawRectangle(new Pen(Color.Green), rectangle);
+                                // 文字
+                                g.DrawString(
+                                    
+                                    $"{pointName}\nX:{point3D.X:0.00}\nY:{point3D.Y:0.00}\nZ:{point3D.Z:0.00}",
+                                    new Font(new FontFamily("Arial"), 16, FontStyle.Italic),
+                                    new SolidBrush(Color.Black),
+                                    rectangle,
+                                    StringFormat.GenericDefault);
+                            }
+                            else
+                            {
+                                Rectangle rectangle = new Rectangle(
+                                    xyz.Points[pointName].Location.X,
+                                    xyz.Points[pointName].Location.Y,
+                                    60, 25);
+
+                                // 背景
+                                g.FillRectangle(new SolidBrush(Color.LightGreen), rectangle);
+
+                                PointF connection = new PointF();
+                                switch (xyz.Points[pointName].Connection)
+                                {
+                                    case 1:
+                                        connection.X = rectangle.Left;
+                                        connection.Y = rectangle.Top;
+                                        break;
+                                    case 2:
+                                        connection.X = (rectangle.Left + rectangle.Right) / 2;
+                                        connection.Y = rectangle.Top;
+                                        break;
+                                    case 3:
+                                        connection.X = rectangle.Right;
+                                        connection.Y = rectangle.Top;
+                                        break;
+                                    case 4:
+                                        connection.X = rectangle.Left;
+                                        connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
+                                        break;
+                                    case 5:
+                                        connection.X = rectangle.Right;
+                                        connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
+                                        break;
+                                    case 6:
+                                        connection.X = rectangle.Left;
+                                        connection.Y = rectangle.Bottom;
+                                        break;
+                                    case 7:
+                                        connection.X = (rectangle.Left + rectangle.Right) / 2;
+                                        connection.Y = rectangle.Bottom;
+                                        break;
+                                    case 8:
+                                        connection.X = rectangle.Right;
+                                        connection.Y = rectangle.Bottom;
+                                        break;
+                                    default:
+                                        connection.X = (rectangle.Left + rectangle.Right) / 2;
+                                        connection.Y = (rectangle.Top + rectangle.Bottom) / 2;
+                                        break;
+                                }
+
+                                // 连接线
+                                g.DrawLine(new Pen(Color.LightGreen),
+                                    xyz.Points[pointName].Point, connection);
+                                // 边框
+                                g.DrawRectangle(new Pen(Color.Green), rectangle);
+                                // 文字
+                                g.DrawString(
+                                    $"{pointName}",
+                                    new Font(new FontFamily("Arial"), 16, FontStyle.Italic),
+                                    new SolidBrush(Color.Black),
+                                    rectangle,
+                                    StringFormat.GenericDefault);
+                            }
                         }
-                        //连接线
-                        g.DrawLine(new Pen(Color.LightGreen), ShowCarXYZs[CarNameNow].Points[pointName].Point, connection);
-                        //边框
-                        g.DrawRectangle(new Pen(Color.Green), rectangle);
-                        //文字
-                        g.DrawString($"X:{point3D.X:0.00}\nY:{point3D.Y:0.00}\nZ:{point3D.Z:0.00}", new Font(new FontFamily("Arial"), 16, FontStyle.Italic), new SolidBrush(Color.Black), rectangle, StringFormat.GenericDefault);
+
+                        // 替换对应的结果图片
+                        CarResultImages[i].Dispose();
+                        CarResultImages[i] = image;
+
+                        // 如果 pictureBox11 正在显示这张图，同步更新
+                        if (i == currentIndex)
+                        {
+                            pictureBox11.Image.Dispose();
+                            pictureBox11.Image = (Image)CarResultImages[i].Clone();
+                        }
                     }
 
-                    if (pictureBox11.Image != null)
-                    {
-                        pictureBox11.Image.Dispose();
-                    }
-                    pictureBox11.Image = image;
+                    // 触发界面刷新，显示更新后的 CarResultImages
+                    // 根据你的实际 UI 结构调用，例如：
+                    // RefreshResultDisplay();
                 }
-                catch (Exception ex) { Console.WriteLine(ex.Message); }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }));
         }
 
@@ -617,5 +888,38 @@ namespace OnlineMeasurement
                 }
             }
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            isShowAll = checkBox_show_all.Checked;
+        }
+
+        private void comboBox_showPictureID_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int showImageID = comboBox_showPictureID.SelectedIndex;
+
+
+                if (pictureBox11.Image != null)
+                {
+                    pictureBox11.Image.Dispose();
+                }
+                if (CarResultImages.Count > showImageID)
+                {
+                    pictureBox11.Image = (Image)CarResultImages[showImageID].Clone();
+
+                }
+                else
+                {
+                    pictureBox11.Image = null;
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+         
+        }
+
     }
 }

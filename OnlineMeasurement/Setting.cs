@@ -1,4 +1,4 @@
-﻿using HalconDotNet;
+using HalconDotNet;
 using HslCommunication.Secs.Types;
 using MySqlX.XDevAPI.Common;
 using System;
@@ -2405,6 +2405,7 @@ namespace OnlineMeasurement
             }
         }
     
+
     }
 
 
