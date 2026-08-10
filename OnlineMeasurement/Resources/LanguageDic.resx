@@ -159,6 +159,12 @@
   <data name="check_result" xml:space="preserve">
     <value>检测结果</value>
   </data>
+  <data name="check_result_ng_write_fail" xml:space="preserve">
+    <value>测量结果NG写入失败</value>
+  </data>
+  <data name="check_result_ok_write_fail" xml:space="preserve">
+    <value>测量结果OK写入失败</value>
+  </data>
   <data name="check_result_readable_write_fail" xml:space="preserve">
     <value>测量结果可读写入失败</value>
   </data>
@@ -393,8 +399,17 @@
   <data name="ready_write_fail" xml:space="preserve">
     <value>准备好写入失败</value>
   </data>
+  <data name="Read_angel_again" xml:space="preserve">
+    <value>再读机器人角度一次</value>
+  </data>
+  <data name="Read_pose_again" xml:space="preserve">
+    <value>再读机器人位姿一次</value>
+  </data>
   <data name="Read_pose_fail" xml:space="preserve">
     <value>读取机器人位姿失败</value>
+  </data>
+  <data name="read_robot_angle_fail" xml:space="preserve">
+    <value>读取机器人角度失败</value>
   </data>
   <data name="read_signal_read_fail" xml:space="preserve">
     <value>已读信号读取失败</value>

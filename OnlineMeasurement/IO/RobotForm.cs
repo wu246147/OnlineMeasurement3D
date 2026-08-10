@@ -119,12 +119,18 @@ namespace OnlineMeasurement.IO
         private void buttonGetRobotPose_Click(object sender, EventArgs e)
         {
             bool rt = signal.ReadPose(out HPose hPose);
-            bool rt2 = signal.ReadAngle(out HTuple hAngel);
-            if (!rt || !rt2)
+            if (!rt)
             {
                 ShowMessage($"{Resources.LanguageDic.Read_pose_fail},{signal.ErrMsg}");
                 return;
             }
+            bool rt2 = signal.ReadAngle(out HTuple hAngel);
+            if (!rt2)
+            {
+                ShowMessage($"{Resources.LanguageDic.read_robot_angle_fail},{signal.ErrMsg}");
+                return;
+            }
+
             //显示
             textBoxRobotX.Text = $"{hPose[0].D * 1000:G6}";
             textBoxRobotY.Text = $"{hPose[1].D * 1000:G6}";

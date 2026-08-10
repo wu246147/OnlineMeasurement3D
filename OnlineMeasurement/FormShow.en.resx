@@ -156,4 +156,7 @@
   <data name="$this.Text" xml:space="preserve">
     <value>FormShow</value>
   </data>
+  <data name="checkBox_show_all.Text" xml:space="preserve">
+    <value>show all info</value>
+  </data>
 </root>

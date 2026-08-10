@@ -459,6 +459,17 @@ namespace OnlineMeasurement
                     {
                         ShowMessage(Resources.LanguageDic.check_result_write_fail, Color.Red);
                     }
+
+                    if (!plc.Write(camIODict["L"]["ResultOK"].Address, false).IsSuccess)
+                    {
+                        ShowMessage(Resources.LanguageDic.check_result_ok_write_fail, Color.Red);
+                    }
+
+                    if (!plc.Write(camIODict["L"]["ResultNG"].Address, false).IsSuccess)
+                    {
+                        ShowMessage(Resources.LanguageDic.check_result_ng_write_fail, Color.Red);
+                    }
+
                     if (!plc.Write(camIODict["L"]["Acq_Finish"].Address, false).IsSuccess)
                     {
                         ShowMessage(Resources.LanguageDic.L_photo_finish_write_fail, Color.Red);
@@ -1336,6 +1347,19 @@ namespace OnlineMeasurement
                     {
                         ShowMessage($"{Resources.LanguageDic.check_result_write_fail}", Color.Red);
                     }
+                    if (!plc.Write(camIODict["L"]["ResultOK"].Address, bResult).IsSuccess)
+                    {
+                        ShowMessage(Resources.LanguageDic.check_result_ok_write_fail, Color.Red);
+                    }
+
+                    if (!plc.Write(camIODict["L"]["ResultNG"].Address, !bResult).IsSuccess)
+                    {
+                        ShowMessage(Resources.LanguageDic.check_result_ng_write_fail, Color.Red);
+                    }
+
+
+
+
                     if (!plc.Write(camIODict["L"]["Check_Finish"].Address, true).IsSuccess)
                     {
                         ShowMessage($"{Resources.LanguageDic.check_result_readable_write_fail}", Color.Red);
@@ -1550,56 +1574,45 @@ namespace OnlineMeasurement
                 if (robot != null)
                 {
                     bool rt = robot.ReadPose(out Pose);
-                    bool rt2 = robot.ReadAngle(out Angle);
-                    if (!rt || !rt2)
+                    if (!rt)
                     {
                         ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail},{robot.ErrMsg}", Color.Red);
-                        return;
+
+                        // 尝试再读一次
+                        ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_again},{robot.ErrMsg}");
+                        rt = robot.ReadPose(out Pose);
+                        if (!rt)
+                        {
+                            ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail},{robot.ErrMsg}", Color.Red);
+                            return;
+                        }
+                    }
+                    bool rt2 = robot.ReadAngle(out Angle);
+                    if (!rt2)
+                    {
+                        ShowMessage(camName + $"{Resources.LanguageDic.read_robot_angle_fail},{robot.ErrMsg}", Color.Red);
+
+                        // 尝试再读一次
+                        ShowMessage(camName + $"{Resources.LanguageDic.Read_angel_again},{robot.ErrMsg}");
+                        rt2 = robot.ReadAngle(out Angle);
+                        if (!rt2)
+                        {
+                            ShowMessage(camName + $"{Resources.LanguageDic.read_robot_angle_fail},{robot.ErrMsg}", Color.Red);
+                            return;
+                        }
                     }
                 }
 
 
-                //var PoseX = plc.ReadFloat(IO["X"].Address);
-                //var PoseY = plc.ReadFloat(IO["Y"].Address);
-                //var PoseZ = plc.ReadFloat(IO["Z"].Address);
-                //var PoseRX = plc.ReadFloat(IO["RX"].Address);
-                //var PoseRY = plc.ReadFloat(IO["RY"].Address);
-                //var PoseRZ = plc.ReadFloat(IO["RZ"].Address);
-                //var A1 = plc.ReadFloat(IO["A1"].Address);
-                //var A2 = plc.ReadFloat(IO["A2"].Address);
-                //var A3 = plc.ReadFloat(IO["A3"].Address);
-                //var A4 = plc.ReadFloat(IO["A4"].Address);
-                //var A5 = plc.ReadFloat(IO["A5"].Address);
-                //var A6 = plc.ReadFloat(IO["A6"].Address);
-                //if (!PoseX.IsSuccess || !PoseY.IsSuccess || !PoseZ.IsSuccess || !PoseRX.IsSuccess || !PoseRY.IsSuccess || !PoseRZ.IsSuccess
-                //    || !A1.IsSuccess || !A2.IsSuccess || !A3.IsSuccess || !A4.IsSuccess || !A5.IsSuccess || !A6.IsSuccess)
-                //{
-                //    ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail}", Color.Red);
-                //    return;
-                //}
-                //ShowMessage(camName + $" Pose:({PoseX.Content},{PoseY.Content},{PoseZ.Content},{PoseRX.Content},{PoseRY.Content},{PoseRZ.Content})" + pointNum);
-                //ShowMessage(camName + $" Joint:({A1.Content},{A2.Content},{A3.Content},{A4.Content},{A5.Content},{A6.Content})" + pointNum);
-
-
-                 
-                //// 这里用的是kuka机器人，默认pose是xyz
-                //HOperatorSet.CreatePose(PoseX.Content, PoseY.Content, PoseZ.Content, PoseRX.Content, PoseRY.Content, PoseRZ.Content, "Rp+T", "gba", "point", out Pose);
-                //Angle.Append(A1.Content);
-                //Angle.Append(A2.Content);
-                //Angle.Append(A3.Content);
-                //Angle.Append(A4.Content);
-                //Angle.Append(A5.Content);
-                //Angle.Append(A6.Content);
-
-                ShowMessage(camName + $"Robot Pose:(x:{Pose[0]},y:{Pose[1]},z:{Pose[2]},rx:{Pose[3]},ry:{Pose[4]},rz:{Pose[5]})", Color.Red);
-                ShowMessage(camName + $"Robot Angle:(A1:{Angle[0]},A2:{Angle[1]},A3:{Angle[2]},A4:{Angle[3]},A5:{Angle[4]},A6:{Angle[5]})", Color.Red);
+                ShowMessage(camName + $"Robot Pose:(x:{Pose[0].D},y:{Pose[1].D},z:{Pose[2].D},rx:{Pose[3].D},ry:{Pose[4].D},rz:{Pose[5].D})");
+                ShowMessage(camName + $"Robot Angle:(A1:{Angle[0].D},A2:{Angle[1]},A3:{Angle[2].D},A4:{Angle[3].D},A5:{Angle[4].D},A6:{Angle[5].D})");
 
                 // 后面看要不要用这个测出来的坐标
-                double robotXOpt=0, robotYOpt = 0, robotZOpt = 0, robotRXOpt = 0, robotRYOpt = 0, robotRZOpt = 0;
+                double robotXOpt = 0, robotYOpt = 0, robotZOpt = 0, robotRXOpt = 0, robotRYOpt = 0, robotRZOpt = 0;
                 //调用温漂函数
-                if(oLM != null)
+                if (oLM != null)
                 {
-                    oLM.run(true, Angle[0], Angle[1], Angle[2], Angle[3], Angle[4], Angle[5], out robotXOpt, out robotYOpt, out robotZOpt, out robotRXOpt, out robotRYOpt, out robotRZOpt);
+                    oLM.run(true, Angle[0].D, Angle[1].D, Angle[2].D, Angle[3].D, Angle[4].D, Angle[5].D, out robotXOpt, out robotYOpt, out robotZOpt, out robotRXOpt, out robotRYOpt, out robotRZOpt);
 
                     if (robot_Type == Robot_Type.Kawasaki)
                     {
@@ -1616,7 +1629,7 @@ namespace OnlineMeasurement
                         robotRZOpt = (float)transformRz;
                     }
                 }
-                ShowMessage(camName + $"oLM Pose:(x:{robotXOpt},y:{robotYOpt},z:{robotZOpt},rx:{robotRXOpt},ry:{robotRYOpt},rz:{robotRZOpt})", Color.Red);
+                ShowMessage(camName + $"oLM Pose:(x:{robotXOpt},y:{robotYOpt},z:{robotZOpt},rx:{robotRXOpt},ry:{robotRYOpt},rz:{robotRZOpt})");
 
                 //给取像点赋值,如果后面有需要，要替代掉pose
                 HPose transformPose;
@@ -1974,6 +1987,155 @@ namespace OnlineMeasurement
                 double X = 0, Y = 0, Z = 0;
                 Dictionary<string, string> 测点数据表 = new Dictionary<string, string>();
                 bool b有数据 = false;
+
+                ShowMessage(camName + $"Start runMatch");
+
+                runMatch(camSetting, carSetting, camName, point3dBase, ref 检测异常, pointNum, Pose, Px0, Py0, Px1, Py1, Px2, Py2, led匹配, light匹配1, light匹配2, ref X, ref Y, ref Z, 测点数据表, ref b有数据);
+
+                if (b有数据)
+                {
+                    ShowMessage(camName + $" b get data");
+
+                    try
+                    {
+                        point3d.Add(pointNum, new Point3D(X, Y, Z));
+
+                        double dx = X - carSetting.gSets[pointNum].X;
+                        double dy = Y - carSetting.gSets[pointNum].Y;
+                        double dz = Z - carSetting.gSets[pointNum].Z;
+                        double dd = Math.Sqrt(dx * dx + dy * dy + dz * dz);
+                        ShowMessage($"{camName}_{pointNum} dx = {dx:0.000}mm, dy = {dy:0.000}mm, dz = {dz:0.000}mm, dd = {dd:0.000}mm");
+
+                        dataGridViewShow.BeginInvoke(new Action(() =>
+                        {
+                            int index = dataGridViewShow.Rows.Add(camName + pointNum, X.ToString("0.000"), Y.ToString("0.000"), Z.ToString("0.000"), dx.ToString("0.000"), dy.ToString("0.000"), dz.ToString("0.000"), dd.ToString("0.000"));
+                            if (dx < carSetting.gSets[pointNum].minDX || dx > carSetting.gSets[pointNum].maxDX)
+                            {
+                                dataGridViewShow.Rows[index].Cells[4].Style.BackColor = Color.Red;
+                            }
+                            if (dy < carSetting.gSets[pointNum].minDY || dy > carSetting.gSets[pointNum].maxDY)
+                            {
+                                dataGridViewShow.Rows[index].Cells[5].Style.BackColor = Color.Red;
+                            }
+                            if (dz < carSetting.gSets[pointNum].minDZ || dz > carSetting.gSets[pointNum].maxDZ)
+                            {
+                                dataGridViewShow.Rows[index].Cells[6].Style.BackColor = Color.Red;
+                            }
+                        }));
+                        if (dx < carSetting.gSets[pointNum].minDX || dx > carSetting.gSets[pointNum].maxDX)
+                        {
+                            数据超差 = false;
+                        }
+                        if (dy < carSetting.gSets[pointNum].minDY || dy > carSetting.gSets[pointNum].maxDY)
+                        {
+                            数据超差 = false;
+                        }
+                        if (dz < carSetting.gSets[pointNum].minDZ || dz > carSetting.gSets[pointNum].maxDZ)
+                        {
+                            数据超差 = false;
+                        }
+
+                        formShow?.UpDataXYZ(point3d[pointNum], camName + pointNum);////////////////////////
+
+                        测点数据表.Add("时间", dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss"));
+                        测点数据表.Add("相机名", camName);
+                        测点数据表.Add("点位号", pointNum.ToString());
+                        测点数据表.Add("X", X.ToString("0.000"));
+                        测点数据表.Add("Y", Y.ToString("0.000"));
+                        测点数据表.Add("Z", Z.ToString("0.000"));
+                        测点数据表.Add("DX", dx.ToString("0.000"));
+                        测点数据表.Add("DY", dy.ToString("0.000"));
+                        测点数据表.Add("DZ", dz.ToString("0.000"));
+                        测点数据表.Add("DD", dd.ToString("0.000"));
+
+                        sqlValuePairs.Add(pointNum, 测点数据表);
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowMessage(camName + $"result process error：{ex.Message}",Color.Red);
+                        return;
+                    }
+
+                }
+                else
+                {
+                    ShowMessage(camName + $" b no data");
+                }
+
+
+                ShowMessage($"{camName}{Resources.LanguageDic.Coordinate_calculation_completed}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
+                sp.Stop();
+                formShow?.UpData灯(camName, false);/////////////////////////////////
+
+                if (!bDry_mode)
+                {
+                    try
+                    {
+                        if (otherSet.isSaveImage)
+                        {
+                            //存图
+                            //ShowMessage($"{camName}_{pointNum:00} 开始存图");
+                            //hImage2D?.WriteImage("png 1", 0, $"{path}\\{camName}_{pointNum:00}_0.png");
+                            //hImage2D匹配图?.WriteImage("jpeg 80", 0, $"{path}\\{camName}_{pointNum:00}_0p.jpg");
+                            //hImageLight?.WriteImage("png 1", 0, $"{path}\\{camName}_{pointNum:00}_1.png");
+                            //hImageLight匹配图?.WriteImage("jpeg 80", 0, $"{path}\\{camName}_{pointNum:00}_1p.jpg");
+                            //ShowMessage($"{camName}_{pointNum:00} 存图完成");
+
+                            ShowMessage($"{camName}_{pointNum:00} {Resources.LanguageDic.Start_storing_images_into_memory}");
+                            lock (lockSaveImage)
+                            {
+                                if (ListImageKeys.Count < 120)
+                                {
+                                    {
+                                        string key = $"{path}\\{camName}_{pointNum:00}_0.png";
+                                        ListImageKeys.Add(key);
+                                        DicImages.Add(key, hImage2D);
+                                    }
+                                    {
+                                        string key = $"{path}\\{camName}_{pointNum:00}_0p.jpg";
+                                        ListImageKeys.Add(key);
+                                        DicImages.Add(key, hImage2D匹配图);
+                                    }
+                                    {
+                                        string key = $"{path}\\{camName}_{pointNum:00}_1.png";
+                                        ListImageKeys.Add(key);
+                                        DicImages.Add(key, hImageLight);
+                                    }
+                                    {
+                                        string key = $"{path}\\{camName}_{pointNum:00}_1p.jpg";
+                                        ListImageKeys.Add(key);
+                                        DicImages.Add(key, hImageLight匹配图);
+                                    }
+                                }
+                                else
+                                {
+                                    ShowMessage($"{camName}_{pointNum:00} {ListImageKeys.Count}{Resources.LanguageDic.pix_not_save_to_hard_disk_in_memory}，{Resources.LanguageDic.skip_this_save_image}", Color.Yellow);
+                                }
+                            }
+                            ShowMessage($"{camName}_{pointNum:00} {Resources.LanguageDic.Image_storage_into_memory_completed}");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowMessage($"{camName}_{pointNum} {Resources.LanguageDic.save_pic_error}：{ex}", Color.Red);
+                    }
+                }
+
+                if (endPoint.Content)
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.Process_ended}");
+                    break;
+                }
+            }
+        }
+
+        private void runMatch(CamSetting camSetting, CarSetting carSetting, string camName, Dictionary<int, Point3D> point3dBase, ref bool 检测异常, int pointNum, HPose Pose, 
+            float Px0, float Py0, float Px1, float Py1, float Px2, float Py2, bool led匹配, bool light匹配1, bool light匹配2, ref double X, ref double Y, ref double Z,
+            Dictionary<string, string> 测点数据表, ref bool b有数据)
+        {
+            try
+            {
+                //ShowMessage(camName + $"开始 runMatch");
                 if (light匹配1 && carSetting.gSets[pointNum].type == "棱")
                 {
                     if (camSetting.GetZFromLight(Px1, Py1, out float camZ) && camSetting.GetXYFromLight(Px1, Py1, camZ, out float camX, out float camY))
@@ -2176,151 +2338,15 @@ namespace OnlineMeasurement
                     }
                 }
 
-                if (b有数据)
-                {
-                    point3d.Add(pointNum, new Point3D(X, Y, Z));
-
-                    double dx = X - carSetting.gSets[pointNum].X;
-                    double dy = Y - carSetting.gSets[pointNum].Y;
-                    double dz = Z - carSetting.gSets[pointNum].Z;
-                    double dd = Math.Sqrt(dx * dx + dy * dy + dz * dz);
-                    ShowMessage($"{camName}_{pointNum} dx = {dx:0.000}mm, dy = {dy:0.000}mm, dz = {dz:0.000}mm, dd = {dd:0.000}mm");
-
-                    dataGridViewShow.BeginInvoke(new Action(() =>
-                    {
-                        int index = dataGridViewShow.Rows.Add(camName + pointNum, X.ToString("0.000"), Y.ToString("0.000"), Z.ToString("0.000"), dx.ToString("0.000"), dy.ToString("0.000"), dz.ToString("0.000"), dd.ToString("0.000"));
-                        if (dx < carSetting.gSets[pointNum].minDX || dx > carSetting.gSets[pointNum].maxDX)
-                        {
-                            dataGridViewShow.Rows[index].Cells[4].Style.BackColor = Color.Red;
-                        }
-                        if (dy < carSetting.gSets[pointNum].minDY || dy > carSetting.gSets[pointNum].maxDY)
-                        {
-                            dataGridViewShow.Rows[index].Cells[5].Style.BackColor = Color.Red;
-                        }
-                        if (dz < carSetting.gSets[pointNum].minDZ || dz > carSetting.gSets[pointNum].maxDZ)
-                        {
-                            dataGridViewShow.Rows[index].Cells[6].Style.BackColor = Color.Red;
-                        }
-                    }));
-                    if (dx < carSetting.gSets[pointNum].minDX || dx > carSetting.gSets[pointNum].maxDX)
-                    {
-                        数据超差 = false;
-                    }
-                    if (dy < carSetting.gSets[pointNum].minDY || dy > carSetting.gSets[pointNum].maxDY)
-                    {
-                        数据超差 = false;
-                    }
-                    if (dz < carSetting.gSets[pointNum].minDZ || dz > carSetting.gSets[pointNum].maxDZ)
-                    {
-                        数据超差 = false;
-                    }
-
-                    formShow?.UpDataXYZ(point3d[pointNum], camName + pointNum);////////////////////////
-
-                    测点数据表.Add("时间", dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss"));
-                    测点数据表.Add("相机名", camName);
-                    测点数据表.Add("点位号", pointNum.ToString());
-                    测点数据表.Add("X", X.ToString("0.000"));
-                    测点数据表.Add("Y", Y.ToString("0.000"));
-                    测点数据表.Add("Z", Z.ToString("0.000"));
-                    测点数据表.Add("DX", dx.ToString("0.000"));
-                    测点数据表.Add("DY", dy.ToString("0.000"));
-                    测点数据表.Add("DZ", dz.ToString("0.000"));
-                    测点数据表.Add("DD", dd.ToString("0.000"));
-
-                    sqlValuePairs.Add(pointNum, 测点数据表);
-
-                    //发送结果
-                    //var writeResultRef = plc.Write(IO["点位测量结果"].Address, 数据超差);
-
-                    //var writeXRef = plc.Write(IO["x坐标实际值"].Address ,(float)X);
-                    //var writeYRef = plc.Write(IO["y坐标实际值"].Address ,(float)Y);
-                    //var writeZRef = plc.Write(IO["z坐标实际值"].Address ,(float)Z);
-                    //var writeDXRef = plc.Write(IO["x坐标偏移值"].Address, (float)dx);
-                    //var writeDYRef = plc.Write(IO["y坐标偏移值"].Address, (float)dy);
-                    //var writeDZRef = plc.Write(IO["z坐标偏移值"].Address, (float)dz);
-
-                }
-                else
-                {
-                    //发送结果
-                    //var writeResultRef = plc.Write(IO["点位测量结果"].Address, 数据超差);
-
-                    //var writeXRef = plc.Write(IO["x坐标实际值"].Address, (float)X);
-                    //var writeYRef = plc.Write(IO["y坐标实际值"].Address, (float)Y);
-                    //var writeZRef = plc.Write(IO["z坐标实际值"].Address, (float)Z);
-                    //var writeDXRef = plc.Write(IO["x坐标偏移值"].Address, (float)99999);
-                    //var writeDYRef = plc.Write(IO["y坐标偏移值"].Address, (float)99999);
-                    //var writeDZRef = plc.Write(IO["z坐标偏移值"].Address, (float)99999);
-                }
-
-
-                ShowMessage($"{camName}{Resources.LanguageDic.Coordinate_calculation_completed}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
-                sp.Stop();
-                formShow?.UpData灯(camName, false);/////////////////////////////////
-
-                if (!bDry_mode)
-                {
-                    try
-                    {
-                        if (otherSet.isSaveImage)
-                        {
-                            //存图
-                            //ShowMessage($"{camName}_{pointNum:00} 开始存图");
-                            //hImage2D?.WriteImage("png 1", 0, $"{path}\\{camName}_{pointNum:00}_0.png");
-                            //hImage2D匹配图?.WriteImage("jpeg 80", 0, $"{path}\\{camName}_{pointNum:00}_0p.jpg");
-                            //hImageLight?.WriteImage("png 1", 0, $"{path}\\{camName}_{pointNum:00}_1.png");
-                            //hImageLight匹配图?.WriteImage("jpeg 80", 0, $"{path}\\{camName}_{pointNum:00}_1p.jpg");
-                            //ShowMessage($"{camName}_{pointNum:00} 存图完成");
-
-                            ShowMessage($"{camName}_{pointNum:00} {Resources.LanguageDic.Start_storing_images_into_memory}");
-                            lock (lockSaveImage)
-                            {
-                                if (ListImageKeys.Count < 120)
-                                {
-                                    {
-                                        string key = $"{path}\\{camName}_{pointNum:00}_0.png";
-                                        ListImageKeys.Add(key);
-                                        DicImages.Add(key, hImage2D);
-                                    }
-                                    {
-                                        string key = $"{path}\\{camName}_{pointNum:00}_0p.jpg";
-                                        ListImageKeys.Add(key);
-                                        DicImages.Add(key, hImage2D匹配图);
-                                    }
-                                    {
-                                        string key = $"{path}\\{camName}_{pointNum:00}_1.png";
-                                        ListImageKeys.Add(key);
-                                        DicImages.Add(key, hImageLight);
-                                    }
-                                    {
-                                        string key = $"{path}\\{camName}_{pointNum:00}_1p.jpg";
-                                        ListImageKeys.Add(key);
-                                        DicImages.Add(key, hImageLight匹配图);
-                                    }
-                                }
-                                else
-                                {
-                                    ShowMessage($"{camName}_{pointNum:00} {ListImageKeys.Count}{Resources.LanguageDic.pix_not_save_to_hard_disk_in_memory}，{Resources.LanguageDic.skip_this_save_image}", Color.Yellow);
-                                }
-                            }
-                            ShowMessage($"{camName}_{pointNum:00} {Resources.LanguageDic.Image_storage_into_memory_completed}");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        ShowMessage($"{camName}_{pointNum} {Resources.LanguageDic.save_pic_error}：{ex}", Color.Red);
-                    }
-                }
-
-                if (endPoint.Content)
-                {
-                    ShowMessage(camName + $"{Resources.LanguageDic.Process_ended}");
-                    break;
-                }
+                //ShowMessage(camName + $"完成 runMatch");
             }
-        }
+            catch (Exception ex)
+            {
+                检测异常 = false;
+                ShowMessage($"{camName}_{pointNum} match error:{ex}", Color.Red);
+            }
 
+         }
 
         private void RobotRunTempareCalib(string path, BaslerCamera.Cam cam,IRobot robot, CamSetting camSetting, CarSetting carSetting, string camName, Dictionary<string, IoAddress> IO)
         {
@@ -2457,11 +2483,32 @@ namespace OnlineMeasurement
                 Angle = new HTuple();
 
                 bool rt = robot.ReadPose(out Pose);
-                bool rt2 = robot.ReadAngle(out Angle);
-                if (!rt || !rt2)
+                if (!rt)
                 {
-                    ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail}", Color.Red);
-                    return;
+                    ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail},{robot.ErrMsg}", Color.Red);
+
+                    // 尝试再读一次
+                    ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_again},{robot.ErrMsg}");
+                    rt = robot.ReadPose(out Pose);
+                    if (!rt)
+                    {
+                        ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail},{robot.ErrMsg}", Color.Red);
+                        return;
+                    }
+                }
+                bool rt2 = robot.ReadAngle(out Angle);
+                if (!rt2)
+                {
+                    ShowMessage(camName + $"{Resources.LanguageDic.read_robot_angle_fail},{robot.ErrMsg}", Color.Red);
+
+                    // 尝试再读一次
+                    ShowMessage(camName + $"{Resources.LanguageDic.Read_angel_again},{robot.ErrMsg}");
+                    rt2 = robot.ReadAngle(out Angle);
+                    if (!rt2)
+                    {
+                        ShowMessage(camName + $"{Resources.LanguageDic.read_robot_angle_fail},{robot.ErrMsg}", Color.Red);
+                        return;
+                    }
                 }
                 ShowMessage(camName + $" Pose:({Pose[0]},{Pose[1]},{Pose[2]},{Pose[3]},{Pose[4]},{Pose[5]})" + pointNum);
                 ShowMessage(camName + $" Joint:({Angle[0]},{Angle[1]},{Angle[2]},{Angle[3]},{Angle[4]},{Angle[5]})" + pointNum);
@@ -4113,154 +4160,20 @@ namespace OnlineMeasurement
                     }
 
                     //坐标转换
+                    Dictionary<string, string> 测点数据表 = new Dictionary<string, string>();
 
                     double X = 0, Y = 0, Z = 0;
                     bool b有数据 = false;
-                    if (light匹配1 && carSetting.gSets[pointNum].type == "棱")
-                    {
-                        if (camSetting.GetZFromLight(Px1, Py1, out float z1) && camSetting.GetXYFromLight(Px1, Py1, z1, out float camX, out float camY))
-                        {
-                            //相机转工具
-                            double toolX = camSetting.cam2Tool.AffineTransPoint3d(camX, camY, z1, out double toolY, out double toolZ);
+                    bool 检测异常 = true;
 
-                            // 转为mm为单位
-                            double toolX_mm = toolX * 1000;
-                            double toolY_mm = toolY * 1000;
-                            double toolZ_mm = toolZ * 1000;
-                            //工具转基座标
-                            HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
-                                carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
-                            double rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out double rbY, out double rbZ);
+                    ShowMessage(IOName + $"Start runMatch");
 
+                    HPose Pose = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
+                                carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "abg", "point");
 
-                            //基座标转车身
-                            double carX = carSetting.robot2Car.AffineTransPoint3d(rbX, rbY, rbZ, out double carY, out double carZ);
+                    ShowMessage(IOName + $"Robot Pose:(x:{Pose[0].D},y:{Pose[1].D},z:{Pose[2].D},rx:{Pose[3].D},ry:{Pose[4].D},rz:{Pose[5].D})");
 
-                            //车身加补偿
-                            X = carX + carSetting.gSets[pointNum].offsetX;
-                            Y = carY + carSetting.gSets[pointNum].offsetY;
-                            Z = carZ + carSetting.gSets[pointNum].offsetZ;
-
-                            rb.Add(pointNum, new Point3D(rbX, rbY, rbZ));//校准用
-                            if (carSetting.gSets[pointNum].isBase)//重建坐标用
-                            {
-                                point3dBase.Add(pointNum, new Point3D(carSetting.gSets[pointNum].X, carSetting.gSets[pointNum].Y, carSetting.gSets[pointNum].Z));
-                            }
-                            b有数据 = true;
-                        }
-                        else
-                        {
-                            ShowMessage($"{IOName}_{pointNum}_1 {Resources.LanguageDic.The_photography_distance_exceeds_the_calibration_range}！", Color.Red);
-                        }
-                    }
-                    else if (light匹配1 && light匹配2 && carSetting.gSets[pointNum].type == "槽")
-                    {
-                        if (camSetting.GetZFromLight(Px1, Py1, out float z1) && camSetting.GetXYFromLight(Px1, Py1, z1, out float camX1, out float camY1))
-                        {
-                            //相机转工具
-                            double toolX1 = camSetting.cam2Tool.AffineTransPoint3d(camX1, camY1, z1, out double toolY1, out double toolZ1);
-                            // 转为mm为单位
-                            double toolX1_mm = toolX1 * 1000;
-                            double toolY1_mm = toolY1 * 1000;
-                            double toolZ1_mm = toolZ1 * 1000;
-                            //工具转基座标
-                            HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
-                                carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
-                            double rbX1 = 工具转基座标.AffineTransPoint3d(toolX1_mm, toolY1_mm, toolZ1_mm, out double rbY1, out double rbZ1);
-
-
-                            //基座标转车身
-                            double carX1 = carSetting.robot2Car.AffineTransPoint3d(rbX1, rbY1, rbZ1, out double carY1, out double carZ1);
-
-                            if (camSetting.GetZFromLight(Px2, Py2, out float z2) && camSetting.GetXYFromLight(Px2, Py2, z2, out float camX2, out float camY2))
-                            {
-                                //相机转工具
-                                double toolX2 = camSetting.cam2Tool.AffineTransPoint3d(camX2, camY2, z2, out double toolY2, out double toolZ2);
-                                // 转为mm为单位
-                                double toolX2_mm = toolX2 * 1000;
-                                double toolY2_mm = toolY2 * 1000;
-                                double toolZ2_mm = toolZ2 * 1000;
-                                //工具转基座标
-                                HHomMat3D 工具转基座标2 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
-                                    carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
-                                double rbX2 = 工具转基座标2.AffineTransPoint3d(toolX2_mm, toolY2_mm, toolZ2_mm, out double rbY2, out double rbZ2);
-
-
-                                //基座标转车身
-                                double carX2 = carSetting.robot2Car.AffineTransPoint3d(rbX2, rbY2, rbZ2, out double carY2, out double carZ2);
-
-                                //车身加补偿
-                                X = carX2 - carX1 + carSetting.gSets[pointNum].offsetX;
-                                Y = carY2 - carY1 + carSetting.gSets[pointNum].offsetY;
-                                Z = carZ2 - carZ1 + carSetting.gSets[pointNum].offsetZ;
-
-                                b有数据 = true;
-                            }
-                            else
-                            {
-                                ShowMessage($"{IOName}_{pointNum}_2 {Resources.LanguageDic.The_photography_distance_exceeds_the_calibration_range}！", Color.Red);
-                            }
-                        }
-                        else
-                        {
-                            ShowMessage($"{IOName}_{pointNum}_1 {Resources.LanguageDic.The_photography_distance_exceeds_the_calibration_range}！", Color.Red);
-                        }
-
-                    }
-                    else if (led匹配 && light匹配1 && light匹配2)//孔
-                    {
-                        //转换相机坐标
-                        if (camSetting.GetZFromLight(Px1, Py1, out float z1))
-                        {
-                            if (camSetting.GetZFromLight(Px2, Py2, out float z2))
-                            {
-                                float camZ = (z1 + z2) / 2;
-                                if (camSetting.GetXYFromLight(Px0, Py0, camZ, out float camX, out float camY))
-                                {
-                                    //相机转工具
-                                    double toolX = camSetting.cam2Tool.AffineTransPoint3d(camX, camY, camZ, out double toolY, out double toolZ);
-
-                                    // 转为mm为单位
-                                    double toolX_mm = toolX * 1000;
-                                    double toolY_mm = toolY * 1000;
-                                    double toolZ_mm = toolZ * 1000;
-
-                                    //工具转基座标
-                                    HHomMat3D 工具转基座标 = new HPose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
-                                        carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ, "Rp+T", "gba", "point").PoseToHomMat3d();
-                                    double rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out double rbY, out double rbZ);
-
-
-                                    //基座标转车身
-                                    double carX = carSetting.robot2Car.AffineTransPoint3d(rbX, rbY, rbZ, out double carY, out double carZ);
-
-                                    //车身加补偿
-                                    X = carX + carSetting.gSets[pointNum].offsetX;
-                                    Y = carY + carSetting.gSets[pointNum].offsetY;
-                                    Z = carZ + carSetting.gSets[pointNum].offsetZ;
-
-                                    rb.Add(pointNum, new Point3D(rbX, rbY, rbZ));//校准用
-                                    if (carSetting.gSets[pointNum].isBase)//重建坐标用
-                                    {
-                                        point3dBase.Add(pointNum, new Point3D(carSetting.gSets[pointNum].X, carSetting.gSets[pointNum].Y, carSetting.gSets[pointNum].Z));
-                                    }
-                                    b有数据 = true;
-                                }
-                                else
-                                {
-                                    ShowMessage($"{IOName}_{pointNum}_0 {Resources.LanguageDic.The_photography_distance_exceeds_the_calibration_range}！", Color.Red);
-                                }
-                            }
-                            else
-                            {
-                                ShowMessage($"{IOName}_{pointNum}_2 {Resources.LanguageDic.Laser_coordinates_exceed_the_calibration_range}！", Color.Red);
-                            }
-                        }
-                        else
-                        {
-                            ShowMessage($"{IOName}_{pointNum}_1 {Resources.LanguageDic.Laser_coordinates_exceed_the_calibration_range}！", Color.Red);
-                        }
-                    }
+                    runMatch(camSetting, carSetting, IOName, point3dBase, ref 检测异常, pointNum, Pose, Px0, Py0, Px1, Py1, Px2, Py2, led匹配, light匹配1, light匹配2, ref X, ref Y, ref Z, 测点数据表, ref b有数据);
 
                     //结果显示
 

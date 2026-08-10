@@ -117,107 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="repeat" xml:space="preserve">
-    <value>repeat</value>
+  <data name="Address_format_mismatch" xml:space="preserve">
+    <value>Address format mismatch</value>
   </data>
-  <data name="software_could_open_mul" xml:space="preserve">
-    <value>The software has been set to prohibit multiple opening</value>
-  </data>
-  <data name="could_not_repect_add" xml:space="preserve">
-    <value>Cannot be added repeatedly</value>
-  </data>
-  <data name="is_save_para" xml:space="preserve">
-    <value>Do you want to save the parameters</value>
-  </data>
-  <data name="not_select_change_item" xml:space="preserve">
-    <value>No modification selected</value>
-  </data>
-  <data name="not_select_delete_item" xml:space="preserve">
-    <value>No deletion option selected</value>
-  </data>
-  <data name="please_fill_it_out_again" xml:space="preserve">
-    <value>Please fill in again</value>
-  </data>
-  <data name="product_id_already_exist" xml:space="preserve">
-    <value>Product ID already exists</value>
-  </data>
-  <data name="product_id_could_not_null" xml:space="preserve">
-    <value>Product ID cannot be empty</value>
-  </data>
-  <data name="product_id_format_is_not_correct" xml:space="preserve">
-    <value>The product ID format is incorrect</value>
-  </data>
-  <data name="product_name_already_exist" xml:space="preserve">
-    <value>The product name already exists</value>
-  </data>
-  <data name="product_name_could_contine_char" xml:space="preserve">
-    <value>The product name cannot contain characters</value>
-  </data>
-  <data name="product_name_could_not_null" xml:space="preserve">
-    <value>The product name cannot be empty</value>
-  </data>
-  <data name="tip" xml:space="preserve">
-    <value>prompt</value>
-  </data>
-  <data name="car_no" xml:space="preserve">
-    <value>Car NO</value>
-  </data>
-  <data name="format_error" xml:space="preserve">
-    <value>Incorrect format</value>
-  </data>
-  <data name="inconsistent_size_of_pasting_area" xml:space="preserve">
-    <value>Inconsistent size of pasting area</value>
-  </data>
-  <data name="Maximize" xml:space="preserve">
-    <value>maximize</value>
-  </data>
-  <data name="model_no" xml:space="preserve">
-    <value>Model NO</value>
-  </data>
-  <data name="name_already_exist" xml:space="preserve">
-    <value>Name already exists</value>
-  </data>
-  <data name="need_input_all_value" xml:space="preserve">
-    <value>Coordinate calibration requires inputting all data</value>
-  </data>
-  <data name="not_input_name" xml:space="preserve">
-    <value>Name not entered</value>
-  </data>
-  <data name="not_value" xml:space="preserve">
-    <value>Non value type</value>
-  </data>
-  <data name="Restore" xml:space="preserve">
-    <value>restore</value>
-  </data>
-  <data name="copy_to_all_model" xml:space="preserve">
-    <value>Copy to all vehicle models</value>
-  </data>
-  <data name="edge" xml:space="preserve">
-    <value>edge</value>
-  </data>
-  <data name="fail" xml:space="preserve">
-    <value>fail</value>
-  </data>
-  <data name="hole" xml:space="preserve">
-    <value>hole</value>
-  </data>
-  <data name="need_to_input_num" xml:space="preserve">
-    <value>Need to enter a numerical name</value>
-  </data>
-  <data name="root_node" xml:space="preserve">
-    <value>root node</value>
-  </data>
-  <data name="save" xml:space="preserve">
-    <value>save</value>
-  </data>
-  <data name="the_path_contains_illegal_characters" xml:space="preserve">
-    <value>The path contains illegal characters</value>
-  </data>
-  <data name="trough" xml:space="preserve">
-    <value>groove</value>
-  </data>
-  <data name="change_language_success" xml:space="preserve">
-    <value>Successfully switched languages</value>
+  <data name="Address_not_assigned" xml:space="preserve">
+    <value>Address not assigned</value>
   </data>
   <data name="but_not_exist" xml:space="preserve">
     <value>But it doesn't exist</value>
@@ -240,20 +144,35 @@
   <data name="cam_open_success" xml:space="preserve">
     <value>Camera successfully opened</value>
   </data>
+  <data name="car_no" xml:space="preserve">
+    <value>Car NO</value>
+  </data>
   <data name="car_no2" xml:space="preserve">
     <value>Serial number</value>
   </data>
   <data name="car_no_info_read_fail" xml:space="preserve">
     <value>Failed to read consecutive information</value>
   </data>
+  <data name="change_language_success" xml:space="preserve">
+    <value>Successfully switched languages</value>
+  </data>
   <data name="check_result" xml:space="preserve">
     <value>Test results</value>
+  </data>
+  <data name="check_result_ng_write_fail" xml:space="preserve">
+    <value>Measurement ng result writing failed</value>
+  </data>
+  <data name="check_result_ok_write_fail" xml:space="preserve">
+    <value>Measurement ok result writing failed</value>
   </data>
   <data name="check_result_readable_write_fail" xml:space="preserve">
     <value>Reading and writing of measurement results failed</value>
   </data>
   <data name="check_result_write_fail" xml:space="preserve">
     <value>Measurement result writing failed</value>
+  </data>
+  <data name="close_success" xml:space="preserve">
+    <value>Close success</value>
   </data>
   <data name="connection_failed" xml:space="preserve">
     <value>Connection failed</value>
@@ -270,6 +189,12 @@
   <data name="Coordinate_calculation_completed" xml:space="preserve">
     <value>Coordinate calculation completed</value>
   </data>
+  <data name="copy_to_all_model" xml:space="preserve">
+    <value>Copy to all vehicle models</value>
+  </data>
+  <data name="could_not_repect_add" xml:space="preserve">
+    <value>Cannot be added repeatedly</value>
+  </data>
   <data name="create_dir" xml:space="preserve">
     <value>Create folder</value>
   </data>
@@ -285,11 +210,26 @@
   <data name="database_write_error" xml:space="preserve">
     <value>Database write exception</value>
   </data>
+  <data name="edge" xml:space="preserve">
+    <value>edge</value>
+  </data>
   <data name="end_point" xml:space="preserve">
     <value>End point</value>
   </data>
   <data name="exist" xml:space="preserve">
     <value>exist</value>
+  </data>
+  <data name="fail" xml:space="preserve">
+    <value>fail</value>
+  </data>
+  <data name="fail_get_point_NO" xml:space="preserve">
+    <value>Fail get point NO</value>
+  </data>
+  <data name="file_format_error" xml:space="preserve">
+    <value>File format error</value>
+  </data>
+  <data name="file_not_exist" xml:space="preserve">
+    <value>File not exist</value>
   </data>
   <data name="finish" xml:space="preserve">
     <value>complete</value>
@@ -297,8 +237,23 @@
   <data name="fix" xml:space="preserve">
     <value>Zhang</value>
   </data>
+  <data name="format_error" xml:space="preserve">
+    <value>Incorrect format</value>
+  </data>
+  <data name="hole" xml:space="preserve">
+    <value>hole</value>
+  </data>
   <data name="Image_storage_into_memory_completed" xml:space="preserve">
     <value>Image storage into memory completed</value>
+  </data>
+  <data name="inconsistent_size_of_pasting_area" xml:space="preserve">
+    <value>Inconsistent size of pasting area</value>
+  </data>
+  <data name="Incorrect_format_conversion_failed" xml:space="preserve">
+    <value>Incorrect format conversion failed</value>
+  </data>
+  <data name="is_save_para" xml:space="preserve">
+    <value>Do you want to save the parameters</value>
   </data>
   <data name="Laser_coordinates_exceed_the_calibration_range" xml:space="preserve">
     <value>Laser coordinates exceed the calibration range</value>
@@ -324,23 +279,59 @@
   <data name="Match_fail" xml:space="preserve">
     <value>Matching failed</value>
   </data>
+  <data name="Maximize" xml:space="preserve">
+    <value>maximize</value>
+  </data>
+  <data name="model_no" xml:space="preserve">
+    <value>Model NO</value>
+  </data>
   <data name="model_no2" xml:space="preserve">
     <value>model of car</value>
   </data>
   <data name="model_no_code_read_fail" xml:space="preserve">
     <value>Vehicle model code reading failed</value>
   </data>
+  <data name="model_no_code_write_fail" xml:space="preserve">
+    <value>model no code write fail</value>
+  </data>
   <data name="model_para_not_exist" xml:space="preserve">
     <value>Vehicle model parameters do not exist</value>
   </data>
+  <data name="name_already_exist" xml:space="preserve">
+    <value>Name already exists</value>
+  </data>
+  <data name="need_input_all_value" xml:space="preserve">
+    <value>Coordinate calibration requires inputting all data</value>
+  </data>
+  <data name="need_to_input_num" xml:space="preserve">
+    <value>Need to enter a numerical name</value>
+  </data>
   <data name="not_exist" xml:space="preserve">
     <value>does not exist</value>
+  </data>
+  <data name="not_input_name" xml:space="preserve">
+    <value>Name not entered</value>
+  </data>
+  <data name="not_select_change_item" xml:space="preserve">
+    <value>No modification selected</value>
+  </data>
+  <data name="not_select_delete_item" xml:space="preserve">
+    <value>No deletion option selected</value>
+  </data>
+  <data name="not_support_strings" xml:space="preserve">
+    <value>Not support strings</value>
+  </data>
+  <data name="not_value" xml:space="preserve">
+    <value>Non value type</value>
   </data>
   <data name="no_cam_calib" xml:space="preserve">
     <value>Camera not calibrated</value>
   </data>
   <data name="no_model" xml:space="preserve">
     <value>Template not created</value>
+  </data>
+  <data name="Online_Det" xml:space="preserve">
+    <value>Online Detection System</value>
   </data>
   <data name="output_ready_signal" xml:space="preserve">
     <value>Output ready signal</value>
@@ -363,6 +354,9 @@
   <data name="para_load_success" xml:space="preserve">
     <value>Parameter loading successful</value>
   </data>
+  <data name="Para_read_fail" xml:space="preserve">
+    <value>Read para fail</value>
+  </data>
   <data name="Photo_posture_in_place_signal_reading_failed" xml:space="preserve">
     <value>Photo posture in place signal reading failed</value>
   </data>
@@ -372,14 +366,50 @@
   <data name="pix_not_save_to_hard_disk_in_memory" xml:space="preserve">
     <value>Zhang Tu is not stored in memory on the hard drive</value>
   </data>
+  <data name="please_fill_it_out_again" xml:space="preserve">
+    <value>Please fill in again</value>
+  </data>
   <data name="Point_number_reading_failed" xml:space="preserve">
     <value>Point number reading failed</value>
+  </data>
+  <data name="Point_number_writing_failed" xml:space="preserve">
+    <value>Point number writing failed</value>
   </data>
   <data name="Process_ended" xml:space="preserve">
     <value>Process ended</value>
   </data>
+  <data name="product_id_already_exist" xml:space="preserve">
+    <value>Product ID already exists</value>
+  </data>
+  <data name="product_id_could_not_null" xml:space="preserve">
+    <value>Product ID cannot be empty</value>
+  </data>
+  <data name="product_id_format_is_not_correct" xml:space="preserve">
+    <value>The product ID format is incorrect</value>
+  </data>
+  <data name="product_name_already_exist" xml:space="preserve">
+    <value>The product name already exists</value>
+  </data>
+  <data name="product_name_could_contine_char" xml:space="preserve">
+    <value>The product name cannot contain characters</value>
+  </data>
+  <data name="product_name_could_not_null" xml:space="preserve">
+    <value>The product name cannot be empty</value>
+  </data>
   <data name="ready_write_fail" xml:space="preserve">
     <value>Ready to write failed</value>
+  </data>
+  <data name="Read_angel_again" xml:space="preserve">
+    <value>Read angel again</value>
+  </data>
+  <data name="Read_pose_again" xml:space="preserve">
+    <value>Read pose again</value>
+  </data>
+  <data name="Read_pose_fail" xml:space="preserve">
+    <value>Read robot pose fail</value>
+  </data>
+  <data name="read_robot_angle_fail" xml:space="preserve">
+    <value>Read robot angle fail</value>
   </data>
   <data name="read_signal_read_fail" xml:space="preserve">
     <value>Read signal read failed</value>
@@ -389,6 +419,9 @@
   </data>
   <data name="remain" xml:space="preserve">
     <value>remaining</value>
+  </data>
+  <data name="repeat" xml:space="preserve">
+    <value>repeat</value>
   </data>
   <data name="repect_again" xml:space="preserve">
     <value>Retrying</value>
@@ -410,6 +443,27 @@
   </data>
   <data name="reset_signal_read_fail" xml:space="preserve">
     <value>Reset process signal reading failed</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>restore</value>
+  </data>
+  <data name="result_write_fail" xml:space="preserve">
+    <value>result write fail</value>
+  </data>
+  <data name="robot_connect_fail" xml:space="preserve">
+    <value>robot connect fail</value>
+  </data>
+  <data name="robot_connect_success" xml:space="preserve">
+    <value>robot connect success</value>
+  </data>
+  <data name="robot_tempareture_calib_fail" xml:space="preserve">
+    <value>Robot tempareture calibration fail</value>
+  </data>
+  <data name="robot_tempareture_calib_success" xml:space="preserve">
+    <value>Robot tempareture calibration success</value>
+  </data>
+  <data name="root_node" xml:space="preserve">
+    <value>root node</value>
   </data>
   <data name="Running" xml:space="preserve">
     <value>run</value>
@@ -434,6 +488,9 @@
   </data>
   <data name="R_robot_finish" xml:space="preserve">
     <value>R robot task completed</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>save</value>
   </data>
   <data name="save_fail" xml:space="preserve">
     <value>Save failed</value>
@@ -486,6 +543,9 @@
   <data name="skip_this_save_image" xml:space="preserve">
     <value>Skip this save image</value>
   </data>
+  <data name="software_could_open_mul" xml:space="preserve">
+    <value>The software has been set to prohibit multiple opening</value>
+  </data>
   <data name="software_is_running" xml:space="preserve">
     <value>The software is currently running</value>
   </data>
@@ -503,6 +563,9 @@
   </data>
   <data name="stop" xml:space="preserve">
     <value>stop</value>
+  </data>
+  <data name="success_get_point_NO" xml:space="preserve">
+    <value>Success get point NO</value>
   </data>
   <data name="sure_exist" xml:space="preserve">
     <value>Confirm exit</value>
@@ -525,14 +588,26 @@
   <data name="The_number_of_coordinate_points_is_less_than" xml:space="preserve">
     <value>The number of coordinate points is less than</value>
   </data>
+  <data name="the_path_contains_illegal_characters" xml:space="preserve">
+    <value>The path contains illegal characters</value>
+  </data>
   <data name="The_photography_distance_exceeds_the_calibration_range" xml:space="preserve">
     <value>The photography distance exceeds the calibration range</value>
   </data>
   <data name="The_written_value_is_inconsistent_with_the_read_value" xml:space="preserve">
     <value>The written value is inconsistent with the read value</value>
   </data>
+  <data name="tip" xml:space="preserve">
+    <value>prompt</value>
+  </data>
+  <data name="too_long" xml:space="preserve">
+    <value>too long</value>
+  </data>
   <data name="Trajectory_endpoint_reading_failed" xml:space="preserve">
     <value>Trajectory endpoint reading failed</value>
+  </data>
+  <data name="trough" xml:space="preserve">
+    <value>groove</value>
   </data>
   <data name="Unable_to_reconstruct_coordinates" xml:space="preserve">
     <value>Unable to reconstruct coordinates</value>
@@ -558,6 +633,9 @@
   <data name="Waiting_for_the_signal_that_the_camera_posture_is_in_place" xml:space="preserve">
     <value>Waiting for the signal that the camera posture is in place</value>
   </data>
+  <data name="wait_for_point_NO" xml:space="preserve">
+    <value>Wait for point NO</value>
+  </data>
   <data name="wait_for_read_signal" xml:space="preserve">
     <value>Waiting for read signal</value>
   </data>
@@ -567,43 +645,7 @@
   <data name="wait_start_signal" xml:space="preserve">
     <value>Waiting for the start signal</value>
   </data>
-  <data name="Online_Det" xml:space="preserve">
-    <value>Online Detection System</value>
-  </data>
-  <data name="model_no_code_write_fail" xml:space="preserve">
-    <value>model no code write fail</value>
-  </data>
-  <data name="Point_number_writing_failed" xml:space="preserve">
-    <value>Point number writing failed</value>
-  </data>
-  <data name="result_write_fail" xml:space="preserve">
-    <value>result write fail</value>
-  </data>
-  <data name="Read_pose_fail" xml:space="preserve">
-    <value>Read robot pose fail</value>
-  </data>
-  <data name="robot_tempareture_calib_fail" xml:space="preserve">
-    <value>Robot tempareture calibration fail</value>
-  </data>
-  <data name="robot_tempareture_calib_success" xml:space="preserve">
-    <value>Robot tempareture calibration success</value>
-  </data>
-  <data name="Address_format_mismatch" xml:space="preserve">
-    <value>Address format mismatch</value>
-  </data>
-  <data name="Address_not_assigned" xml:space="preserve">
-    <value>Address not assigned</value>
-  </data>
-  <data name="not_support_strings" xml:space="preserve">
-    <value>Not support strings</value>
-  </data>
   <data name="Writing_format_not_supported" xml:space="preserve">
     <value>Writing format not supported</value>
-  </data>
-  <data name="robot_connect_fail" xml:space="preserve">
-    <value>robot connect fail</value>
-  </data>
-  <data name="robot_connect_success" xml:space="preserve">
-    <value>robot connect success</value>
   </data>
 </root>

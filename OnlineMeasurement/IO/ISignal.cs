@@ -16,6 +16,8 @@ namespace OnlineMeasurement.IO
         Readily,
         Running,
         Result,
+        ResultOK,
+        ResultNG,
         Check_Finish,
         Acq_Finish,
         Check_Point_Result,

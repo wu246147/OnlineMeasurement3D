@@ -130,10 +130,10 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 163</value>
+    <value>9, 192</value>
   </data>
   <data name="pictureBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 92</value>
+    <value>171, 85</value>
   </data>
   <data name="pictureBox2.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -157,10 +157,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="pictureBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 267</value>
+    <value>9, 289</value>
   </data>
   <data name="pictureBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 92</value>
+    <value>171, 85</value>
   </data>
   <data name="pictureBox3.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -184,10 +184,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="pictureBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 371</value>
+    <value>9, 386</value>
   </data>
   <data name="pictureBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 92</value>
+    <value>171, 85</value>
   </data>
   <data name="pictureBox4.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -211,10 +211,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="pictureBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 475</value>
+    <value>9, 483</value>
   </data>
   <data name="pictureBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 92</value>
+    <value>171, 85</value>
   </data>
   <data name="pictureBox5.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -238,10 +238,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="pictureBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 59</value>
+    <value>192, 95</value>
   </data>
   <data name="pictureBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 92</value>
+    <value>171, 85</value>
   </data>
   <data name="pictureBox6.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -265,10 +265,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="pictureBox7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 163</value>
+    <value>192, 192</value>
   </data>
   <data name="pictureBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 92</value>
+    <value>171, 85</value>
   </data>
   <data name="pictureBox7.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -292,10 +292,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="pictureBox8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 267</value>
+    <value>192, 289</value>
   </data>
   <data name="pictureBox8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 92</value>
+    <value>171, 85</value>
   </data>
   <data name="pictureBox8.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -319,10 +319,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="pictureBox9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 371</value>
+    <value>192, 386</value>
   </data>
   <data name="pictureBox9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 92</value>
+    <value>171, 85</value>
   </data>
   <data name="pictureBox9.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -346,10 +346,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="pictureBox10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 475</value>
+    <value>192, 483</value>
   </data>
   <data name="pictureBox10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 92</value>
+    <value>171, 85</value>
   </data>
   <data name="pictureBox10.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -372,11 +372,14 @@
   <data name="pictureBox11.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
+  <data name="pictureBox11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="pictureBox11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>379, 59</value>
+    <value>375, 95</value>
   </data>
   <data name="pictureBox11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>916, 508</value>
+    <value>907, 473</value>
   </data>
   <data name="pictureBox11.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -406,7 +409,7 @@
     <value>微软雅黑, 21.75pt</value>
   </data>
   <data name="label_carNum.Location" type="System.Drawing.Point, System.Drawing">
-    <value>643, 6</value>
+    <value>635, 6</value>
   </data>
   <data name="label_carNum.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 38</value>
@@ -439,7 +442,7 @@
     <value>微软雅黑, 21.75pt</value>
   </data>
   <data name="label_carName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>426, 6</value>
+    <value>421, 6</value>
   </data>
   <data name="label_carName.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 38</value>
@@ -472,7 +475,7 @@
     <value>微软雅黑, 21.75pt</value>
   </data>
   <data name="label_time.Location" type="System.Drawing.Point, System.Drawing">
-    <value>52, 3</value>
+    <value>50, 3</value>
   </data>
   <data name="label_time.Size" type="System.Drawing.Size, System.Drawing">
     <value>302, 38</value>
@@ -499,10 +502,10 @@
     <value>Fill</value>
   </data>
   <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>891, 3</value>
+    <value>882, 3</value>
   </data>
   <data name="panel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>404, 44</value>
+    <value>400, 44</value>
   </data>
   <data name="panel2.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -529,7 +532,7 @@
     <value>微软雅黑, 21.75pt</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>34, 3</value>
+    <value>33, 3</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 38</value>
@@ -562,7 +565,7 @@
     <value>宋体, 18pt, style=Bold</value>
   </data>
   <data name="label_camL.Location" type="System.Drawing.Point, System.Drawing">
-    <value>115, 10</value>
+    <value>114, 10</value>
   </data>
   <data name="label_camL.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 24</value>
@@ -592,7 +595,7 @@
     <value>9, 3</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 44</value>
+    <value>171, 44</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -619,7 +622,7 @@
     <value>微软雅黑, 21.75pt</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>36, 3</value>
+    <value>35, 3</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 38</value>
@@ -652,7 +655,7 @@
     <value>宋体, 18pt, style=Bold</value>
   </data>
   <data name="label_camR.Location" type="System.Drawing.Point, System.Drawing">
-    <value>117, 10</value>
+    <value>116, 10</value>
   </data>
   <data name="label_camR.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 24</value>
@@ -679,10 +682,10 @@
     <value>Fill</value>
   </data>
   <data name="panel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 3</value>
+    <value>192, 3</value>
   </data>
   <data name="panel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 44</value>
+    <value>171, 44</value>
   </data>
   <data name="panel3.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -703,13 +706,13 @@
     <value>Fill</value>
   </data>
   <data name="panel4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>370, 56</value>
+    <value>366, 92</value>
   </data>
   <data name="panel4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 514</value>
+    <value>6, 479</value>
   </data>
   <data name="panel4.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -730,13 +733,13 @@
     <value>Fill</value>
   </data>
   <data name="panel_bian.Location" type="System.Drawing.Point, System.Drawing">
-    <value>185, 56</value>
+    <value>183, 92</value>
   </data>
   <data name="panel_bian.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel_bian.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 514</value>
+    <value>6, 479</value>
   </data>
   <data name="panel_bian.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -757,10 +760,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 59</value>
+    <value>9, 95</value>
   </data>
   <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 92</value>
+    <value>171, 85</value>
   </data>
   <data name="pictureBox1.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -784,13 +787,13 @@
     <value>Fill</value>
   </data>
   <data name="panel5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 56</value>
+    <value>0, 92</value>
   </data>
   <data name="panel5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 514</value>
+    <value>6, 479</value>
   </data>
   <data name="panel5.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -811,13 +814,13 @@
     <value>Fill</value>
   </data>
   <data name="panel6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1298, 56</value>
+    <value>1285, 92</value>
   </data>
   <data name="panel6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>18, 514</value>
+    <value>31, 479</value>
   </data>
   <data name="panel6.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -838,13 +841,13 @@
     <value>Fill</value>
   </data>
   <data name="panel7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 154</value>
+    <value>6, 183</value>
   </data>
   <data name="panel7.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="panel7.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -865,13 +868,13 @@
     <value>Fill</value>
   </data>
   <data name="panel8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>191, 154</value>
+    <value>189, 183</value>
   </data>
   <data name="panel8.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="panel8.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -892,13 +895,13 @@
     <value>Fill</value>
   </data>
   <data name="panel9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 258</value>
+    <value>6, 280</value>
   </data>
   <data name="panel9.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="panel9.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -919,13 +922,13 @@
     <value>Fill</value>
   </data>
   <data name="panel10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>191, 258</value>
+    <value>189, 280</value>
   </data>
   <data name="panel10.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="panel10.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -946,13 +949,13 @@
     <value>Fill</value>
   </data>
   <data name="panel16.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 362</value>
+    <value>6, 377</value>
   </data>
   <data name="panel16.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel16.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="panel16.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -973,13 +976,13 @@
     <value>Fill</value>
   </data>
   <data name="panel17.Location" type="System.Drawing.Point, System.Drawing">
-    <value>191, 362</value>
+    <value>189, 377</value>
   </data>
   <data name="panel17.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel17.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="panel17.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1000,13 +1003,13 @@
     <value>Fill</value>
   </data>
   <data name="panel18.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 466</value>
+    <value>6, 474</value>
   </data>
   <data name="panel18.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel18.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="panel18.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1027,13 +1030,13 @@
     <value>Fill</value>
   </data>
   <data name="panel19.Location" type="System.Drawing.Point, System.Drawing">
-    <value>191, 466</value>
+    <value>189, 474</value>
   </data>
   <data name="panel19.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel19.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="panel19.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1060,7 +1063,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel20.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="panel20.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1081,13 +1084,13 @@
     <value>Fill</value>
   </data>
   <data name="panel21.Location" type="System.Drawing.Point, System.Drawing">
-    <value>191, 50</value>
+    <value>189, 50</value>
   </data>
   <data name="panel21.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel21.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="panel21.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1108,13 +1111,13 @@
     <value>Fill</value>
   </data>
   <data name="panel22.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 570</value>
+    <value>6, 571</value>
   </data>
   <data name="panel22.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel22.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 9</value>
+    <value>177, 8</value>
   </data>
   <data name="panel22.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1135,13 +1138,13 @@
     <value>Fill</value>
   </data>
   <data name="panel23.Location" type="System.Drawing.Point, System.Drawing">
-    <value>191, 570</value>
+    <value>189, 571</value>
   </data>
   <data name="panel23.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel23.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 9</value>
+    <value>177, 8</value>
   </data>
   <data name="panel23.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1162,13 +1165,13 @@
     <value>Fill</value>
   </data>
   <data name="panel24.Location" type="System.Drawing.Point, System.Drawing">
-    <value>376, 570</value>
+    <value>372, 571</value>
   </data>
   <data name="panel24.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel24.Size" type="System.Drawing.Size, System.Drawing">
-    <value>922, 9</value>
+    <value>913, 8</value>
   </data>
   <data name="panel24.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1189,13 +1192,13 @@
     <value>Fill</value>
   </data>
   <data name="panel25.Location" type="System.Drawing.Point, System.Drawing">
-    <value>376, 50</value>
+    <value>372, 50</value>
   </data>
   <data name="panel25.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel25.Size" type="System.Drawing.Size, System.Drawing">
-    <value>922, 6</value>
+    <value>913, 6</value>
   </data>
   <data name="panel25.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1212,11 +1215,71 @@
   <data name="&gt;&gt;panel25.ZOrder" xml:space="preserve">
     <value>33</value>
   </data>
+  <data name="comboBox_showPictureID.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="comboBox_showPictureID.Location" type="System.Drawing.Point, System.Drawing">
+    <value>603, 59</value>
+  </data>
+  <data name="comboBox_showPictureID.Size" type="System.Drawing.Size, System.Drawing">
+    <value>679, 20</value>
+  </data>
+  <data name="comboBox_showPictureID.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;comboBox_showPictureID.Name" xml:space="preserve">
+    <value>comboBox_showPictureID</value>
+  </data>
+  <data name="&gt;&gt;comboBox_showPictureID.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBox_showPictureID.Parent" xml:space="preserve">
+    <value>tableLayoutPanel_Max</value>
+  </data>
+  <data name="&gt;&gt;comboBox_showPictureID.ZOrder" xml:space="preserve">
+    <value>34</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>微软雅黑, 14.25pt</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>375, 56</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>222, 30</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>显示结果图片选择：</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>tableLayoutPanel_Max</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>35</value>
+  </data>
   <data name="tableLayoutPanel_Max.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 129</value>
   </data>
   <data name="tableLayoutPanel_Max.RowCount" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="tableLayoutPanel_Max.Size" type="System.Drawing.Size, System.Drawing">
     <value>1316, 579</value>
@@ -1234,10 +1297,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanel_Max.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="tableLayoutPanel_Max.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="pictureBox2" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox3" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox4" Row="8" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox5" Row="10" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox6" Row="2" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox7" Row="4" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox8" Row="6" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox9" Row="8" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox10" Row="10" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox11" Row="2" RowSpan="9" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="label_carNum" Row="0" RowSpan="1" Column="6" ColumnSpan="1" /&gt;&lt;Control Name="label_carName" Row="0" RowSpan="1" Column="5" ColumnSpan="1" /&gt;&lt;Control Name="panel2" Row="0" RowSpan="1" Column="7" ColumnSpan="1" /&gt;&lt;Control Name="panel1" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel3" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel4" Row="2" RowSpan="9" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="panel_bian" Row="2" RowSpan="9" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox1" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel5" Row="2" RowSpan="9" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="panel6" Row="2" RowSpan="9" Column="8" ColumnSpan="1" /&gt;&lt;Control Name="panel7" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel8" Row="3" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel9" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel10" Row="5" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel16" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel17" Row="7" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel18" Row="9" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel19" Row="9" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel20" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel21" Row="1" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel22" Row="11" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel23" Row="11" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel24" Row="11" RowSpan="1" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="panel25" Row="1" RowSpan="1" Column="5" ColumnSpan="3" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Percent,14,Absolute,6,Percent,14,Absolute,6,Percent,18,Percent,22,Percent,32,Absolute,16" /&gt;&lt;Rows Styles="Absolute,50,Absolute,6,Percent,20,Absolute,6,Percent,20,Absolute,6,Percent,20,Absolute,6,Percent,20,Absolute,6,Percent,20,Absolute,6" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="pictureBox2" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox3" Row="8" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox4" Row="10" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox5" Row="12" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox6" Row="4" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox7" Row="6" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox8" Row="8" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox9" Row="10" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox10" Row="12" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox11" Row="4" RowSpan="9" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="label_carNum" Row="0" RowSpan="1" Column="6" ColumnSpan="1" /&gt;&lt;Control Name="label_carName" Row="0" RowSpan="1" Column="5" ColumnSpan="1" /&gt;&lt;Control Name="panel2" Row="0" RowSpan="1" Column="7" ColumnSpan="1" /&gt;&lt;Control Name="panel1" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel3" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel4" Row="4" RowSpan="9" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="panel_bian" Row="4" RowSpan="9" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox1" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel5" Row="4" RowSpan="9" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="panel6" Row="4" RowSpan="9" Column="8" ColumnSpan="1" /&gt;&lt;Control Name="panel7" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel8" Row="5" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel9" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel10" Row="7" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel16" Row="9" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel17" Row="9" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel18" Row="11" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel19" Row="11" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel20" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel21" Row="1" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel22" Row="13" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel23" Row="13" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel24" Row="13" RowSpan="1" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="panel25" Row="1" RowSpan="1" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="comboBox_showPictureID" Row="2" RowSpan="1" Column="6" ColumnSpan="2" /&gt;&lt;Control Name="label4" Row="2" RowSpan="1" Column="5" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Percent,14,Absolute,6,Percent,14,Absolute,6,Percent,18,Percent,22,Percent,32,Absolute,28" /&gt;&lt;Rows Styles="Absolute,50,Absolute,6,Absolute,30,Absolute,6,Percent,20,Absolute,6,Percent,20,Absolute,6,Percent,20,Absolute,6,Percent,20,Absolute,6,Percent,20,Absolute,6" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -1297,7 +1360,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox_raivas.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -1324,7 +1387,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;panel_Title.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="panel_Top.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -1525,7 +1588,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;panel_Top.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="panel11.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Right</value>
@@ -1549,7 +1612,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;panel11.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="panel12.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left</value>
@@ -1573,7 +1636,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;panel12.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="panel13.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
@@ -1597,7 +1660,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;panel13.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="panel14.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -1621,7 +1684,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;panel14.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="panel15.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -1645,7 +1708,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;panel15.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>107, 17</value>
@@ -1676,6 +1739,36 @@
   </data>
   <data name="&gt;&gt;contextMenuStrip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="checkBox_show_all.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox_show_all.Font" type="System.Drawing.Font, System.Drawing">
+    <value>微软雅黑, 21.75pt</value>
+  </data>
+  <data name="checkBox_show_all.Location" type="System.Drawing.Point, System.Drawing">
+    <value>62, 52</value>
+  </data>
+  <data name="checkBox_show_all.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 42</value>
+  </data>
+  <data name="checkBox_show_all.TabIndex" type="System.Int32, mscorlib">
+    <value>93</value>
+  </data>
+  <data name="checkBox_show_all.Text" xml:space="preserve">
+    <value>显示所有</value>
+  </data>
+  <data name="&gt;&gt;checkBox_show_all.Name" xml:space="preserve">
+    <value>checkBox_show_all</value>
+  </data>
+  <data name="&gt;&gt;checkBox_show_all.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox_show_all.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;checkBox_show_all.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

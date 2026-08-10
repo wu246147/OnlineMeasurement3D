@@ -458,51 +458,6 @@
   <metadata name="Column3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="Column4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column5.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column6.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column7.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column8.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column9.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column10.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="dataGridViewShow.Location" type="System.Drawing.Point, System.Drawing">
-    <value>26, 143</value>
-  </data>
-  <data name="dataGridViewShow.Size" type="System.Drawing.Size, System.Drawing">
-    <value>497, 397</value>
-  </data>
-  <data name="dataGridViewShow.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewShow.Name" xml:space="preserve">
-    <value>dataGridViewShow</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewShow.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewShow.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewShow.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <metadata name="Column3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>点位</value>
   </data>
@@ -574,6 +529,27 @@
   </data>
   <data name="Column10.Width" type="System.Int32, mscorlib">
     <value>60</value>
+  </data>
+  <data name="dataGridViewShow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 143</value>
+  </data>
+  <data name="dataGridViewShow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>497, 397</value>
+  </data>
+  <data name="dataGridViewShow.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewShow.Name" xml:space="preserve">
+    <value>dataGridViewShow</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewShow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewShow.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewShow.ZOrder" xml:space="preserve">
+    <value>10</value>
   </data>
   <data name="textBoxTestNum.Location" type="System.Drawing.Point, System.Drawing">
     <value>11, 43</value>
@@ -1400,7 +1376,7 @@
 </value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>OnlineMeasurement</value>
+    <value>OnlineMeasurement 1.10.0</value>
   </data>
   <data name="&gt;&gt;Column1.Name" xml:space="preserve">
     <value>Column1</value>

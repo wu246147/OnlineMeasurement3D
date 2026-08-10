@@ -187,6 +187,24 @@ namespace OnlineMeasurement.Resources {
         }
         
         /// <summary>
+        ///   查找类似 测量结果NG写入失败 的本地化字符串。
+        /// </summary>
+        internal static string check_result_ng_write_fail {
+            get {
+                return ResourceManager.GetString("check_result_ng_write_fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 测量结果OK写入失败 的本地化字符串。
+        /// </summary>
+        internal static string check_result_ok_write_fail {
+            get {
+                return ResourceManager.GetString("check_result_ok_write_fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 测量结果可读写入失败 的本地化字符串。
         /// </summary>
         internal static string check_result_readable_write_fail {
@@ -916,11 +934,38 @@ namespace OnlineMeasurement.Resources {
         }
         
         /// <summary>
+        ///   查找类似 再读机器人角度一次 的本地化字符串。
+        /// </summary>
+        internal static string Read_angel_again {
+            get {
+                return ResourceManager.GetString("Read_angel_again", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 再读机器人位姿一次 的本地化字符串。
+        /// </summary>
+        internal static string Read_pose_again {
+            get {
+                return ResourceManager.GetString("Read_pose_again", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 读取机器人位姿失败 的本地化字符串。
         /// </summary>
         internal static string Read_pose_fail {
             get {
                 return ResourceManager.GetString("Read_pose_fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 读取机器人角度失败 的本地化字符串。
+        /// </summary>
+        internal static string read_robot_angle_fail {
+            get {
+                return ResourceManager.GetString("read_robot_angle_fail", resourceCulture);
             }
         }
         
