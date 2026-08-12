@@ -1034,7 +1034,9 @@ namespace OnlineMeasurement.IO
             hPose = new HPose();
             try
             {
-                var pattern = @"\b([XYZABC])\s+([-+]?\d*\.?\d+)";
+                //var pattern = @"\b([XYZABC])\s+([-+]?\d*\.?\d+)";
+                // 包含科学计数法格式
+                var pattern = @"\b([XYZABC])\s+([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)";
                 var matches = Regex.Matches(info, pattern);
 
                 var dict = new Dictionary<string, double>();
@@ -1108,7 +1110,10 @@ namespace OnlineMeasurement.IO
             hAngle = new HTuple(0,0,0,0,0,0);
             try
             {
-                var pattern = @"\b(A[1-6])\s+([-+]?\d*\.?\d+)";
+                //var pattern = @"\b(A[1-6])\s+([-+]?\d*\.?\d+)";
+                // 包含科学计数法格式
+                var pattern = @"\b(A[1-6])\s+([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)";
+
                 var matches = Regex.Matches(info, pattern);
 
                 var dict = new Dictionary<string, double>();

@@ -639,6 +639,9 @@ namespace OnlineMeasurement
                     //    //}
                     //}
 
+                    int pointNumMaxL = 0;//最大点位号
+                    int pointNumMaxR = 0;//最大点位号
+
                     if (!车型参数.ContainsKey($"{carKind.Content}-{TRnum}"))
                     {
                         string[] carPaths = Directory.GetDirectories("Data\\Car", $"{carKind.Content}-{TRnum}-*");
@@ -662,17 +665,46 @@ namespace OnlineMeasurement
                                             车型参数.Remove(车型参数排序key[0]);
                                             车型参数排序key.Remove(车型参数排序key[0]);
                                         }
+
+                                        //统计检测点数
+                                        foreach (var item in car.car)
+                                        {
+                                            if (item.Key.StartsWith("L"))
+                                            {
+                                                pointNumMaxL = item.Value.gSets.Count;
+                                            }
+                                            else if (item.Key.StartsWith("R"))
+                                            {
+                                                pointNumMaxR = item.Value.gSets.Count;
+                                            }
+                                        }
+
                                         车型参数.Add($"{车型号}-{托盘号}", car);
                                         车型参数排序key.Add($"{车型号}-{托盘号}");
                                         ShowMessage($"{dirName}{Resources.LanguageDic.para_load_success}");
                                     }
                                     else
                                     {
+
                                         ShowMessage($"{dirName}{Resources.LanguageDic.para_load_fail}", Color.Red);
                                     }
                                 }
                                 else
                                 {
+                                    Car car = 车型参数[$"{车型号}-{托盘号}"];
+                                    //统计检测点数
+                                    foreach (var item in car.car)
+                                    {
+                                        if (item.Key.StartsWith("L"))
+                                        {
+                                            pointNumMaxL = item.Value.gSets.Count;
+                                        }
+                                        else if (item.Key.StartsWith("R"))
+                                        {
+                                            pointNumMaxR = item.Value.gSets.Count;
+                                        }
+                                    }
+
                                     ShowMessage($"{dirName}{Resources.LanguageDic.para_already_load}");
                                 }
                             }
@@ -695,9 +727,11 @@ namespace OnlineMeasurement
                     {
                         carName = 车型号转名称[carKind.Content];
                     }
+
+
                     //显示
                     formShow?.UpDataCamImage(null, "Clear");///////////////////////////
-                    formShow?.UpDataCarInform(carName, carNumString);/////////////////////////
+                    formShow?.UpDataCarInform(carName, carNumString, pointNumMaxL, pointNumMaxR);/////////////////////////
                     lblSysStatus.BeginInvoke(new Action(() =>
                     {
                         lblSysStatus.Text = Resources.LanguageDic.Running;
@@ -1456,6 +1490,8 @@ namespace OnlineMeasurement
         {
             point3d = new Dictionary<int, Point3D>();
             point3dBase = new Dictionary<int, Point3D>();
+            Dictionary<int, Point3D> point3dRobot = new Dictionary<int, Point3D>();
+
             sqlValuePairs = new Dictionary<int, Dictionary<string, string>>();
             int pictureBoxIndex = 0;
             System.Diagnostics.Stopwatch sp = new System.Diagnostics.Stopwatch();
@@ -1605,7 +1641,7 @@ namespace OnlineMeasurement
 
 
                 ShowMessage(camName + $"Robot Pose:(x:{Pose[0].D},y:{Pose[1].D},z:{Pose[2].D},rx:{Pose[3].D},ry:{Pose[4].D},rz:{Pose[5].D})");
-                ShowMessage(camName + $"Robot Angle:(A1:{Angle[0].D},A2:{Angle[1]},A3:{Angle[2].D},A4:{Angle[3].D},A5:{Angle[4].D},A6:{Angle[5].D})");
+                ShowMessage(camName + $"Robot Angle:(A1:{Angle[0].D},A2:{Angle[1].D},A3:{Angle[2].D},A4:{Angle[3].D},A5:{Angle[4].D},A6:{Angle[5].D})");
 
                 // 后面看要不要用这个测出来的坐标
                 double robotXOpt = 0, robotYOpt = 0, robotZOpt = 0, robotRXOpt = 0, robotRYOpt = 0, robotRZOpt = 0;
@@ -1639,6 +1675,12 @@ namespace OnlineMeasurement
                     //最好加个判断
                     Pose = transformPose;
                 }
+                //改成毫米单位
+                Pose[0] = Pose[0] * 1000;
+                Pose[1] = Pose[1] * 1000;
+                Pose[2] = Pose[2] * 1000;
+
+                ShowMessage(camName + $"Robot Pose:(x:{Pose[0].D},y:{Pose[1].D},z:{Pose[2].D},rx:{Pose[3].D},ry:{Pose[4].D},rz:{Pose[5].D})");
 
                 //是否末点
                 var endPoint = plc.ReadBool(IO["End_of_Check_Points"].Address);
@@ -1990,7 +2032,7 @@ namespace OnlineMeasurement
 
                 ShowMessage(camName + $"Start runMatch");
 
-                runMatch(camSetting, carSetting, camName, point3dBase, ref 检测异常, pointNum, Pose, Px0, Py0, Px1, Py1, Px2, Py2, led匹配, light匹配1, light匹配2, ref X, ref Y, ref Z, 测点数据表, ref b有数据);
+                runMatch(camSetting, carSetting, camName,ref point3dRobot,ref point3dBase, ref 检测异常, pointNum, Pose, Px0, Py0, Px1, Py1, Px2, Py2, led匹配, light匹配1, light匹配2, ref X, ref Y, ref Z, 测点数据表, ref b有数据);
 
                 if (b有数据)
                 {
@@ -2129,7 +2171,7 @@ namespace OnlineMeasurement
             }
         }
 
-        private void runMatch(CamSetting camSetting, CarSetting carSetting, string camName, Dictionary<int, Point3D> point3dBase, ref bool 检测异常, int pointNum, HPose Pose, 
+        private void runMatch(CamSetting camSetting, CarSetting carSetting, string camName,ref Dictionary<int, Point3D> point3dRobot,ref Dictionary<int, Point3D> point3dBase, ref bool 检测异常, int pointNum, HPose Pose, 
             float Px0, float Py0, float Px1, float Py1, float Px2, float Py2, bool led匹配, bool light匹配1, bool light匹配2, ref double X, ref double Y, ref double Z,
             Dictionary<string, string> 测点数据表, ref bool b有数据)
         {
@@ -2155,6 +2197,7 @@ namespace OnlineMeasurement
 
                         double rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out double rbY, out double rbZ);
 
+                        point3dRobot.Add(pointNum, new Point3D(rbX, rbY, rbZ));
 
                         //基座标转车身
                         double carX = carSetting.robot2Car.AffineTransPoint3d(rbX, rbY, rbZ, out double carY, out double carZ);
@@ -2164,8 +2207,8 @@ namespace OnlineMeasurement
                         X = carX + carSetting.gSets[pointNum].offsetX;
                         Y = carY + carSetting.gSets[pointNum].offsetY;
                         Z = carZ + carSetting.gSets[pointNum].offsetZ;
-
-                        if (carSetting.gSets[pointNum].isBase)//重建坐标用
+                        
+                        //if (carSetting.gSets[pointNum].isBase)//重建坐标用
                         {
                             point3dBase.Add(pointNum, new Point3D(carSetting.gSets[pointNum].X, carSetting.gSets[pointNum].Y, carSetting.gSets[pointNum].Z));
                         }
@@ -2231,6 +2274,8 @@ namespace OnlineMeasurement
 
                             double rbX2 = 工具转基座标2.AffineTransPoint3d(toolX2_mm, toolY2_mm, toolZ2_mm, out double rbY2, out double rbZ2);
 
+                            point3dRobot.Add(pointNum, new Point3D(rbX2 - rbX1, rbY2 - rbY1, rbZ2 - rbZ1));
+
                             //基座标转车身
                             double carX2 = carSetting.robot2Car.AffineTransPoint3d(rbX2, rbY2, rbZ2, out double carY2, out double carZ2);
 
@@ -2238,6 +2283,14 @@ namespace OnlineMeasurement
                             X = carX2 - carX1 + carSetting.gSets[pointNum].offsetX;
                             Y = carY2 - carY1 + carSetting.gSets[pointNum].offsetY;
                             Z = carZ2 - carZ1 + carSetting.gSets[pointNum].offsetZ;
+
+
+                            //if (carSetting.gSets[pointNum].isBase)//重建坐标用
+                            {
+                                point3dBase.Add(pointNum, new Point3D(carSetting.gSets[pointNum].X, carSetting.gSets[pointNum].Y, carSetting.gSets[pointNum].Z));
+                            }
+
+
 
                             测点数据表.Add("相机X", camX2.ToString("0.000"));
                             测点数据表.Add("相机Y", camY2.ToString("0.000"));
@@ -2290,6 +2343,13 @@ namespace OnlineMeasurement
                                 HHomMat3D 工具转基座标 = Pose.PoseToHomMat3d();
                                 double rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out double rbY, out double rbZ);
 
+                                //HTuple hv_PoseOutTemp;
+                                //HOperatorSet.CreatePose(toolX_mm, toolY_mm, toolZ_mm, 0, 0, 0, "Rp+T", "abg", "point", out hv_PoseOutTemp);
+
+                                //HOperatorSet.PoseCompose(Pose, hv_PoseOutTemp, out HTuple hv_PoseOutTempTransform);
+
+
+                                point3dRobot.Add(pointNum, new Point3D(rbX, rbY, rbZ));
 
                                 //基座标转车身
                                 double carX = carSetting.robot2Car.AffineTransPoint3d(rbX, rbY, rbZ, out double carY, out double carZ);
@@ -2299,7 +2359,7 @@ namespace OnlineMeasurement
                                 Y = carY + carSetting.gSets[pointNum].offsetY;
                                 Z = carZ + carSetting.gSets[pointNum].offsetZ;
 
-                                if (carSetting.gSets[pointNum].isBase)//重建坐标用
+                                //if (carSetting.gSets[pointNum].isBase)//重建坐标用
                                 {
                                     point3dBase.Add(pointNum, new Point3D(carSetting.gSets[pointNum].X, carSetting.gSets[pointNum].Y, carSetting.gSets[pointNum].Z));
                                 }
@@ -3430,6 +3490,10 @@ namespace OnlineMeasurement
                         dataGridViewShow.Rows.Clear();
                     }));
 
+                    int pointNumMaxL = 0;//最大点位号
+                    int pointNumMaxR = 0;//最大点位号
+
+
                     if (!预载车型参数)
                     {
                         string[] carPaths = Directory.GetDirectories("Data\\Car", $"{textBoxTestNum.Text}-*");
@@ -3453,6 +3517,19 @@ namespace OnlineMeasurement
                                             车型参数.Remove(车型参数排序key[0]);
                                             车型参数排序key.Remove(车型参数排序key[0]);
                                         }
+                                        //统计检测点数
+                                        foreach (var item in car.car)
+                                        {
+                                            if (item.Key.StartsWith("L"))
+                                            {
+                                                pointNumMaxL  = item.Value.gSets.Count;
+                                            }
+                                            else if (item.Key.StartsWith("R"))
+                                            {
+                                                pointNumMaxR = item.Value.gSets.Count;
+                                            }
+                                        }
+
                                         车型参数.Add($"{车型号}-{托盘号}", car);
                                         车型参数排序key.Add($"{车型号}-{托盘号}");
                                         ShowMessage($"{dirName}{Resources.LanguageDic.para_load_success}");
@@ -3464,6 +3541,20 @@ namespace OnlineMeasurement
                                 }
                                 else
                                 {
+                                    Car car = 车型参数[$"{车型号}-{托盘号}"];
+                                    //统计检测点数
+                                    foreach (var item in car.car)
+                                    {
+                                        if (item.Key.StartsWith("L"))
+                                        {
+                                            pointNumMaxL = item.Value.gSets.Count;
+                                        }
+                                        else if (item.Key.StartsWith("R"))
+                                        {
+                                            pointNumMaxR = item.Value.gSets.Count;
+                                        }
+                                    }
+
                                     ShowMessage($"{dirName}{Resources.LanguageDic.para_already_load}", Color.Red);
                                 }
                             }
@@ -3485,7 +3576,7 @@ namespace OnlineMeasurement
                     }
                     string carNum = "P02345678";
                     formShow?.UpDataCamImage(null, "Clear");///////////////////////////
-                    formShow?.UpDataCarInform(carName, carNum);/////////////////////////
+                    formShow?.UpDataCarInform(carName, carNum, pointNumMaxL, pointNumMaxR);/////////////////////////
                     Dictionary<int, Point3D> rbL = new Dictionary<int, Point3D>();
                     Dictionary<int, Point3D> point3dL = new Dictionary<int, Point3D>();
                     Dictionary<int, Point3D> point3dBaseL = new Dictionary<int, Point3D>();
@@ -3924,6 +4015,9 @@ namespace OnlineMeasurement
 
         private void 仿真计算(string IOName, string[] Lfiles, Dictionary<int, Point3D> point3d, Dictionary<int, Point3D> point3dBase, Dictionary<int, Point3D> rb)
         {
+
+            Dictionary<int, Point3D> point3dRobot = new Dictionary<int, Point3D>();
+
             var camSetting = 相机参数[IOName];
             if (!车型参数[textBoxTestNum.Text].car.ContainsKey(IOName))
             {
@@ -4173,7 +4267,8 @@ namespace OnlineMeasurement
 
                     ShowMessage(IOName + $"Robot Pose:(x:{Pose[0].D},y:{Pose[1].D},z:{Pose[2].D},rx:{Pose[3].D},ry:{Pose[4].D},rz:{Pose[5].D})");
 
-                    runMatch(camSetting, carSetting, IOName, point3dBase, ref 检测异常, pointNum, Pose, Px0, Py0, Px1, Py1, Px2, Py2, led匹配, light匹配1, light匹配2, ref X, ref Y, ref Z, 测点数据表, ref b有数据);
+
+                    runMatch(camSetting, carSetting, IOName, ref point3dRobot, ref point3dBase, ref 检测异常, pointNum, Pose, Px0, Py0, Px1, Py1, Px2, Py2, led匹配, light匹配1, light匹配2, ref X, ref Y, ref Z, 测点数据表, ref b有数据);
 
                     //结果显示
 
@@ -4228,7 +4323,59 @@ namespace OnlineMeasurement
                     ShowMessage($"{IOName}_{pointNum} {Resources.LanguageDic.cam_error}:{ex}", Color.Red);
                 }
             }
+
+            string filePath = $"{IOName}_point3dRobot.ply";
+
+            SavePly(point3dRobot, filePath);
+            filePath = $"{IOName}_point3dBase.ply";
+            SavePly(point3dBase, filePath);
         }
+
+        private static void SavePly(Dictionary<int, Point3D> point3dRobot, string filePath)
+        {
+            //临时保存点云
+            HTuple hv_X = new HTuple();
+            HTuple hv_Y = new HTuple();
+            HTuple hv_Z = new HTuple();
+            // 先收集到数组，一次性构造 HTuple，避免逐条 Append 的性能问题
+            double[] xArr = new double[point3dRobot.Count];
+            double[] yArr = new double[point3dRobot.Count];
+            double[] zArr = new double[point3dRobot.Count];
+            int iter = 0;
+            foreach (var item in point3dRobot)
+            {
+                xArr[iter] = item.Value.X;
+                yArr[iter] = item.Value.Y;
+                zArr[iter] = item.Value.Z;
+                iter++;
+                if (iter >= 10)
+                {
+                    break;
+                }
+            }
+            hv_X = new HTuple(xArr);
+            hv_Y = new HTuple(yArr);
+            hv_Z = new HTuple(zArr);
+
+            // ---- Step 2: 创建 3D 对象模型 ----
+            HTuple hv_OM3D;
+            // Halcon 21.05+ 提供此算子，直接从点坐标创建对象模型
+            HOperatorSet.GenObjectModel3dFromPoints(hv_X, hv_Y, hv_Z, out hv_OM3D);
+
+            // ---- Step 3: 写出 PLY 文件 ----
+            HOperatorSet.WriteObjectModel3d(
+                hv_OM3D,
+                "ply",              // 文件格式
+                filePath,           // 输出路径，如 @"D:\output.ply"
+                new HTuple(),       // GenParamName  (无额外参数)
+                new HTuple()        // GenParamValue
+            );
+
+            // ---- Step 4: 释放资源 ----
+            HOperatorSet.ClearObjectModel3d(hv_OM3D);
+        }
+       
+        
         #endregion
 
         #region 光源激光控制
@@ -4549,6 +4696,25 @@ namespace OnlineMeasurement
         {
             var writeYRef = plc.Write("D1410", (int)(99999 * 100));
 
+            //// 测试机器人信息解析
+            //IRobot robot;
+            ////默认库卡
+            //robot = new KukaRobot();
+            //switch (robot_Type)
+            //{
+            //    case Robot_Type.Kuka:
+            //        robot = new KukaRobot();
+            //        break;
+
+            //    case Robot_Type.Kawasaki:
+            //        robot = new KawasakiRobot();
+            //        break;
+            //}
+            //robot.robotName = "L";
+            //robot.Load();
+
+            //((KukaRobot)robot).FormatTransformPose("{E6POS: X 1052.40222, Y 10.9672298, Z 34.9790077, A 89.9990, B 1.79503317E-07, C -175.499, S 2, T 11, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}",out HPose pose);
+            //((KukaRobot)robot).FormatTransformAXIS("{E6POS: A1 1052.40222, A2 10.9672298, A3 34.9790077, A4 89.9990, A5 1.79503317E-07, A6 -175.499, S 2, T 11, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}", out HTuple angle);
         }
 
         private void button_setRobotL_Click(object sender, EventArgs e)

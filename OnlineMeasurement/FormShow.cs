@@ -1,4 +1,5 @@
 using HalconDotNet;
+using MySqlX.XDevAPI.Relational;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,9 +13,11 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace OnlineMeasurement
 {
@@ -22,6 +25,16 @@ namespace OnlineMeasurement
     {
         public bool IsShow = false;
         public bool EnableClose = false;
+
+        int _rowL = 0;
+        int _rowR = 0;
+
+        List<PictureBox> L_pictureBoxs = new List<PictureBox>();
+        List<PictureBox> R_pictureBoxs = new List<PictureBox>();
+
+        bool bTableLayoutPanel_Max_Paint = true;
+
+
         public FormShow()
         {
             InitializeComponent();
@@ -399,7 +412,7 @@ namespace OnlineMeasurement
         }
         string CarNameNow = string.Empty;
         string CarNumNow = string.Empty;
-        public void UpDataCarInform(string carName, string carNum)
+        public void UpDataCarInform(string carName, string carNum, int LCount, int RCount)
         {
             CarNameNow = carName;
             CarNumNow = carNum;
@@ -419,13 +432,19 @@ namespace OnlineMeasurement
                         }
                     }
                     
-
+                    //更新结果显示列表
                     comboBox_showPictureID.Items.Clear();
                     for (int i = 0; i < CarImages[CarNameNow].Count; i++)
                     {
                         comboBox_showPictureID.Items.Add($"{i + 1}");
                     }
                     comboBox_showPictureID.SelectedIndex = 0;
+
+                    //更新结果显示控件
+
+                    CreatePictureBox(LCount, RCount);
+
+
                 }
                 catch { }
             }));
@@ -439,72 +458,225 @@ namespace OnlineMeasurement
                 {
                     if (pointName == "Clear")
                     {
-                        pictureBox1.Image = null;
-                        pictureBox2.Image = null;
-                        pictureBox3.Image = null;
-                        pictureBox4.Image = null;
-                        pictureBox5.Image = null;
-                        pictureBox6.Image = null;
-                        pictureBox7.Image = null;
-                        pictureBox8.Image = null;
-                        pictureBox9.Image = null;
-                        pictureBox10.Image = null;
+                        foreach (var item in L_pictureBoxs)
+                        {
+                            item.Image = null;
+                        }
+                        foreach (var item in R_pictureBoxs)
+                        {
+                            item.Image = null;
+                        }
+
                         return;
                     }
                     if (_hImage == null) return;
                     Bitmap image = HImage2Bitmap(_hImage);
                     _hImage?.Dispose();
-                    switch (pointName)
+
+                    if (pointName.StartsWith("L"))
                     {
-                        case "L1":
-                            pictureBox1.Image = image;
-                            break;
-                        case "L2":
-                            pictureBox2.Image = image;
-                            break;
-                        case "L3":
-                            pictureBox3.Image = image;
-                            break;
-                        case "L4":
-                            pictureBox4.Image = image;
-                            break;
-                        case "L5":
-                            pictureBox5.Image = image;
-                            break;
-                        case "R1":
-                            pictureBox6.Image = image;
-                            break;
-                        case "R2":
-                            pictureBox7.Image = image;
-                            break;
-                        case "R3":
-                            pictureBox8.Image = image;
-                            break;
-                        case "R4":
-                            pictureBox9.Image = image;
-                            break;
-                        case "R5":
-                            pictureBox10.Image = image;
-                            break;
-                        case "Clear":
-                            pictureBox1.Image = null;
-                            pictureBox2.Image = null;
-                            pictureBox3.Image = null;
-                            pictureBox4.Image = null;
-                            pictureBox5.Image = null;
-                            pictureBox6.Image = null;
-                            pictureBox7.Image = null;
-                            pictureBox8.Image = null;
-                            pictureBox9.Image = null;
-                            pictureBox10.Image = null;
-                            break;
-                        default:
-                            break;
+                        if (int.TryParse(pointName.Substring(1), out int num))
+                        {
+                            if (num - 1 < L_pictureBoxs.Count)
+                            {
+                                L_pictureBoxs[num - 1].Image = image;
+                            }
+                        }
                     }
+                    else
+                    {
+                        if (int.TryParse(pointName.Substring(1), out int num))
+                        {
+                            if (num - 1 < R_pictureBoxs.Count)
+                            {
+                                R_pictureBoxs[num - 1].Image = image;
+                            }
+                        }
+                    }
+
+                    
                 }
                 catch { }
             }));
         }
+
+        void CreatePictureBox(int LCount, int RCount)
+        {
+            if (_rowL != LCount || _rowR != RCount)
+            {
+                _rowL = LCount;
+                _rowR = RCount;
+
+                bTableLayoutPanel_Max_Paint = false;
+
+                tableLayoutPanel_CamImageL.Controls.Clear();
+                tableLayoutPanel_CamImageL.RowStyles.Clear();
+                tableLayoutPanel_CamImageL.ColumnStyles.Clear();
+                L_pictureBoxs.Clear();
+
+                tableLayoutPanel_CamImageR.Controls.Clear();
+                tableLayoutPanel_CamImageR.RowStyles.Clear();
+                tableLayoutPanel_CamImageR.ColumnStyles.Clear();
+                R_pictureBoxs.Clear();
+
+                tableLayoutPanel_CamImageL.RowCount = LCount * 3 - 1;
+
+                tableLayoutPanel_CamImageR.RowCount = RCount * 3 - 1;
+
+                for (int r = 0; r < LCount * 3 - 1; r++)
+                {
+                    if (r % 3 == 0)
+                    {
+                        tableLayoutPanel_CamImageL.RowStyles.Add(new RowStyle(SizeType.Absolute, 19F));
+                    }
+                    else if (r % 3 == 1)
+                    {
+                        tableLayoutPanel_CamImageL.RowStyles.Add(new RowStyle(SizeType.Absolute, 120F ));
+                    }
+                    else
+                    {
+                        tableLayoutPanel_CamImageL.RowStyles.Add(new RowStyle(SizeType.Absolute, 6F));
+                    }
+                }
+                for (int r = 0; r < RCount * 3 - 1; r++)
+                {
+                    if (r % 3 == 0)
+                    {
+                        tableLayoutPanel_CamImageR.RowStyles.Add(new RowStyle(SizeType.Absolute, 19F));
+                    }
+                    else if (r % 3 == 1)
+                    {
+                        tableLayoutPanel_CamImageR.RowStyles.Add(new RowStyle(SizeType.Absolute, 120F));
+                    }
+                    else
+                    {
+                        tableLayoutPanel_CamImageR.RowStyles.Add(new RowStyle(SizeType.Absolute, 6F));
+                    }
+                }
+
+                for (int r = 0; r < LCount * 3 - 1; r++)
+                {
+
+                    if (r % 3 == 0)//序号
+                    {
+                            Label label = new Label();
+                            label.AutoSize = true;
+                            label.BackColor = Color.Transparent;
+                            label.Font = new Font("微软雅黑", 10.5F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(134)));
+                            label.ForeColor = Color.White;
+                            label.Text =( r/3 + 1).ToString();
+                            label.TabStop = false;
+                            tableLayoutPanel_CamImageL.Controls.Add(label, 0, r);
+                            
+                    }
+                    else if (r % 3 == 1)//图片
+                    {
+                            PictureBox pictureBox = new PictureBox();
+                            pictureBox.Dock = DockStyle.Fill;
+                            pictureBox.BackColor = Color.Transparent;
+                            pictureBox.Name = "pictureBox" + (r + 1);
+                            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                            pictureBox.TabStop = false;
+                            //pictureBox.DoubleClick += PictureBox_DoubleClick;
+                            tableLayoutPanel_CamImageL.Controls.Add(pictureBox, 0, r);
+                            L_pictureBoxs.Add(pictureBox);
+                            
+                    }
+                    else//边框
+                    {
+                            Panel panel = new Panel();
+                            panel.Dock = DockStyle.Fill;
+                            panel.BackColor = Color.Transparent;
+                            panel.Margin = new Padding(0);
+                            panel.TabStop = false;
+                            panel.Paint += panel_bian_Paint;
+                            tableLayoutPanel_CamImageL.Controls.Add(panel, 0, r);
+                            
+                    }
+                    
+                }
+
+                for (int r = 0; r < RCount * 3 - 1; r++)
+                {
+
+                    if (r % 3 == 0)//序号
+                    {
+                        Label label = new Label();
+                        label.AutoSize = true;
+                        label.BackColor = Color.Transparent;
+                        label.Font = new Font("微软雅黑", 10.5F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(134)));
+                        label.ForeColor = Color.White;
+                        label.Text = (r/3 + 1).ToString();
+                        label.TabStop = false;
+                        tableLayoutPanel_CamImageR.Controls.Add(label, 0, r);
+
+                    }
+                    else if (r % 3 == 1)//图片
+                    {
+                        PictureBox pictureBox = new PictureBox();
+                        pictureBox.Dock = DockStyle.Fill;
+                        pictureBox.BackColor = Color.Transparent;
+                        pictureBox.Name = "pictureBox" + (r + 1);
+                        pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                        pictureBox.TabStop = false;
+                        //pictureBox.DoubleClick += PictureBox_DoubleClick;
+                        tableLayoutPanel_CamImageR.Controls.Add(pictureBox, 0, r);
+                        R_pictureBoxs.Add(pictureBox);
+
+                    }
+                    else//边框
+                    {
+                        Panel panel = new Panel();
+                        panel.Dock = DockStyle.Fill;
+                        panel.BackColor = Color.Transparent;
+                        panel.Margin = new Padding(0);
+                        panel.TabStop = false;
+                        panel.Paint += panel_bian_Paint;
+                        tableLayoutPanel_CamImageR.Controls.Add(panel, 0, r);
+
+                    }
+
+                }
+
+                bTableLayoutPanel_Max_Paint = true;
+            }
+        }
+        //private HImage Bitmap2HImage(Bitmap image)
+        //{
+        //    if (image == null)
+        //    {
+        //        return null;
+        //    }
+        //    try
+        //    {
+        //        Rectangle rectangle = new Rectangle(0, 0, image.Width, image.Height);
+        //        BitmapData bitmapData = image.LockBits(rectangle, ImageLockMode.ReadOnly, image.PixelFormat);
+        //        HImage hImage = new HImage();
+        //        hImage.GenImageInterleaved(bitmapData.Scan0, "bgrx", image.Width, image.Height, 0, "byte", 0, 0, 0, 0, -1, 0);
+        //        image.UnlockBits(bitmapData);
+        //        return hImage;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return null;
+        //    }
+        //}
+
+        //private void PictureBox_DoubleClick(object sender, EventArgs e)
+        //{
+        //    PictureBox pictureBox = sender as PictureBox;
+        //    HImage hImage = Bitmap2HImage((Bitmap)pictureBox.Image);
+        //    string text = "查看图片" + pictureBox.Name.Substring(10);
+        //    if (hImage != null)
+        //    {
+        //        Thread th = new Thread(() =>
+        //        {
+        //            new FormImage(hImage, text).ShowDialog();
+        //        });
+        //        th.IsBackground = true;
+        //        th.Start();
+        //    }
+        //}
 
         //public void UpDataXYZ(Point3D point3D, string pointName)
         //{
@@ -631,7 +803,7 @@ namespace OnlineMeasurement
         //                    //文字
         //                    g.DrawString($"{pointName}", new Font(new FontFamily("Arial"), 16, FontStyle.Italic), new SolidBrush(Color.Black), rectangle, StringFormat.GenericDefault);
         //                }
-                        
+
         //            }
 
         //            if (pictureBox11.Image != null)
@@ -643,7 +815,7 @@ namespace OnlineMeasurement
         //        catch (Exception ex) { Console.WriteLine(ex.Message); }
         //    }));
         //}
-       
+
         public void UpDataXYZ(Point3D point3D, string pointName)
         {
             BeginInvoke(new Action(() =>

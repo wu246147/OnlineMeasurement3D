@@ -31,17 +31,7 @@ namespace OnlineMeasurement
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormShow));
             this.tableLayoutPanel_Max = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
-            this.label_carNum = new System.Windows.Forms.Label();
             this.label_carName = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label_time = new System.Windows.Forms.Label();
@@ -53,24 +43,11 @@ namespace OnlineMeasurement
             this.label_camR = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel_bian = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.panel16 = new System.Windows.Forms.Panel();
-            this.panel17 = new System.Windows.Forms.Panel();
-            this.panel18 = new System.Windows.Forms.Panel();
-            this.panel19 = new System.Windows.Forms.Panel();
             this.panel20 = new System.Windows.Forms.Panel();
             this.panel21 = new System.Windows.Forms.Panel();
-            this.panel22 = new System.Windows.Forms.Panel();
-            this.panel23 = new System.Windows.Forms.Panel();
-            this.panel24 = new System.Windows.Forms.Panel();
             this.panel25 = new System.Windows.Forms.Panel();
-            this.comboBox_showPictureID = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox_raivas = new System.Windows.Forms.PictureBox();
@@ -93,21 +70,15 @@ namespace OnlineMeasurement
             this.最大化ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.切换屏幕ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkBox_show_all = new System.Windows.Forms.CheckBox();
+            this.comboBox_showPictureID = new System.Windows.Forms.ComboBox();
+            this.label_carNum = new System.Windows.Forms.Label();
+            this.tableLayoutPanel_CamImageL = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel_CamImageR = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel_Max.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_raivas)).BeginInit();
             this.panel_Title.SuspendLayout();
             this.panel_Top.SuspendLayout();
@@ -120,15 +91,6 @@ namespace OnlineMeasurement
             // tableLayoutPanel_Max
             // 
             resources.ApplyResources(this.tableLayoutPanel_Max, "tableLayoutPanel_Max");
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox2, 1, 6);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox3, 1, 8);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox4, 1, 10);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox5, 1, 12);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox6, 3, 4);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox7, 3, 6);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox8, 3, 8);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox9, 3, 10);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox10, 3, 12);
             this.tableLayoutPanel_Max.Controls.Add(this.pictureBox11, 5, 4);
             this.tableLayoutPanel_Max.Controls.Add(this.label_carNum, 6, 0);
             this.tableLayoutPanel_Max.Controls.Add(this.label_carName, 5, 0);
@@ -137,90 +99,17 @@ namespace OnlineMeasurement
             this.tableLayoutPanel_Max.Controls.Add(this.panel3, 3, 0);
             this.tableLayoutPanel_Max.Controls.Add(this.panel4, 4, 4);
             this.tableLayoutPanel_Max.Controls.Add(this.panel_bian, 2, 4);
-            this.tableLayoutPanel_Max.Controls.Add(this.pictureBox1, 1, 4);
             this.tableLayoutPanel_Max.Controls.Add(this.panel5, 0, 4);
             this.tableLayoutPanel_Max.Controls.Add(this.panel6, 8, 4);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel7, 1, 5);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel8, 3, 5);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel9, 1, 7);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel10, 3, 7);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel16, 1, 9);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel17, 3, 9);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel18, 1, 11);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel19, 3, 11);
             this.tableLayoutPanel_Max.Controls.Add(this.panel20, 1, 1);
             this.tableLayoutPanel_Max.Controls.Add(this.panel21, 3, 1);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel22, 1, 13);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel23, 3, 13);
-            this.tableLayoutPanel_Max.Controls.Add(this.panel24, 5, 13);
             this.tableLayoutPanel_Max.Controls.Add(this.panel25, 5, 1);
             this.tableLayoutPanel_Max.Controls.Add(this.comboBox_showPictureID, 6, 2);
             this.tableLayoutPanel_Max.Controls.Add(this.label4, 5, 2);
+            this.tableLayoutPanel_Max.Controls.Add(this.tableLayoutPanel_CamImageL, 1, 4);
+            this.tableLayoutPanel_Max.Controls.Add(this.tableLayoutPanel_CamImageR, 3, 4);
             this.tableLayoutPanel_Max.Name = "tableLayoutPanel_Max";
             this.tableLayoutPanel_Max.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel_Max_Paint);
-            // 
-            // pictureBox2
-            // 
-            resources.ApplyResources(this.pictureBox2, "pictureBox2");
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            resources.ApplyResources(this.pictureBox3, "pictureBox3");
-            this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox4
-            // 
-            resources.ApplyResources(this.pictureBox4, "pictureBox4");
-            this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.TabStop = false;
-            // 
-            // pictureBox5
-            // 
-            resources.ApplyResources(this.pictureBox5, "pictureBox5");
-            this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.TabStop = false;
-            // 
-            // pictureBox6
-            // 
-            resources.ApplyResources(this.pictureBox6, "pictureBox6");
-            this.pictureBox6.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.TabStop = false;
-            // 
-            // pictureBox7
-            // 
-            resources.ApplyResources(this.pictureBox7, "pictureBox7");
-            this.pictureBox7.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.TabStop = false;
-            // 
-            // pictureBox8
-            // 
-            resources.ApplyResources(this.pictureBox8, "pictureBox8");
-            this.pictureBox8.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.TabStop = false;
-            // 
-            // pictureBox9
-            // 
-            resources.ApplyResources(this.pictureBox9, "pictureBox9");
-            this.pictureBox9.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.TabStop = false;
-            // 
-            // pictureBox10
-            // 
-            resources.ApplyResources(this.pictureBox10, "pictureBox10");
-            this.pictureBox10.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox10.Name = "pictureBox10";
-            this.pictureBox10.TabStop = false;
             // 
             // pictureBox11
             // 
@@ -228,15 +117,7 @@ namespace OnlineMeasurement
             this.pictureBox11.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel_Max.SetColumnSpan(this.pictureBox11, 3);
             this.pictureBox11.Name = "pictureBox11";
-            this.tableLayoutPanel_Max.SetRowSpan(this.pictureBox11, 9);
             this.pictureBox11.TabStop = false;
-            // 
-            // label_carNum
-            // 
-            resources.ApplyResources(this.label_carNum, "label_carNum");
-            this.label_carNum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(50)))), ((int)(((byte)(125)))));
-            this.label_carNum.ForeColor = System.Drawing.Color.White;
-            this.label_carNum.Name = "label_carNum";
             // 
             // label_carName
             // 
@@ -307,84 +188,25 @@ namespace OnlineMeasurement
             // 
             resources.ApplyResources(this.panel4, "panel4");
             this.panel4.Name = "panel4";
-            this.tableLayoutPanel_Max.SetRowSpan(this.panel4, 9);
             this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
             // 
             // panel_bian
             // 
             resources.ApplyResources(this.panel_bian, "panel_bian");
             this.panel_bian.Name = "panel_bian";
-            this.tableLayoutPanel_Max.SetRowSpan(this.panel_bian, 9);
             this.panel_bian.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
-            // pictureBox1
-            // 
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
             // 
             // panel5
             // 
             resources.ApplyResources(this.panel5, "panel5");
             this.panel5.Name = "panel5";
-            this.tableLayoutPanel_Max.SetRowSpan(this.panel5, 9);
             this.panel5.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
             // 
             // panel6
             // 
             resources.ApplyResources(this.panel6, "panel6");
             this.panel6.Name = "panel6";
-            this.tableLayoutPanel_Max.SetRowSpan(this.panel6, 9);
             this.panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
-            // panel7
-            // 
-            resources.ApplyResources(this.panel7, "panel7");
-            this.panel7.Name = "panel7";
-            this.panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
-            // panel8
-            // 
-            resources.ApplyResources(this.panel8, "panel8");
-            this.panel8.Name = "panel8";
-            this.panel8.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
-            // panel9
-            // 
-            resources.ApplyResources(this.panel9, "panel9");
-            this.panel9.Name = "panel9";
-            this.panel9.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
-            // panel10
-            // 
-            resources.ApplyResources(this.panel10, "panel10");
-            this.panel10.Name = "panel10";
-            this.panel10.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
-            // panel16
-            // 
-            resources.ApplyResources(this.panel16, "panel16");
-            this.panel16.Name = "panel16";
-            this.panel16.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
-            // panel17
-            // 
-            resources.ApplyResources(this.panel17, "panel17");
-            this.panel17.Name = "panel17";
-            this.panel17.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
-            // panel18
-            // 
-            resources.ApplyResources(this.panel18, "panel18");
-            this.panel18.Name = "panel18";
-            this.panel18.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
-            // panel19
-            // 
-            resources.ApplyResources(this.panel19, "panel19");
-            this.panel19.Name = "panel19";
-            this.panel19.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
             // 
             // panel20
             // 
@@ -398,40 +220,12 @@ namespace OnlineMeasurement
             this.panel21.Name = "panel21";
             this.panel21.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
             // 
-            // panel22
-            // 
-            resources.ApplyResources(this.panel22, "panel22");
-            this.panel22.Name = "panel22";
-            this.panel22.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
-            // panel23
-            // 
-            resources.ApplyResources(this.panel23, "panel23");
-            this.panel23.Name = "panel23";
-            this.panel23.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
-            // panel24
-            // 
-            this.tableLayoutPanel_Max.SetColumnSpan(this.panel24, 3);
-            resources.ApplyResources(this.panel24, "panel24");
-            this.panel24.Name = "panel24";
-            this.panel24.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
             // panel25
             // 
             this.tableLayoutPanel_Max.SetColumnSpan(this.panel25, 3);
             resources.ApplyResources(this.panel25, "panel25");
             this.panel25.Name = "panel25";
             this.panel25.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            // 
-            // comboBox_showPictureID
-            // 
-            this.tableLayoutPanel_Max.SetColumnSpan(this.comboBox_showPictureID, 2);
-            resources.ApplyResources(this.comboBox_showPictureID, "comboBox_showPictureID");
-            this.comboBox_showPictureID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_showPictureID.FormattingEnabled = true;
-            this.comboBox_showPictureID.Name = "comboBox_showPictureID";
-            this.comboBox_showPictureID.SelectedIndexChanged += new System.EventHandler(this.comboBox_showPictureID_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -619,6 +413,32 @@ namespace OnlineMeasurement
             this.checkBox_show_all.UseVisualStyleBackColor = true;
             this.checkBox_show_all.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
+            // comboBox_showPictureID
+            // 
+            this.tableLayoutPanel_Max.SetColumnSpan(this.comboBox_showPictureID, 2);
+            resources.ApplyResources(this.comboBox_showPictureID, "comboBox_showPictureID");
+            this.comboBox_showPictureID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_showPictureID.FormattingEnabled = true;
+            this.comboBox_showPictureID.Name = "comboBox_showPictureID";
+            this.comboBox_showPictureID.SelectedIndexChanged += new System.EventHandler(this.comboBox_showPictureID_SelectedIndexChanged);
+            // 
+            // label_carNum
+            // 
+            resources.ApplyResources(this.label_carNum, "label_carNum");
+            this.label_carNum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(50)))), ((int)(((byte)(125)))));
+            this.label_carNum.ForeColor = System.Drawing.Color.White;
+            this.label_carNum.Name = "label_carNum";
+            // 
+            // tableLayoutPanel_CamImageL
+            // 
+            resources.ApplyResources(this.tableLayoutPanel_CamImageL, "tableLayoutPanel_CamImageL");
+            this.tableLayoutPanel_CamImageL.Name = "tableLayoutPanel_CamImageL";
+            // 
+            // tableLayoutPanel_CamImageR
+            // 
+            resources.ApplyResources(this.tableLayoutPanel_CamImageR, "tableLayoutPanel_CamImageR");
+            this.tableLayoutPanel_CamImageR.Name = "tableLayoutPanel_CamImageR";
+            // 
             // FormShow
             // 
             resources.ApplyResources(this, "$this");
@@ -646,15 +466,6 @@ namespace OnlineMeasurement
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormShow_MouseDown);
             this.tableLayoutPanel_Max.ResumeLayout(false);
             this.tableLayoutPanel_Max.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -662,7 +473,6 @@ namespace OnlineMeasurement
             this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_raivas)).EndInit();
             this.panel_Title.ResumeLayout(false);
             this.panel_Title.PerformLayout();
@@ -706,17 +516,6 @@ namespace OnlineMeasurement
         private System.Windows.Forms.ToolStripMenuItem 最大化ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 切换屏幕ToolStripMenuItem;
         private System.Windows.Forms.Label label_camL;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.PictureBox pictureBox7;
-        private System.Windows.Forms.PictureBox pictureBox8;
-        private System.Windows.Forms.PictureBox pictureBox9;
-        private System.Windows.Forms.PictureBox pictureBox10;
-        private System.Windows.Forms.Label label_carNum;
         private System.Windows.Forms.Label label_time;
         private System.Windows.Forms.Label label_carName;
         private System.Windows.Forms.Panel panel2;
@@ -726,23 +525,15 @@ namespace OnlineMeasurement
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Panel panel16;
-        private System.Windows.Forms.Panel panel17;
-        private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.Panel panel20;
         private System.Windows.Forms.Panel panel21;
-        private System.Windows.Forms.Panel panel22;
-        private System.Windows.Forms.Panel panel23;
-        private System.Windows.Forms.Panel panel24;
         private System.Windows.Forms.Panel panel25;
         private System.Windows.Forms.CheckBox checkBox_show_all;
         private System.Windows.Forms.PictureBox pictureBox11;
-        private System.Windows.Forms.ComboBox comboBox_showPictureID;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label_carNum;
+        private System.Windows.Forms.ComboBox comboBox_showPictureID;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_CamImageL;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_CamImageR;
     }
 }
