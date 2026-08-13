@@ -1060,6 +1060,8 @@ namespace OnlineMeasurement
                         hWorldPose.ReadPose(filePath);
                         toolInCam = hWorldPose;
                         //这里要先求逆，再转换
+
+                        HHomMat3D tool2Cam = toolInCam.PoseToHomMat3d();
                         cam2Tool = toolInCam.PoseInvert().PoseToHomMat3d();
                     }
                 }

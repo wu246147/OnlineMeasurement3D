@@ -32,6 +32,7 @@ namespace OnlineMeasurement
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormShow));
             this.tableLayoutPanel_Max = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
+            this.label_carNum = new System.Windows.Forms.Label();
             this.label_carName = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label_time = new System.Windows.Forms.Label();
@@ -48,7 +49,10 @@ namespace OnlineMeasurement
             this.panel20 = new System.Windows.Forms.Panel();
             this.panel21 = new System.Windows.Forms.Panel();
             this.panel25 = new System.Windows.Forms.Panel();
+            this.comboBox_showPictureID = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel_CamImageL = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel_CamImageR = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox_raivas = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -70,10 +74,6 @@ namespace OnlineMeasurement
             this.最大化ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.切换屏幕ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkBox_show_all = new System.Windows.Forms.CheckBox();
-            this.comboBox_showPictureID = new System.Windows.Forms.ComboBox();
-            this.label_carNum = new System.Windows.Forms.Label();
-            this.tableLayoutPanel_CamImageL = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel_CamImageR = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel_Max.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             this.panel2.SuspendLayout();
@@ -118,6 +118,13 @@ namespace OnlineMeasurement
             this.tableLayoutPanel_Max.SetColumnSpan(this.pictureBox11, 3);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.TabStop = false;
+            // 
+            // label_carNum
+            // 
+            resources.ApplyResources(this.label_carNum, "label_carNum");
+            this.label_carNum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(50)))), ((int)(((byte)(125)))));
+            this.label_carNum.ForeColor = System.Drawing.Color.White;
+            this.label_carNum.Name = "label_carNum";
             // 
             // label_carName
             // 
@@ -227,12 +234,31 @@ namespace OnlineMeasurement
             this.panel25.Name = "panel25";
             this.panel25.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
             // 
+            // comboBox_showPictureID
+            // 
+            this.tableLayoutPanel_Max.SetColumnSpan(this.comboBox_showPictureID, 2);
+            resources.ApplyResources(this.comboBox_showPictureID, "comboBox_showPictureID");
+            this.comboBox_showPictureID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_showPictureID.FormattingEnabled = true;
+            this.comboBox_showPictureID.Name = "comboBox_showPictureID";
+            this.comboBox_showPictureID.SelectedIndexChanged += new System.EventHandler(this.comboBox_showPictureID_SelectedIndexChanged);
+            // 
             // label4
             // 
             resources.ApplyResources(this.label4, "label4");
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(50)))), ((int)(((byte)(125)))));
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Name = "label4";
+            // 
+            // tableLayoutPanel_CamImageL
+            // 
+            resources.ApplyResources(this.tableLayoutPanel_CamImageL, "tableLayoutPanel_CamImageL");
+            this.tableLayoutPanel_CamImageL.Name = "tableLayoutPanel_CamImageL";
+            // 
+            // tableLayoutPanel_CamImageR
+            // 
+            resources.ApplyResources(this.tableLayoutPanel_CamImageR, "tableLayoutPanel_CamImageR");
+            this.tableLayoutPanel_CamImageR.Name = "tableLayoutPanel_CamImageR";
             // 
             // label1
             // 
@@ -412,32 +438,6 @@ namespace OnlineMeasurement
             this.checkBox_show_all.Name = "checkBox_show_all";
             this.checkBox_show_all.UseVisualStyleBackColor = true;
             this.checkBox_show_all.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // comboBox_showPictureID
-            // 
-            this.tableLayoutPanel_Max.SetColumnSpan(this.comboBox_showPictureID, 2);
-            resources.ApplyResources(this.comboBox_showPictureID, "comboBox_showPictureID");
-            this.comboBox_showPictureID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_showPictureID.FormattingEnabled = true;
-            this.comboBox_showPictureID.Name = "comboBox_showPictureID";
-            this.comboBox_showPictureID.SelectedIndexChanged += new System.EventHandler(this.comboBox_showPictureID_SelectedIndexChanged);
-            // 
-            // label_carNum
-            // 
-            resources.ApplyResources(this.label_carNum, "label_carNum");
-            this.label_carNum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(50)))), ((int)(((byte)(125)))));
-            this.label_carNum.ForeColor = System.Drawing.Color.White;
-            this.label_carNum.Name = "label_carNum";
-            // 
-            // tableLayoutPanel_CamImageL
-            // 
-            resources.ApplyResources(this.tableLayoutPanel_CamImageL, "tableLayoutPanel_CamImageL");
-            this.tableLayoutPanel_CamImageL.Name = "tableLayoutPanel_CamImageL";
-            // 
-            // tableLayoutPanel_CamImageR
-            // 
-            resources.ApplyResources(this.tableLayoutPanel_CamImageR, "tableLayoutPanel_CamImageR");
-            this.tableLayoutPanel_CamImageR.Name = "tableLayoutPanel_CamImageR";
             // 
             // FormShow
             // 

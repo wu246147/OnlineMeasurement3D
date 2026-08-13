@@ -10,6 +10,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1491,6 +1492,8 @@ namespace OnlineMeasurement
             point3d = new Dictionary<int, Point3D>();
             point3dBase = new Dictionary<int, Point3D>();
             Dictionary<int, Point3D> point3dRobot = new Dictionary<int, Point3D>();
+            Dictionary<int, Point3D> point3dCam = new Dictionary<int, Point3D>();
+            Dictionary<int, Point3D> point3dModel = new Dictionary<int, Point3D>();
 
             sqlValuePairs = new Dictionary<int, Dictionary<string, string>>();
             int pictureBoxIndex = 0;
@@ -2032,7 +2035,7 @@ namespace OnlineMeasurement
 
                 ShowMessage(camName + $"Start runMatch");
 
-                runMatch(camSetting, carSetting, camName,ref point3dRobot,ref point3dBase, ref 检测异常, pointNum, Pose, Px0, Py0, Px1, Py1, Px2, Py2, led匹配, light匹配1, light匹配2, ref X, ref Y, ref Z, 测点数据表, ref b有数据);
+                runMatch(camSetting, carSetting, camName,ref point3dCam, ref point3dRobot, ref point3dModel, ref point3dBase, ref 检测异常, pointNum, Pose, Px0, Py0, Px1, Py1, Px2, Py2, led匹配, light匹配1, light匹配2, ref X, ref Y, ref Z, 测点数据表, ref b有数据);
 
                 if (b有数据)
                 {
@@ -2171,7 +2174,7 @@ namespace OnlineMeasurement
             }
         }
 
-        private void runMatch(CamSetting camSetting, CarSetting carSetting, string camName,ref Dictionary<int, Point3D> point3dRobot,ref Dictionary<int, Point3D> point3dBase, ref bool 检测异常, int pointNum, HPose Pose, 
+        private void runMatch(CamSetting camSetting, CarSetting carSetting, string camName, ref Dictionary<int, Point3D> point3dCam, ref Dictionary<int, Point3D> point3dRobot,ref Dictionary<int, Point3D> point3dModel, ref Dictionary<int, Point3D> point3dBase, ref bool 检测异常, int pointNum, HPose Pose, 
             float Px0, float Py0, float Px1, float Py1, float Px2, float Py2, bool led匹配, bool light匹配1, bool light匹配2, ref double X, ref double Y, ref double Z,
             Dictionary<string, string> 测点数据表, ref bool b有数据)
         {
@@ -2197,6 +2200,9 @@ namespace OnlineMeasurement
 
                         double rbX = 工具转基座标.AffineTransPoint3d(toolX_mm, toolY_mm, toolZ_mm, out double rbY, out double rbZ);
 
+
+                        point3dCam.Add(pointNum, new Point3D(camX, camY, camZ));
+
                         point3dRobot.Add(pointNum, new Point3D(rbX, rbY, rbZ));
 
                         //基座标转车身
@@ -2208,7 +2214,8 @@ namespace OnlineMeasurement
                         Y = carY + carSetting.gSets[pointNum].offsetY;
                         Z = carZ + carSetting.gSets[pointNum].offsetZ;
                         
-                        //if (carSetting.gSets[pointNum].isBase)//重建坐标用
+                        point3dModel.Add(pointNum, new Point3D(carSetting.gSets[pointNum].X, carSetting.gSets[pointNum].Y, carSetting.gSets[pointNum].Z));
+                        if (carSetting.gSets[pointNum].isBase)//重建坐标用
                         {
                             point3dBase.Add(pointNum, new Point3D(carSetting.gSets[pointNum].X, carSetting.gSets[pointNum].Y, carSetting.gSets[pointNum].Z));
                         }
@@ -2274,6 +2281,10 @@ namespace OnlineMeasurement
 
                             double rbX2 = 工具转基座标2.AffineTransPoint3d(toolX2_mm, toolY2_mm, toolZ2_mm, out double rbY2, out double rbZ2);
 
+
+                            point3dCam.Add(pointNum, new Point3D(camX2-camX1, camY2-camY1, camZ2-camZ1));
+
+
                             point3dRobot.Add(pointNum, new Point3D(rbX2 - rbX1, rbY2 - rbY1, rbZ2 - rbZ1));
 
                             //基座标转车身
@@ -2284,11 +2295,12 @@ namespace OnlineMeasurement
                             Y = carY2 - carY1 + carSetting.gSets[pointNum].offsetY;
                             Z = carZ2 - carZ1 + carSetting.gSets[pointNum].offsetZ;
 
+                            point3dModel.Add(pointNum, new Point3D(carSetting.gSets[pointNum].X, carSetting.gSets[pointNum].Y, carSetting.gSets[pointNum].Z));
 
                             //if (carSetting.gSets[pointNum].isBase)//重建坐标用
-                            {
-                                point3dBase.Add(pointNum, new Point3D(carSetting.gSets[pointNum].X, carSetting.gSets[pointNum].Y, carSetting.gSets[pointNum].Z));
-                            }
+                            //{
+                            //    point3dBase.Add(pointNum, new Point3D(carSetting.gSets[pointNum].X, carSetting.gSets[pointNum].Y, carSetting.gSets[pointNum].Z));
+                            //}
 
 
 
@@ -2348,6 +2360,7 @@ namespace OnlineMeasurement
 
                                 //HOperatorSet.PoseCompose(Pose, hv_PoseOutTemp, out HTuple hv_PoseOutTempTransform);
 
+                                point3dCam.Add(pointNum, new Point3D(camX, camY, camZ));
 
                                 point3dRobot.Add(pointNum, new Point3D(rbX, rbY, rbZ));
 
@@ -2359,7 +2372,8 @@ namespace OnlineMeasurement
                                 Y = carY + carSetting.gSets[pointNum].offsetY;
                                 Z = carZ + carSetting.gSets[pointNum].offsetZ;
 
-                                //if (carSetting.gSets[pointNum].isBase)//重建坐标用
+                                point3dModel.Add(pointNum, new Point3D(carSetting.gSets[pointNum].X, carSetting.gSets[pointNum].Y, carSetting.gSets[pointNum].Z));
+                                if (carSetting.gSets[pointNum].isBase)//重建坐标用
                                 {
                                     point3dBase.Add(pointNum, new Point3D(carSetting.gSets[pointNum].X, carSetting.gSets[pointNum].Y, carSetting.gSets[pointNum].Z));
                                 }
@@ -4017,6 +4031,9 @@ namespace OnlineMeasurement
         {
 
             Dictionary<int, Point3D> point3dRobot = new Dictionary<int, Point3D>();
+            Dictionary<int, Point3D> point3dCam = new Dictionary<int, Point3D>();
+            Dictionary<int, Point3D> point3dModel = new Dictionary<int, Point3D>();
+
 
             var camSetting = 相机参数[IOName];
             if (!车型参数[textBoxTestNum.Text].car.ContainsKey(IOName))
@@ -4268,13 +4285,15 @@ namespace OnlineMeasurement
                     ShowMessage(IOName + $"Robot Pose:(x:{Pose[0].D},y:{Pose[1].D},z:{Pose[2].D},rx:{Pose[3].D},ry:{Pose[4].D},rz:{Pose[5].D})");
 
 
-                    runMatch(camSetting, carSetting, IOName, ref point3dRobot, ref point3dBase, ref 检测异常, pointNum, Pose, Px0, Py0, Px1, Py1, Px2, Py2, led匹配, light匹配1, light匹配2, ref X, ref Y, ref Z, 测点数据表, ref b有数据);
+                    runMatch(camSetting, carSetting, IOName,ref point3dCam, ref point3dRobot, ref point3dModel,ref point3dBase, ref 检测异常, pointNum, Pose, Px0, Py0, Px1, Py1, Px2, Py2, led匹配, light匹配1, light匹配2, ref X, ref Y, ref Z, 测点数据表, ref b有数据);
 
                     //结果显示
 
                     if (b有数据)
                     {
                         point3d.Add(pointNum, new Point3D(X, Y, Z));
+
+                        rb.Add(pointNum, new Point3D(point3dRobot[pointNum].X, point3dRobot[pointNum].Y, point3dRobot[pointNum].Z));
 
                         double dx = X - carSetting.gSets[pointNum].X;
                         double dy = Y - carSetting.gSets[pointNum].Y;
@@ -4324,11 +4343,136 @@ namespace OnlineMeasurement
                 }
             }
 
+            // 临时保存
             string filePath = $"{IOName}_point3dRobot.ply";
-
             SavePly(point3dRobot, filePath);
-            filePath = $"{IOName}_point3dBase.ply";
-            SavePly(point3dBase, filePath);
+            filePath = $"{IOName}_point3dModel.ply";
+            SavePly(point3dModel, filePath);
+
+            //获取拍照姿态位姿并保存点云数据
+            filePath = $"{IOName}_camPose.ply";
+            HPose[] poses = new HPose[Lfiles.Length];
+            int poseID = 0;
+            foreach (var file1 in Lfiles)
+            {
+                var s = Path.GetFileNameWithoutExtension(file1).Split('_');
+                int pointNum = int.Parse(s[1]);
+                if (carSetting != null && carSetting.gSets.ContainsKey(pointNum))
+                {
+                    HTuple pose = new HTuple();
+                    HOperatorSet.CreatePose(carSetting.gSets[pointNum].pX, carSetting.gSets[pointNum].pY, carSetting.gSets[pointNum].pZ,
+                        carSetting.gSets[pointNum].pRX, carSetting.gSets[pointNum].pRY, carSetting.gSets[pointNum].pRZ,
+                         "Rp+T", "abg", "point", out pose);
+                    poses[poseID] = new HPose(pose);
+                    poseID++;
+                } 
+            }
+            Tool.WriteMultiplePoseAxes(poses, filePath);
+
+
+            //重新计算手眼标定和数模的映射矩阵
+            //先转回m单位
+            for (int i = 0; i < poses.Length; i++)
+            {
+                poses[i][0] /= 1000;
+                poses[i][1] /= 1000;
+                poses[i][2] /= 1000;
+
+            }
+            foreach (var item in point3dModel)
+            {
+                point3dModel[item.Key].X /= 1000;
+                point3dModel[item.Key].Y /= 1000;
+                point3dModel[item.Key].Z /= 1000;
+            }
+            foreach (var item in point3dRobot)
+            {
+                point3dRobot[item.Key].X /= 1000;
+                point3dRobot[item.Key].Y /= 1000;
+                point3dRobot[item.Key].Z /= 1000;
+            }
+
+            // 用有问题的手眼标定数据来算
+            #region
+
+            //HandEyeCalibrator.CalibrationResult rt = HandEyeCalibrator.Solve( point3dRobot.Values.ToArray(), point3dBase.Values.ToArray(), poses, camSetting.cam2Tool);
+
+            ////算出新的目标点位，并保存
+            //Point3D[] correctBasePoint =  HandEyeCalibrator.CorrectBasePoints(point3dRobot.Values.ToArray(), poses,camSetting.cam2Tool,rt);
+
+            //Dictionary<int, Point3D> point3dRobotNew = new Dictionary<int, Point3D>();
+
+            //// 保存点云,转为mm
+            //int pointID = 0;
+            //foreach (var item in point3dRobot)
+            //{
+            //    point3dRobotNew.Add(item.Key, correctBasePoint[pointID]);
+            //    pointID++;
+            //}
+            //foreach (var item in point3dRobotNew)
+            //{
+            //    point3dRobotNew[item.Key].X *= 1000;
+            //    point3dRobotNew[item.Key].Y *= 1000;
+            //    point3dRobotNew[item.Key].Z *= 1000;
+            //}
+            //filePath = $"{IOName}_point3dRobotNew.ply";
+            //SavePly(point3dRobotNew, filePath);
+            #endregion
+
+
+            // 直接用相机坐标系的点来做手眼
+            #region
+            HandEyeCalibrator.CalibrationResult rt = HandEyeCalibrator.SolveFromCamera(point3dCam.Values.ToArray(), point3dModel.Values.ToArray(), poses);
+            Point3D[] correctBasePoint = HandEyeCalibrator.CamToBase(point3dCam.Values.ToArray(), poses, rt.Cam2ToolMatrix);
+            Dictionary<int, Point3D> point3dRobotNew = new Dictionary<int, Point3D>();
+
+            // 保存点云,转为mm
+            int pointID = 0;
+            foreach (var item in point3dRobot)
+            {
+                point3dRobotNew.Add(item.Key, correctBasePoint[pointID]);
+                pointID++;
+            }
+            foreach (var item in point3dRobotNew)
+            {
+                point3dRobotNew[item.Key].X *= 1000;
+                point3dRobotNew[item.Key].Y *= 1000;
+                point3dRobotNew[item.Key].Z *= 1000;
+            }
+            filePath = $"{IOName}_point3dRobotNew.ply";
+            SavePly(point3dRobotNew, filePath);
+            //打印手眼标定矩阵
+            ShowMessage($"{IOName} old cam2Tool [{camSetting.cam2Tool[0].D},{camSetting.cam2Tool[1].D},{camSetting.cam2Tool[2].D},{camSetting.cam2Tool[3].D}," +
+                $"{camSetting.cam2Tool[4].D},{camSetting.cam2Tool[5].D},{camSetting.cam2Tool[6].D},{camSetting.cam2Tool[7].D}," +
+                $"{camSetting.cam2Tool[8].D},{camSetting.cam2Tool[9].D},{camSetting.cam2Tool[10].D},{camSetting.cam2Tool[11].D}] ");
+
+            ShowMessage($"{IOName} new cam2Tool [{rt.Cam2ToolMatrix[0,0]},{rt.Cam2ToolMatrix[0, 1]},{rt.Cam2ToolMatrix[0, 2]},{rt.Cam2ToolMatrix[0, 3]}," +
+                $"{rt.Cam2ToolMatrix[1, 0]},{rt.Cam2ToolMatrix[1, 1]},{rt.Cam2ToolMatrix[1, 2]},{rt.Cam2ToolMatrix[1, 3]}," +
+                $"{rt.Cam2ToolMatrix[2, 0]},{rt.Cam2ToolMatrix[2, 1]},{rt.Cam2ToolMatrix[2, 2]},{rt.Cam2ToolMatrix[2, 3]}] ");
+
+
+            //看一下直接用，有没有问题
+            HHomMat3D cam2Tool = new HHomMat3D();
+            cam2Tool[0] = rt.Cam2ToolMatrix[0, 0];
+            cam2Tool[1] = rt.Cam2ToolMatrix[0, 1];
+            cam2Tool[2] = rt.Cam2ToolMatrix[0, 2];
+            cam2Tool[3] = rt.Cam2ToolMatrix[0, 3];
+            cam2Tool[4] = rt.Cam2ToolMatrix[1, 0];
+            cam2Tool[5] = rt.Cam2ToolMatrix[1, 1];
+            cam2Tool[6] = rt.Cam2ToolMatrix[1, 2];
+            cam2Tool[7] = rt.Cam2ToolMatrix[1, 3];
+            cam2Tool[8] = rt.Cam2ToolMatrix[2, 0];
+            cam2Tool[9] = rt.Cam2ToolMatrix[2, 1];
+            cam2Tool[10] = rt.Cam2ToolMatrix[2, 2];
+            cam2Tool[11] = rt.Cam2ToolMatrix[2, 3];
+
+            HPose toolInCam = cam2Tool.HomMat3dInvert().HomMat3dToPose();
+
+            toolInCam = toolInCam.ConvertPoseType("Rp+T", "abg", "point");
+            filePath = $"{IOName}_ToolInCam.dat";
+            HOperatorSet.WritePose(toolInCam, filePath);
+
+            #endregion
         }
 
         private static void SavePly(Dictionary<int, Point3D> point3dRobot, string filePath)
@@ -4348,10 +4492,10 @@ namespace OnlineMeasurement
                 yArr[iter] = item.Value.Y;
                 zArr[iter] = item.Value.Z;
                 iter++;
-                if (iter >= 10)
-                {
-                    break;
-                }
+                //if (iter >= 10)
+                //{
+                //    break;
+                //}
             }
             hv_X = new HTuple(xArr);
             hv_Y = new HTuple(yArr);
