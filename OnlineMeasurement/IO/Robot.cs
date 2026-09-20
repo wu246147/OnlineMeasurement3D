@@ -1578,7 +1578,7 @@ namespace OnlineMeasurement.IO
         //int _port = 60008;
         //HslCommunication.Robot.FANUC.FanucInterfaceNet robot = new HslCommunication.Robot.FANUC.FanucInterfaceNet();
 
-        TCP_Client robot;
+        UDP robot;
 
 
         //寄存数据
@@ -1786,7 +1786,7 @@ namespace OnlineMeasurement.IO
         }
         public bool Open()
         {
-            robot = new TCP_Client(param.IpAddress, param.Port);
+            robot = new UDP(param.IpAddress, param.Port);
             //绑定委托与事件
             robot.OnDataReceived += ProcessInfo;
             //开始监听
