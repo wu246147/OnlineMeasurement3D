@@ -340,6 +340,15 @@ namespace OnlineMeasurement.Resources {
         }
         
         /// <summary>
+        ///   查找类似 距离激光 的本地化字符串。
+        /// </summary>
+        internal static string Distance_Light {
+            get {
+                return ResourceManager.GetString("Distance_Light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 棱 的本地化字符串。
         /// </summary>
         internal static string edge {
@@ -448,6 +457,15 @@ namespace OnlineMeasurement.Resources {
         }
         
         /// <summary>
+        ///   查找类似 图像预处理 的本地化字符串。
+        /// </summary>
+        internal static string ImageProcess {
+            get {
+                return ResourceManager.GetString("ImageProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 粘贴区域大小不一致 的本地化字符串。
         /// </summary>
         internal static string inconsistent_size_of_pasting_area {
@@ -552,6 +570,15 @@ namespace OnlineMeasurement.Resources {
         internal static string Maximize {
             get {
                 return ResourceManager.GetString("Maximize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 模板匹配 的本地化字符串。
+        /// </summary>
+        internal static string Model_Match {
+            get {
+                return ResourceManager.GetString("Model_Match", resourceCulture);
             }
         }
         
@@ -709,11 +736,47 @@ namespace OnlineMeasurement.Resources {
         }
         
         /// <summary>
+        ///   查找类似 输出检测完成信号 的本地化字符串。
+        /// </summary>
+        internal static string output_checkfinish_signal {
+            get {
+                return ResourceManager.GetString("output_checkfinish_signal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 输出准备好信号 的本地化字符串。
         /// </summary>
         internal static string output_ready_signal {
             get {
                 return ResourceManager.GetString("output_ready_signal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 输出结果信号 的本地化字符串。
+        /// </summary>
+        internal static string output_result_signal {
+            get {
+                return ResourceManager.GetString("output_result_signal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 输出运行false信号 的本地化字符串。
+        /// </summary>
+        internal static string output_running_false_signal {
+            get {
+                return ResourceManager.GetString("output_running_false_signal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 输出运行信号 的本地化字符串。
+        /// </summary>
+        internal static string output_running_signal {
+            get {
+                return ResourceManager.GetString("output_running_signal", resourceCulture);
             }
         }
         

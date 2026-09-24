@@ -180,6 +180,12 @@
   <data name="buttonTest.Text" xml:space="preserve">
     <value>simulation</value>
   </data>
+  <data name="button_setRobotR.Text" xml:space="preserve">
+    <value>R Robot Setting</value>
+  </data>
+  <data name="button_setRobotL.Text" xml:space="preserve">
+    <value>L Robot Setting</value>
+  </data>
   <data name="buttonSave.Text" xml:space="preserve">
     <value>save</value>
   </data>
@@ -189,32 +195,59 @@
   <data name="checkBoxFrame.Text" xml:space="preserve">
     <value>Coord calib</value>
   </data>
-  <data name="checkBoxLightR.Text" xml:space="preserve">
-    <value>Right laser</value>
-  </data>
-  <data name="checkBoxLightL.Text" xml:space="preserve">
-    <value>Left laser</value>
-  </data>
-  <data name="checkBoxLedR.Text" xml:space="preserve">
-    <value>Right light</value>
-  </data>
-  <data name="checkBoxLedL.Text" xml:space="preserve">
-    <value>Left light</value>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Sim file path:</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>modelNo-carNo</value>
   </data>
+  <data name="button_setPLC.Text" xml:space="preserve">
+    <value>PLC settings</value>
+  </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>tool</value>
+  </data>
+  <data name="button3.Text" xml:space="preserve">
+    <value>Output test</value>
+  </data>
+  <data name="button2.Text" xml:space="preserve">
+    <value>Left camera image capture</value>
+  </data>
+  <data name="button1.Text" xml:space="preserve">
+    <value>Connect the left camera</value>
+  </data>
+  <data name="checkBoxLedL.Text" xml:space="preserve">
+    <value>Left light</value>
+  </data>
+  <data name="checkBoxLightL.Text" xml:space="preserve">
+    <value>Left laser</value>
+  </data>
+  <data name="checkBoxLightR.Text" xml:space="preserve">
+    <value>Right laser</value>
+  </data>
+  <data name="checkBoxLedR.Text" xml:space="preserve">
+    <value>Right light</value>
   </data>
   <data name="buttonSetting.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="checkBox_KeepOK.Text" xml:space="preserve">
-    <value>Block alarm</value>
-  </data>
   <data name="buttonClear.Text" xml:space="preserve">
     <value>Overload parameters</value>
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>trash can</value>
+  </data>
+  <data name="comboBox1.Items" xml:space="preserve">
+    <value>Chinese</value>
+  </data>
+  <data name="comboBox1.Items1" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="checkBox_KeepOK.Text" xml:space="preserve">
+    <value>Block alarm</value>
   </data>
   <data name="buttonSkipStart.Text" xml:space="preserve">
     <value>Forced start</value>
@@ -227,29 +260,5 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>OnlineMeasurement</value>
-  </data>
-  <data name="comboBox1.Items" xml:space="preserve">
-    <value>Chinese</value>
-  </data>
-  <data name="comboBox1.Items1" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="label8.Text" xml:space="preserve">
-    <value>Language:</value>
-  </data>
-  <data name="button3.Text" xml:space="preserve">
-    <value>Output test</value>
-  </data>
-  <data name="button_setPLC.Text" xml:space="preserve">
-    <value>PLC settings</value>
-  </data>
-  <data name="button2.Text" xml:space="preserve">
-    <value>Left camera image capture</value>
-  </data>
-  <data name="button1.Text" xml:space="preserve">
-    <value>Connect the left camera</value>
-  </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>trash can</value>
   </data>
 </root>

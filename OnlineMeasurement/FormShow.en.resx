@@ -132,6 +132,9 @@
   <data name="label3.Text" xml:space="preserve">
     <value>right side</value>
   </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>select result image:</value>
+  </data>
   <data name="label1.Text" xml:space="preserve">
     <value>White body front panel online measurement system</value>
   </data>
@@ -153,10 +156,10 @@
   <data name="切换屏幕ToolStripMenuItem.Text" xml:space="preserve">
     <value>switch screen</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>FormShow</value>
-  </data>
   <data name="checkBox_show_all.Text" xml:space="preserve">
     <value>show all info</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>FormShow</value>
   </data>
 </root>

@@ -29,7 +29,7 @@ namespace OnlineMeasurement
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRun));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.buttonRun = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -61,7 +61,9 @@ namespace OnlineMeasurement
             this.buttonSave = new System.Windows.Forms.Button();
             this.checkBoxZero = new System.Windows.Forms.CheckBox();
             this.checkBoxFrame = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.textBox_simPath = new System.Windows.Forms.TextBox();
             this.button_setPLC = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -72,10 +74,10 @@ namespace OnlineMeasurement
             this.buttonSetting = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.buttonClear = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.checkBox_KeepOK = new System.Windows.Forms.CheckBox();
-            this.buttonClear = new System.Windows.Forms.Button();
             this.buttonSkipStart = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.labelResult = new System.Windows.Forms.Label();
@@ -128,19 +130,19 @@ namespace OnlineMeasurement
             // 
             this.dataGridViewLog.AllowUserToAddRows = false;
             this.dataGridViewLog.AllowUserToDeleteRows = false;
+            resources.ApplyResources(this.dataGridViewLog, "dataGridViewLog");
             this.dataGridViewLog.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridViewLog.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridViewLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewLog.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2});
-            resources.ApplyResources(this.dataGridViewLog, "dataGridViewLog");
             this.dataGridViewLog.Name = "dataGridViewLog";
             this.dataGridViewLog.ReadOnly = true;
             this.dataGridViewLog.RowHeadersVisible = false;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewLog.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewLog.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewLog.RowTemplate.Height = 23;
             // 
             // Column1
@@ -185,6 +187,7 @@ namespace OnlineMeasurement
             // 
             this.dataGridViewShow.AllowUserToAddRows = false;
             this.dataGridViewShow.AllowUserToDeleteRows = false;
+            resources.ApplyResources(this.dataGridViewShow, "dataGridViewShow");
             this.dataGridViewShow.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewShow.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column3,
@@ -195,7 +198,6 @@ namespace OnlineMeasurement
             this.Column8,
             this.Column9,
             this.Column10});
-            resources.ApplyResources(this.dataGridViewShow, "dataGridViewShow");
             this.dataGridViewShow.Name = "dataGridViewShow";
             this.dataGridViewShow.ReadOnly = true;
             this.dataGridViewShow.RowHeadersVisible = false;
@@ -263,18 +265,18 @@ namespace OnlineMeasurement
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.button_setRobotR);
             this.groupBox1.Controls.Add(this.button_setRobotL);
-            this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.buttonSave);
             this.groupBox1.Controls.Add(this.checkBoxZero);
             this.groupBox1.Controls.Add(this.checkBoxFrame);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.textBox_simPath);
             this.groupBox1.Controls.Add(this.textBoxTestNum);
-            this.groupBox1.Controls.Add(this.buttonTest);
             this.groupBox1.Controls.Add(this.button_setPLC);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
@@ -318,10 +320,20 @@ namespace OnlineMeasurement
             this.checkBoxFrame.Name = "checkBoxFrame";
             this.checkBoxFrame.UseVisualStyleBackColor = true;
             // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
             // label6
             // 
             resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
+            // 
+            // textBox_simPath
+            // 
+            resources.ApplyResources(this.textBox_simPath, "textBox_simPath");
+            this.textBox_simPath.Name = "textBox_simPath";
             // 
             // button_setPLC
             // 
@@ -388,10 +400,10 @@ namespace OnlineMeasurement
             this.panel1.Controls.Add(this.comboBox1);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.checkBox_KeepOK);
-            this.panel1.Controls.Add(this.buttonClear);
             this.panel1.Controls.Add(this.buttonSkipStart);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Controls.Add(this.buttonTest);
             this.panel1.Controls.Add(this.buttonSetting);
             this.panel1.Controls.Add(this.buttonRun);
             this.panel1.Controls.Add(this.dataGridViewShow);
@@ -412,22 +424,31 @@ namespace OnlineMeasurement
             // 
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.checkBoxLedL);
+            this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.checkBoxLightL);
+            this.groupBox2.Controls.Add(this.buttonClear);
             this.groupBox2.Controls.Add(this.checkBoxLedR);
             this.groupBox2.Controls.Add(this.checkBoxLightR);
             resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
+            // buttonClear
+            // 
+            resources.ApplyResources(this.buttonClear, "buttonClear");
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
             // comboBox1
             // 
+            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             resources.GetString("comboBox1.Items"),
             resources.GetString("comboBox1.Items1")});
-            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -441,13 +462,6 @@ namespace OnlineMeasurement
             resources.ApplyResources(this.checkBox_KeepOK, "checkBox_KeepOK");
             this.checkBox_KeepOK.Name = "checkBox_KeepOK";
             this.checkBox_KeepOK.UseVisualStyleBackColor = true;
-            // 
-            // buttonClear
-            // 
-            resources.ApplyResources(this.buttonClear, "buttonClear");
-            this.buttonClear.Name = "buttonClear";
-            this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonSkipStart
             // 
@@ -474,10 +488,12 @@ namespace OnlineMeasurement
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.Name = "FormRun";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormRun_FormClosing);
             this.Load += new System.EventHandler(this.FormRun_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormRun_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormRun_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewShow)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -541,6 +557,8 @@ namespace OnlineMeasurement
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button_setRobotR;
         private System.Windows.Forms.Button button_setRobotL;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox_simPath;
     }
 }
 

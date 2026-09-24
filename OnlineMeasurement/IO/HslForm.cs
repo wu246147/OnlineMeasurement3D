@@ -57,6 +57,7 @@ namespace OnlineMeasurement.IO
 
                 Label lbl = new Label();
                 lbl.Text = diNames[i];
+                lbl.AutoSize = true;
                 lbl.Tag = i;
                 lbl.Location = new Point(labelInName.Location.X, (int)(labelInName.Location.Y + (labelInName.Size.Height * 2.5 * (i + 1))));
                 lbl.BackColor = Color.Transparent;
@@ -86,6 +87,7 @@ namespace OnlineMeasurement.IO
 
                 Label lbl = new Label();
                 lbl.Text = doNames[i];
+                lbl.AutoSize = true;
                 lbl.Tag = i;
                 lbl.Location = new Point(labelOutName.Location.X, (int)(labelOutName.Location.Y + (labelOutName.Size.Height * 2.5 * (i + 1))));
                 lbl.BackColor = Color.Transparent;
@@ -375,7 +377,7 @@ namespace OnlineMeasurement.IO
                     {
                         if (int.TryParse(doValueTextBoxs[i].Text, out int value))
                         {
-                            var result = signal.Write(ioDict[eIO.ToString()].Address, value);
+                            var result = signal.Write(ioDict[eIO.ToString()].Address, (ushort)value);
                             if (!result.IsSuccess)
                             {
                                 ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);

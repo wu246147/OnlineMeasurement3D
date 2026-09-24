@@ -417,6 +417,10 @@ out HTuple hv_R2_new, out HTuple hv_R3_new)
 
             foreach (HPose pose in poses)
             {
+                if (pose == null)
+                {
+                    continue;
+                }
                 HHomMat3D homMat = pose.PoseToHomMat3d();
 
                 // 局部坐标系下生成轴线点
@@ -597,6 +601,10 @@ out HTuple hv_R2_new, out HTuple hv_R3_new)
             List<double> xs, List<double> ys, List<double> zs,
             List<byte> rs, List<byte> gs, List<byte> bs, string path)
         {
+            if (xs.Count == 0)
+            {
+                return;
+            }
             HTuple hv_OM3D;
             HOperatorSet.GenObjectModel3dFromPoints(
                 ToHTuple(xs), ToHTuple(ys), ToHTuple(zs), out hv_OM3D);

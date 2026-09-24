@@ -26,6 +26,7 @@ namespace OnlineMeasurement
         };
         Dictionary<string, int> checkDicReversed;
 
+
         public FormSet()
         {
             InitializeComponent();
@@ -38,6 +39,8 @@ namespace OnlineMeasurement
     .ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
             comboBox_type.Items.AddRange(new string[] { Resources.LanguageDic.hole, Resources.LanguageDic.edge, Resources.LanguageDic.trough });
+
+            comboBox_locationLightMode.Items.AddRange(new string[] { Resources.LanguageDic.Model_Match, Resources.LanguageDic.Distance_Light});
 
             groupBox绿色范围值.ContextMenuStrip = new ContextMenuStrip();
             groupBox绿色范围值.ContextMenuStrip.Opening += (s, e) =>
@@ -158,6 +161,8 @@ namespace OnlineMeasurement
             otherSet.Load();
             checkBox_isSaveImage.Checked = otherSet.isSaveImage;
             textBox_imagePath.Text = otherSet.imagePath;
+            numericUpDown_olmCarKind.Value = otherSet.olmCarKind;
+
             this.checkBox_isSaveImage.CheckedChanged += new System.EventHandler(this.checkBox_isSaveImage_CheckedChanged);
             this.textBox_imagePath.TextChanged += new System.EventHandler(this.textBox_imagePath_TextChanged);
         }
@@ -190,6 +195,13 @@ namespace OnlineMeasurement
             numericUpDown_pRX.ValueChanged += UpData;
             numericUpDown_pRY.ValueChanged += UpData;
             numericUpDown_pRZ.ValueChanged += UpData;
+
+            numericUpDown_lightDilationSize.ValueChanged += UpData;
+            checkBox_enableLightImageProcess.CheckedChanged+= UpData;
+
+            comboBox_locationLightMode.TextChanged += UpData;
+            numericUpDown_distanceThre.ValueChanged += UpData;
+
         }
         private void DisenableUpData()
         {
@@ -219,6 +231,13 @@ namespace OnlineMeasurement
             numericUpDown_pRX.ValueChanged -= UpData;
             numericUpDown_pRY.ValueChanged -= UpData;
             numericUpDown_pRZ.ValueChanged -= UpData;
+
+            numericUpDown_lightDilationSize.ValueChanged -= UpData;
+            checkBox_enableLightImageProcess.CheckedChanged -= UpData;
+
+            comboBox_locationLightMode.TextChanged -= UpData;
+            numericUpDown_distanceThre.ValueChanged -= UpData;
+
         }
 
         private void UpData(object sender, EventArgs e)
@@ -240,6 +259,35 @@ namespace OnlineMeasurement
             {
                 //set.type = comboBox_type.Text;
             }
+
+            
+            set.locationLightMode = comboBox_locationLightMode.SelectedIndex;
+            set.distanceThre = (int)numericUpDown_distanceThre.Value;
+
+            if (set.type == "孔")
+            {
+                comboBox_locationLightMode.Visible = true;
+                label30.Visible = true;
+
+                if (set.locationLightMode == 1)
+                {
+                    numericUpDown_distanceThre.Visible = true;
+                    label32.Visible = true;
+                }
+                else
+                {
+                    numericUpDown_distanceThre.Visible = false;
+                    label32.Visible = false;
+                }
+            }
+            else
+            {
+                comboBox_locationLightMode.Visible = false;
+                numericUpDown_distanceThre.Visible = false;
+                label30.Visible = false;
+                label32.Visible = false;
+            }
+
 
             set.isBase = checkBox_isBase.Checked;
             set.ledExposure = (int)numericUpDown_ledExposure.Value;
@@ -265,6 +313,9 @@ namespace OnlineMeasurement
             set.pRX = (double)numericUpDown_pRX.Value;
             set.pRY = (double)numericUpDown_pRY.Value;
             set.pRZ = (double)numericUpDown_pRZ.Value;
+
+            set.lightDilationEnable = checkBox_enableLightImageProcess.Checked;
+            set.lightDilationSize = (int)numericUpDown_lightDilationSize.Value;
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -286,6 +337,34 @@ namespace OnlineMeasurement
                 {
                     comboBox_type.Text = set.type;
                 }
+
+                if (set.type == "孔")
+                {
+                    comboBox_locationLightMode.Visible = true;
+                    label30.Visible = true;
+
+                    if (set.locationLightMode == 1)
+                    {
+                        numericUpDown_distanceThre.Visible = true;
+                        label32.Visible = true;
+                    }
+                    else
+                    {
+                        numericUpDown_distanceThre.Visible = false;
+                        label32.Visible = false;
+                    }
+                }
+                else
+                {
+                    comboBox_locationLightMode.Visible = false;
+                    numericUpDown_distanceThre.Visible = false;
+                    label30.Visible = false;
+                    label32.Visible = false;
+                }
+
+                comboBox_locationLightMode.SelectedIndex = set.locationLightMode;
+                numericUpDown_distanceThre.Value = set.distanceThre; 
+
                 checkBox_isBase.Checked = set.isBase;
                 numericUpDown_ledExposure.Value = set.ledExposure;
                 numericUpDown_lightExposure.Value = (int)set.lightExposure;
@@ -310,6 +389,11 @@ namespace OnlineMeasurement
                 numericUpDown_pRX.Value = (decimal)set.pRX;
                 numericUpDown_pRY.Value = (decimal)set.pRY;
                 numericUpDown_pRZ.Value = (decimal)set.pRZ;
+
+
+                checkBox_enableLightImageProcess.Checked = set.lightDilationEnable;
+                numericUpDown_lightDilationSize.Value = set.lightDilationSize;
+
 
                 EnableUpData();
             }
@@ -503,5 +587,25 @@ namespace OnlineMeasurement
                 numericUpDown_offsetZ.Value += (decimal)formValue.Value;
             }
         }
+
+        private void numericUpDown_lightDilationSize_ValueChanged(object sender, EventArgs e)
+        {
+            var nud = (NumericUpDown)sender;
+            decimal val = nud.Value;
+
+            // 如果是偶数，自动调整为最近的奇数
+            if (val % 2 == 0)
+            {
+                // 根据增减方向决定加1还是减1
+                nud.Value = val + 1 > nud.Maximum ? val - 1 : val + 1;
+            }
+        }
+
+        private void numericUpDown_olmCarKind_ValueChanged(object sender, EventArgs e)
+        {
+            isAlter = true;
+            otherSet.olmCarKind = (int)numericUpDown_olmCarKind.Value;
+        }
+
     }
 }

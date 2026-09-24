@@ -153,6 +153,7 @@ namespace OnlineMeasurement.IO
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.checkBox_IsStringReverseByteWord);
             this.groupBox1.Controls.Add(this.comboBox_cam);
@@ -165,7 +166,6 @@ namespace OnlineMeasurement.IO
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 

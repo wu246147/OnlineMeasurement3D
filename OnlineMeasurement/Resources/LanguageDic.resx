@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -647,5 +647,26 @@
   </data>
   <data name="Writing_format_not_supported" xml:space="preserve">
     <value>写入格式不支持</value>
+  </data>
+  <data name="output_running_signal" xml:space="preserve">
+    <value>输出运行信号</value>
+  </data>
+  <data name="output_result_signal" xml:space="preserve">
+    <value>输出结果信号</value>
+  </data>
+  <data name="output_checkfinish_signal" xml:space="preserve">
+    <value>输出检测完成信号</value>
+  </data>
+  <data name="output_running_false_signal" xml:space="preserve">
+    <value>输出运行false信号</value>
+  </data>
+  <data name="ImageProcess" xml:space="preserve">
+    <value>图像预处理</value>
+  </data>
+  <data name="Model_Match" xml:space="preserve">
+    <value>模板匹配</value>
+  </data>
+  <data name="Distance_Light" xml:space="preserve">
+    <value>距离激光</value>
   </data>
 </root>

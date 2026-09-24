@@ -648,4 +648,25 @@
   <data name="Writing_format_not_supported" xml:space="preserve">
     <value>Writing format not supported</value>
   </data>
+  <data name="output_running_signal" xml:space="preserve">
+    <value>Output running signal</value>
+  </data>
+  <data name="output_result_signal" xml:space="preserve">
+    <value>Output result signal</value>
+  </data>
+  <data name="output_checkfinish_signal" xml:space="preserve">
+    <value>Output checkfinish signal</value>
+  </data>
+  <data name="output_running_false_signal" xml:space="preserve">
+    <value>Output running false signal</value>
+  </data>
+  <data name="ImageProcess" xml:space="preserve">
+    <value>Image Process</value>
+  </data>
+  <data name="Model_Match" xml:space="preserve">
+    <value>Model Match</value>
+  </data>
+  <data name="Distance_Light" xml:space="preserve">
+    <value>Distance Light</value>
+  </data>
 </root>

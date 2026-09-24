@@ -97,9 +97,18 @@ namespace OnlineMeasurement
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.numericUpDown_lightDilationSize = new System.Windows.Forms.NumericUpDown();
             this.label27 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.numericUpDownSleepTime = new System.Windows.Forms.NumericUpDown();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.numericUpDown_distanceThre = new System.Windows.Forms.NumericUpDown();
+            this.checkBox_enableLightImageProcess = new System.Windows.Forms.CheckBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.comboBox_locationLightMode = new System.Windows.Forms.ComboBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.numericUpDown_olmCarKind = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y)).BeginInit();
@@ -131,7 +140,10 @@ namespace OnlineMeasurement
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_lightDilationSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSleepTime)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_distanceThre)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_olmCarKind)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView1
@@ -824,7 +836,9 @@ namespace OnlineMeasurement
             // groupBox6
             // 
             this.groupBox6.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox6.Controls.Add(this.numericUpDown_olmCarKind);
             this.groupBox6.Controls.Add(this.checkBox_isSaveImage);
+            this.groupBox6.Controls.Add(this.label31);
             this.groupBox6.Controls.Add(this.label26);
             this.groupBox6.Controls.Add(this.textBox_imagePath);
             resources.ApplyResources(this.groupBox6, "groupBox6");
@@ -842,6 +856,7 @@ namespace OnlineMeasurement
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.numericUpDown_lightDilationSize);
             this.panel1.Controls.Add(this.label27);
             this.panel1.Controls.Add(this.label28);
             this.panel1.Controls.Add(this.numericUpDownSleepTime);
@@ -849,18 +864,45 @@ namespace OnlineMeasurement
             this.panel1.Controls.Add(this.groupBox4);
             this.panel1.Controls.Add(this.label_Node);
             this.panel1.Controls.Add(this.groupBox2);
+            this.panel1.Controls.Add(this.label30);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.groupBox绿色范围值);
+            this.panel1.Controls.Add(this.label32);
             this.panel1.Controls.Add(this.label15);
+            this.panel1.Controls.Add(this.numericUpDown_distanceThre);
             this.panel1.Controls.Add(this.groupBox5);
             this.panel1.Controls.Add(this.numericUpDown_ledExposure);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.numericUpDown_lightExposure);
+            this.panel1.Controls.Add(this.checkBox_enableLightImageProcess);
             this.panel1.Controls.Add(this.checkBox_isBase);
+            this.panel1.Controls.Add(this.label29);
             this.panel1.Controls.Add(this.label16);
+            this.panel1.Controls.Add(this.comboBox_locationLightMode);
             this.panel1.Controls.Add(this.comboBox_type);
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
+            // 
+            // numericUpDown_lightDilationSize
+            // 
+            this.numericUpDown_lightDilationSize.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            resources.ApplyResources(this.numericUpDown_lightDilationSize, "numericUpDown_lightDilationSize");
+            this.numericUpDown_lightDilationSize.Maximum = new decimal(new int[] {
+            21,
+            0,
+            0,
+            0});
+            this.numericUpDown_lightDilationSize.Name = "numericUpDown_lightDilationSize";
+            this.numericUpDown_lightDilationSize.Value = new decimal(new int[] {
+            11,
+            0,
+            0,
+            0});
+            this.numericUpDown_lightDilationSize.ValueChanged += new System.EventHandler(this.numericUpDown_lightDilationSize_ValueChanged);
             // 
             // label27
             // 
@@ -886,6 +928,70 @@ namespace OnlineMeasurement
             0,
             0,
             0});
+            // 
+            // label30
+            // 
+            resources.ApplyResources(this.label30, "label30");
+            this.label30.Name = "label30";
+            // 
+            // label32
+            // 
+            resources.ApplyResources(this.label32, "label32");
+            this.label32.Name = "label32";
+            // 
+            // numericUpDown_distanceThre
+            // 
+            resources.ApplyResources(this.numericUpDown_distanceThre, "numericUpDown_distanceThre");
+            this.numericUpDown_distanceThre.Maximum = new decimal(new int[] {
+            400,
+            0,
+            0,
+            0});
+            this.numericUpDown_distanceThre.Name = "numericUpDown_distanceThre";
+            this.numericUpDown_distanceThre.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // checkBox_enableLightImageProcess
+            // 
+            resources.ApplyResources(this.checkBox_enableLightImageProcess, "checkBox_enableLightImageProcess");
+            this.checkBox_enableLightImageProcess.Name = "checkBox_enableLightImageProcess";
+            this.checkBox_enableLightImageProcess.UseVisualStyleBackColor = true;
+            // 
+            // label29
+            // 
+            resources.ApplyResources(this.label29, "label29");
+            this.label29.Name = "label29";
+            // 
+            // comboBox_locationLightMode
+            // 
+            this.comboBox_locationLightMode.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox_locationLightMode, "comboBox_locationLightMode");
+            this.comboBox_locationLightMode.Name = "comboBox_locationLightMode";
+            // 
+            // label31
+            // 
+            resources.ApplyResources(this.label31, "label31");
+            this.label31.BackColor = System.Drawing.Color.Transparent;
+            this.label31.Name = "label31";
+            // 
+            // numericUpDown_olmCarKind
+            // 
+            this.numericUpDown_olmCarKind.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            resources.ApplyResources(this.numericUpDown_olmCarKind, "numericUpDown_olmCarKind");
+            this.numericUpDown_olmCarKind.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDown_olmCarKind.Name = "numericUpDown_olmCarKind";
+            this.numericUpDown_olmCarKind.ValueChanged += new System.EventHandler(this.numericUpDown_olmCarKind_ValueChanged);
             // 
             // FormSet
             // 
@@ -939,7 +1045,10 @@ namespace OnlineMeasurement
             this.groupBox7.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_lightDilationSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSleepTime)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_distanceThre)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_olmCarKind)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1017,5 +1126,14 @@ namespace OnlineMeasurement
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.NumericUpDown numericUpDownSleepTime;
+        private System.Windows.Forms.CheckBox checkBox_enableLightImageProcess;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.NumericUpDown numericUpDown_lightDilationSize;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.ComboBox comboBox_locationLightMode;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.NumericUpDown numericUpDown_distanceThre;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.NumericUpDown numericUpDown_olmCarKind;
     }
 }

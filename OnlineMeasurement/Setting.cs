@@ -1,12 +1,14 @@
 using HalconDotNet;
 using HslCommunication.Secs.Types;
 using MySqlX.XDevAPI.Common;
+using MySqlX.XDevAPI.Relational;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
@@ -703,6 +705,8 @@ namespace OnlineMeasurement
         //    dx = 0;
         //    return false;
         //}
+
+        //灰度模板定位
         public bool FindPxPy(HImage map, HRegion hRegion, HNCCModel hNCCModel, double score, double modeCenterX, double modeCenterY, ref float Px, ref float Py, out double dx, out double dy)
         {
             HImage hImageReduced = map.ReduceDomain(hRegion);
@@ -719,6 +723,8 @@ namespace OnlineMeasurement
             dx = 0;
             return false;
         }
+
+        // 边缘模板定位
         public bool FindPxPy(HImage map, HRegion hRegion, HShapeModel hShapeModel, double score, double modeCenterX, double modeCenterY, ref float Px, ref float Py, out double dx, out double dy)
         {
             HImage hImageReduced = map.ReduceDomain(hRegion);
@@ -736,6 +742,89 @@ namespace OnlineMeasurement
             dx = 0;
             return false;
         }
+
+        // 激光找点，只能用于孔定位
+        public bool FindPxPy(HImage map, HRegion hRegion, int MidpointDist, double score, double modeCenterX, double modeCenterY, float Px0, ref float Px, ref float Py, out double dx, out double dy,int lightWidthThre = 3)
+        {
+            HImage hImageReduced = map.ReduceDomain(hRegion);
+            // 获取激光坐标映射列表
+            FindLight(hImageReduced, 40, out HTuple xs, out HTuple ys);
+            if (xs.Length > 0)
+            {
+                // x取与Px0间隔MidpointDist的点，y取间隔点附近几个点的y均值
+                Px = (float)(Px0 + MidpointDist);
+                int pixX  = (int)(Px0 + MidpointDist);
+                Py = 0;
+                int count = 0;
+                for (int i = pixX - lightWidthThre; i < pixX + lightWidthThre + 1; i++)
+                {
+                    if (xs.TupleConcat(i))
+                    {
+                        HOperatorSet.TupleFind(xs, i, out HTuple index);
+                        Py += (float)ys[index[0].I].D;
+                        count += 1;
+                    }
+                }
+                if(count > 0)
+                {
+                    Py/= count;
+                    dy = Py - modeCenterY;
+                    dx = Px - modeCenterX;
+                    return true;
+                }
+                dy = 0;
+                dx = 0;
+                return false;
+
+            }
+
+
+            dy = 0;
+            dx = 0;
+            return false;
+        }
+
+         public void FindLight(HImage hImage, double minThreshold, out HTuple xs, out HTuple ys, int offsetX = 0, int offsetY = 0)
+        {
+            HRegion hRegion = hImage.Threshold(minThreshold, double.MaxValue);
+            HRegion hRegionClosing = hRegion.ClosingCircle(3.5);
+            HRegion hRegionConnection = hRegionClosing.Connection();
+            HRegion hRegionSelect = hRegionConnection.SelectShape("area", "and", 5, double.MaxValue);
+            HRegion hRegionUnion1 = hRegionSelect.Union1();
+            HRegion hRegionDilation = hRegionUnion1.DilationCircle(2.5);
+            hRegionDilation.SmallestRectangle1(out HTuple row1, out HTuple column1, out HTuple row2, out HTuple column2);
+            HRegion hRegionSmallestRectangle = new HRegion(row1, column1, row2, column2);
+
+            HRegion hRegionDifference = hRegionSmallestRectangle.Difference(hRegionDilation);
+            HImage hImagePaint = hRegionDifference.PaintRegion(hImage, 0d, "fill");
+
+            HRegion hRegionDomain = hImagePaint.GetDomain();
+            HRegion hRegionIntersection = hRegionSmallestRectangle.Intersection(hRegionDomain);
+            HSheetOfLightModel hSheetOfLightModel = hRegionIntersection.CreateSheetOfLightModel(new HTuple("min_gray").TupleConcat("num_profiles"), new HTuple((int)minThreshold).TupleConcat(1));
+            hSheetOfLightModel.MeasureProfileSheetOfLight(hImagePaint, new HTuple());
+            HImage hImageDisparity = hSheetOfLightModel.GetSheetOfLightResult("disparity");
+            HRegion hRegionDisparityDomain = hImageDisparity.GetDomain();
+            hRegionDisparityDomain.GetRegionPoints(out HTuple rows, out HTuple columns);
+            HTuple Grayval = hImageDisparity.GetGrayval(rows, columns);
+            xs = columns + (column1 + offsetX);
+            ys = Grayval + offsetY;
+
+            hRegion.Dispose();
+            hRegionClosing.Dispose();
+            hRegionConnection.Dispose();
+            hRegionSelect.Dispose();
+            hRegionUnion1.Dispose();
+            hRegionDilation.Dispose();
+            hRegionSmallestRectangle.Dispose();
+            hRegionDifference.Dispose();
+            hImagePaint.Dispose();
+            hRegionDomain.Dispose();
+            hRegionIntersection.Dispose();
+            hSheetOfLightModel.Dispose();
+            hImageDisparity.Dispose();
+            hRegionDisparityDomain.Dispose();
+        }
+
         public HImage GetShowHIamge(HImage hImage, HRegion hRegion, double modeCenterX, double modeCenterY, double px, double py, HShapeModel hShapeModel)
         {
             double w = 1;
@@ -855,6 +944,17 @@ namespace OnlineMeasurement
 
         public double score0 = 0.5, score1 = 0.5, score2 = 0.5;//匹配分数
         public double pX, pY, pZ, pRX, pRY, pRZ;//拍照点位姿坐标
+
+        public int lightDilationSize = 11;//激光图像处理
+        public bool lightDilationEnable = false;
+
+
+        // 激光定位方式
+        public int locationLightMode = 0; //0: 模板定位，1：固定值激光定位
+        public int distanceThre = 50;
+        public int lightWidthThre = 3;
+
+
     }
 
     [Serializable]
@@ -862,6 +962,8 @@ namespace OnlineMeasurement
     {
         public bool isSaveImage = true;
         public string imagePath = "D:\\image";
+
+        public int olmCarKind = 0;
 
         public bool Load()
         {
@@ -881,6 +983,7 @@ namespace OnlineMeasurement
                     {
                         this.isSaveImage = set.isSaveImage;
                         this.imagePath = set.imagePath;
+                        this.olmCarKind = set.olmCarKind;
                         result2 = true;
                     }
                 }

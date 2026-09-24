@@ -1580,7 +1580,6 @@ namespace OnlineMeasurement.IO
 
         UDP robot;
 
-
         //寄存数据
         bool _isExist = false;
         float _X = 0, _Y = 0, _Z = 0, _RX = 0, _RY = 0, _RZ = 0,
@@ -1786,7 +1785,8 @@ namespace OnlineMeasurement.IO
         }
         public bool Open()
         {
-            robot = new UDP(param.IpAddress, param.Port);
+            robot = new UDP(param.IpAddress, 0);
+            robot.LocalPort = param.Port;
             //绑定委托与事件
             robot.OnDataReceived += ProcessInfo;
             //开始监听

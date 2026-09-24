@@ -243,6 +243,12 @@
   <data name="label28.Text" xml:space="preserve">
     <value>Delay:</value>
   </data>
+  <data name="checkBox_enableLightImageProcess.Text" xml:space="preserve">
+    <value>Light Image Process</value>
+  </data>
+  <data name="label29.Text" xml:space="preserve">
+    <value>Light Image Dilation Size:</value>
+  </data>
   <data name="groupBox7.Text" xml:space="preserve">
     <value>Measurement point setting</value>
   </data>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -123,250 +123,6 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tableLayoutPanel_Max.ColumnCount" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="pictureBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pictureBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 192</value>
-  </data>
-  <data name="pictureBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 85</value>
-  </data>
-  <data name="pictureBox2.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.Name" xml:space="preserve">
-    <value>pictureBox2</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="pictureBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="pictureBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 289</value>
-  </data>
-  <data name="pictureBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 85</value>
-  </data>
-  <data name="pictureBox3.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;pictureBox3.Name" xml:space="preserve">
-    <value>pictureBox3</value>
-  </data>
-  <data name="&gt;&gt;pictureBox3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox3.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;pictureBox3.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="pictureBox4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="pictureBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 386</value>
-  </data>
-  <data name="pictureBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 85</value>
-  </data>
-  <data name="pictureBox4.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBox4.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;pictureBox4.Name" xml:space="preserve">
-    <value>pictureBox4</value>
-  </data>
-  <data name="&gt;&gt;pictureBox4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox4.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;pictureBox4.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="pictureBox5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="pictureBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 483</value>
-  </data>
-  <data name="pictureBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 85</value>
-  </data>
-  <data name="pictureBox5.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBox5.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;pictureBox5.Name" xml:space="preserve">
-    <value>pictureBox5</value>
-  </data>
-  <data name="&gt;&gt;pictureBox5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox5.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;pictureBox5.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="pictureBox6.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="pictureBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>192, 95</value>
-  </data>
-  <data name="pictureBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 85</value>
-  </data>
-  <data name="pictureBox6.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBox6.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;pictureBox6.Name" xml:space="preserve">
-    <value>pictureBox6</value>
-  </data>
-  <data name="&gt;&gt;pictureBox6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox6.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;pictureBox6.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="pictureBox7.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="pictureBox7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>192, 192</value>
-  </data>
-  <data name="pictureBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 85</value>
-  </data>
-  <data name="pictureBox7.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBox7.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;pictureBox7.Name" xml:space="preserve">
-    <value>pictureBox7</value>
-  </data>
-  <data name="&gt;&gt;pictureBox7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox7.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;pictureBox7.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="pictureBox8.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="pictureBox8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>192, 289</value>
-  </data>
-  <data name="pictureBox8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 85</value>
-  </data>
-  <data name="pictureBox8.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBox8.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;pictureBox8.Name" xml:space="preserve">
-    <value>pictureBox8</value>
-  </data>
-  <data name="&gt;&gt;pictureBox8.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox8.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;pictureBox8.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="pictureBox9.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="pictureBox9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>192, 386</value>
-  </data>
-  <data name="pictureBox9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 85</value>
-  </data>
-  <data name="pictureBox9.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBox9.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;pictureBox9.Name" xml:space="preserve">
-    <value>pictureBox9</value>
-  </data>
-  <data name="&gt;&gt;pictureBox9.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox9.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;pictureBox9.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="pictureBox10.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="pictureBox10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>192, 483</value>
-  </data>
-  <data name="pictureBox10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 85</value>
-  </data>
-  <data name="pictureBox10.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBox10.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;pictureBox10.Name" xml:space="preserve">
-    <value>pictureBox10</value>
-  </data>
-  <data name="&gt;&gt;pictureBox10.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox10.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;pictureBox10.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
   <data name="pictureBox11.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -375,11 +131,12 @@
   <data name="pictureBox11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>375, 95</value>
+    <value>383, 94</value>
   </data>
   <data name="pictureBox11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>907, 473</value>
+    <value>930, 476</value>
   </data>
   <data name="pictureBox11.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -397,7 +154,7 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;pictureBox11.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>0</value>
   </data>
   <data name="label_carNum.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -408,8 +165,11 @@
   <data name="label_carNum.Font" type="System.Drawing.Font, System.Drawing">
     <value>微软雅黑, 21.75pt</value>
   </data>
+  <data name="label_carNum.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="label_carNum.Location" type="System.Drawing.Point, System.Drawing">
-    <value>635, 6</value>
+    <value>651, 6</value>
   </data>
   <data name="label_carNum.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 38</value>
@@ -430,7 +190,7 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;label_carNum.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>1</value>
   </data>
   <data name="label_carName.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -442,7 +202,7 @@
     <value>微软雅黑, 21.75pt</value>
   </data>
   <data name="label_carName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>421, 6</value>
+    <value>431, 6</value>
   </data>
   <data name="label_carName.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 38</value>
@@ -463,7 +223,7 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;label_carName.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>2</value>
   </data>
   <data name="label_time.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -475,7 +235,7 @@
     <value>微软雅黑, 21.75pt</value>
   </data>
   <data name="label_time.Location" type="System.Drawing.Point, System.Drawing">
-    <value>50, 3</value>
+    <value>56, 3</value>
   </data>
   <data name="label_time.Size" type="System.Drawing.Size, System.Drawing">
     <value>302, 38</value>
@@ -502,10 +262,10 @@
     <value>Fill</value>
   </data>
   <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>882, 3</value>
+    <value>901, 3</value>
   </data>
   <data name="panel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>400, 44</value>
+    <value>412, 44</value>
   </data>
   <data name="panel2.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -520,7 +280,7 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;panel2.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>3</value>
   </data>
   <data name="label2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -532,7 +292,7 @@
     <value>微软雅黑, 21.75pt</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 3</value>
+    <value>35, 3</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 38</value>
@@ -565,7 +325,7 @@
     <value>宋体, 18pt, style=Bold</value>
   </data>
   <data name="label_camL.Location" type="System.Drawing.Point, System.Drawing">
-    <value>114, 10</value>
+    <value>116, 10</value>
   </data>
   <data name="label_camL.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 24</value>
@@ -595,7 +355,7 @@
     <value>9, 3</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 44</value>
+    <value>175, 44</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -610,7 +370,7 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>4</value>
   </data>
   <data name="label3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -622,7 +382,7 @@
     <value>微软雅黑, 21.75pt</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 3</value>
+    <value>37, 3</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 38</value>
@@ -655,7 +415,7 @@
     <value>宋体, 18pt, style=Bold</value>
   </data>
   <data name="label_camR.Location" type="System.Drawing.Point, System.Drawing">
-    <value>116, 10</value>
+    <value>118, 10</value>
   </data>
   <data name="label_camR.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 24</value>
@@ -682,10 +442,10 @@
     <value>Fill</value>
   </data>
   <data name="panel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>192, 3</value>
+    <value>196, 3</value>
   </data>
   <data name="panel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 44</value>
+    <value>175, 44</value>
   </data>
   <data name="panel3.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -700,19 +460,19 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;panel3.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>5</value>
   </data>
   <data name="panel4.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="panel4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>366, 92</value>
+    <value>374, 91</value>
   </data>
   <data name="panel4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 479</value>
+    <value>6, 482</value>
   </data>
   <data name="panel4.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -727,19 +487,19 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;panel4.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>6</value>
   </data>
   <data name="panel_bian.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="panel_bian.Location" type="System.Drawing.Point, System.Drawing">
-    <value>183, 92</value>
+    <value>187, 91</value>
   </data>
   <data name="panel_bian.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel_bian.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 479</value>
+    <value>6, 482</value>
   </data>
   <data name="panel_bian.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -754,46 +514,19 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;panel_bian.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="pictureBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 95</value>
-  </data>
-  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 85</value>
-  </data>
-  <data name="pictureBox1.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBox1.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Name" xml:space="preserve">
-    <value>pictureBox1</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
-    <value>17</value>
   </data>
   <data name="panel5.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="panel5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 92</value>
+    <value>0, 91</value>
   </data>
   <data name="panel5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 479</value>
+    <value>6, 482</value>
   </data>
   <data name="panel5.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -808,19 +541,19 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;panel5.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>8</value>
   </data>
   <data name="panel6.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="panel6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1285, 92</value>
+    <value>0, 573</value>
   </data>
   <data name="panel6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 479</value>
+    <value>6, 6</value>
   </data>
   <data name="panel6.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -835,223 +568,7 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;panel6.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="panel7.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="panel7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 183</value>
-  </data>
-  <data name="panel7.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="panel7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="panel7.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;panel7.Name" xml:space="preserve">
-    <value>panel7</value>
-  </data>
-  <data name="&gt;&gt;panel7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel7.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;panel7.ZOrder" xml:space="preserve">
-    <value>20</value>
-  </data>
-  <data name="panel8.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="panel8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 183</value>
-  </data>
-  <data name="panel8.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="panel8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="panel8.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;panel8.Name" xml:space="preserve">
-    <value>panel8</value>
-  </data>
-  <data name="&gt;&gt;panel8.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel8.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;panel8.ZOrder" xml:space="preserve">
-    <value>21</value>
-  </data>
-  <data name="panel9.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="panel9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 280</value>
-  </data>
-  <data name="panel9.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="panel9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="panel9.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;panel9.Name" xml:space="preserve">
-    <value>panel9</value>
-  </data>
-  <data name="&gt;&gt;panel9.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel9.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;panel9.ZOrder" xml:space="preserve">
-    <value>22</value>
-  </data>
-  <data name="panel10.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="panel10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 280</value>
-  </data>
-  <data name="panel10.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="panel10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="panel10.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;panel10.Name" xml:space="preserve">
-    <value>panel10</value>
-  </data>
-  <data name="&gt;&gt;panel10.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel10.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;panel10.ZOrder" xml:space="preserve">
-    <value>23</value>
-  </data>
-  <data name="panel16.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="panel16.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 377</value>
-  </data>
-  <data name="panel16.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="panel16.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="panel16.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;panel16.Name" xml:space="preserve">
-    <value>panel16</value>
-  </data>
-  <data name="&gt;&gt;panel16.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel16.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;panel16.ZOrder" xml:space="preserve">
-    <value>24</value>
-  </data>
-  <data name="panel17.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="panel17.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 377</value>
-  </data>
-  <data name="panel17.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="panel17.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="panel17.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;panel17.Name" xml:space="preserve">
-    <value>panel17</value>
-  </data>
-  <data name="&gt;&gt;panel17.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel17.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;panel17.ZOrder" xml:space="preserve">
-    <value>25</value>
-  </data>
-  <data name="panel18.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="panel18.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 474</value>
-  </data>
-  <data name="panel18.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="panel18.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="panel18.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;panel18.Name" xml:space="preserve">
-    <value>panel18</value>
-  </data>
-  <data name="&gt;&gt;panel18.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel18.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;panel18.ZOrder" xml:space="preserve">
-    <value>26</value>
-  </data>
-  <data name="panel19.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="panel19.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 474</value>
-  </data>
-  <data name="panel19.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="panel19.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="panel19.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;panel19.Name" xml:space="preserve">
-    <value>panel19</value>
-  </data>
-  <data name="&gt;&gt;panel19.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel19.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;panel19.ZOrder" xml:space="preserve">
-    <value>27</value>
+    <value>9</value>
   </data>
   <data name="panel20.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1063,7 +580,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel20.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>181, 6</value>
   </data>
   <data name="panel20.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1078,19 +595,19 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;panel20.ZOrder" xml:space="preserve">
-    <value>28</value>
+    <value>10</value>
   </data>
   <data name="panel21.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="panel21.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 50</value>
+    <value>193, 50</value>
   </data>
   <data name="panel21.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel21.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>181, 6</value>
   </data>
   <data name="panel21.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1105,100 +622,19 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;panel21.ZOrder" xml:space="preserve">
-    <value>29</value>
-  </data>
-  <data name="panel22.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="panel22.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 571</value>
-  </data>
-  <data name="panel22.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="panel22.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 8</value>
-  </data>
-  <data name="panel22.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="&gt;&gt;panel22.Name" xml:space="preserve">
-    <value>panel22</value>
-  </data>
-  <data name="&gt;&gt;panel22.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel22.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;panel22.ZOrder" xml:space="preserve">
-    <value>30</value>
-  </data>
-  <data name="panel23.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="panel23.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 571</value>
-  </data>
-  <data name="panel23.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="panel23.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 8</value>
-  </data>
-  <data name="panel23.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="&gt;&gt;panel23.Name" xml:space="preserve">
-    <value>panel23</value>
-  </data>
-  <data name="&gt;&gt;panel23.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel23.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;panel23.ZOrder" xml:space="preserve">
-    <value>31</value>
-  </data>
-  <data name="panel24.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="panel24.Location" type="System.Drawing.Point, System.Drawing">
-    <value>372, 571</value>
-  </data>
-  <data name="panel24.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="panel24.Size" type="System.Drawing.Size, System.Drawing">
-    <value>913, 8</value>
-  </data>
-  <data name="panel24.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="&gt;&gt;panel24.Name" xml:space="preserve">
-    <value>panel24</value>
-  </data>
-  <data name="&gt;&gt;panel24.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel24.Parent" xml:space="preserve">
-    <value>tableLayoutPanel_Max</value>
-  </data>
-  <data name="&gt;&gt;panel24.ZOrder" xml:space="preserve">
-    <value>32</value>
+    <value>11</value>
   </data>
   <data name="panel25.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="panel25.Location" type="System.Drawing.Point, System.Drawing">
-    <value>372, 50</value>
+    <value>380, 50</value>
   </data>
   <data name="panel25.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel25.Size" type="System.Drawing.Size, System.Drawing">
-    <value>913, 6</value>
+    <value>936, 6</value>
   </data>
   <data name="panel25.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1213,16 +649,16 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;panel25.ZOrder" xml:space="preserve">
-    <value>33</value>
+    <value>12</value>
   </data>
   <data name="comboBox_showPictureID.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="comboBox_showPictureID.Location" type="System.Drawing.Point, System.Drawing">
-    <value>603, 59</value>
+    <value>616, 59</value>
   </data>
   <data name="comboBox_showPictureID.Size" type="System.Drawing.Size, System.Drawing">
-    <value>679, 20</value>
+    <value>697, 20</value>
   </data>
   <data name="comboBox_showPictureID.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -1237,7 +673,7 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;comboBox_showPictureID.ZOrder" xml:space="preserve">
-    <value>34</value>
+    <value>13</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1252,10 +688,10 @@
     <value>NoControl</value>
   </data>
   <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>375, 56</value>
+    <value>383, 56</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>222, 30</value>
+    <value>227, 29</value>
   </data>
   <data name="label4.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1273,13 +709,85 @@
     <value>tableLayoutPanel_Max</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>35</value>
+    <value>14</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageL.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageL.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageL.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageL.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 94</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageL.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageL.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 476</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageL.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel_CamImageL.Name" xml:space="preserve">
+    <value>tableLayoutPanel_CamImageL</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel_CamImageL.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel_CamImageL.Parent" xml:space="preserve">
+    <value>tableLayoutPanel_Max</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel_CamImageL.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageL.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls /&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,50,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageR.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageR.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageR.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageR.Location" type="System.Drawing.Point, System.Drawing">
+    <value>196, 94</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageR.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageR.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 476</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageR.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel_CamImageR.Name" xml:space="preserve">
+    <value>tableLayoutPanel_CamImageR</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel_CamImageR.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel_CamImageR.Parent" xml:space="preserve">
+    <value>tableLayoutPanel_Max</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel_CamImageR.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="tableLayoutPanel_CamImageR.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls /&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="tableLayoutPanel_Max.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 129</value>
   </data>
   <data name="tableLayoutPanel_Max.RowCount" type="System.Int32, mscorlib">
-    <value>14</value>
+    <value>6</value>
   </data>
   <data name="tableLayoutPanel_Max.Size" type="System.Drawing.Size, System.Drawing">
     <value>1316, 579</value>
@@ -1300,7 +808,7 @@
     <value>10</value>
   </data>
   <data name="tableLayoutPanel_Max.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="pictureBox2" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox3" Row="8" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox4" Row="10" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox5" Row="12" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox6" Row="4" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox7" Row="6" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox8" Row="8" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox9" Row="10" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox10" Row="12" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox11" Row="4" RowSpan="9" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="label_carNum" Row="0" RowSpan="1" Column="6" ColumnSpan="1" /&gt;&lt;Control Name="label_carName" Row="0" RowSpan="1" Column="5" ColumnSpan="1" /&gt;&lt;Control Name="panel2" Row="0" RowSpan="1" Column="7" ColumnSpan="1" /&gt;&lt;Control Name="panel1" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel3" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel4" Row="4" RowSpan="9" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="panel_bian" Row="4" RowSpan="9" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="pictureBox1" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel5" Row="4" RowSpan="9" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="panel6" Row="4" RowSpan="9" Column="8" ColumnSpan="1" /&gt;&lt;Control Name="panel7" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel8" Row="5" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel9" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel10" Row="7" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel16" Row="9" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel17" Row="9" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel18" Row="11" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel19" Row="11" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel20" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel21" Row="1" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel22" Row="13" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel23" Row="13" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel24" Row="13" RowSpan="1" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="panel25" Row="1" RowSpan="1" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="comboBox_showPictureID" Row="2" RowSpan="1" Column="6" ColumnSpan="2" /&gt;&lt;Control Name="label4" Row="2" RowSpan="1" Column="5" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Percent,14,Absolute,6,Percent,14,Absolute,6,Percent,18,Percent,22,Percent,32,Absolute,28" /&gt;&lt;Rows Styles="Absolute,50,Absolute,6,Absolute,30,Absolute,6,Percent,20,Absolute,6,Percent,20,Absolute,6,Percent,20,Absolute,6,Percent,20,Absolute,6,Percent,20,Absolute,6" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="pictureBox11" Row="4" RowSpan="1" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="label_carNum" Row="0" RowSpan="1" Column="6" ColumnSpan="1" /&gt;&lt;Control Name="label_carName" Row="0" RowSpan="1" Column="5" ColumnSpan="1" /&gt;&lt;Control Name="panel2" Row="0" RowSpan="1" Column="7" ColumnSpan="1" /&gt;&lt;Control Name="panel1" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel3" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel4" Row="4" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="panel_bian" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="panel5" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="panel6" Row="4" RowSpan="1" Column="8" ColumnSpan="1" /&gt;&lt;Control Name="panel20" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel21" Row="1" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="panel25" Row="1" RowSpan="1" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="comboBox_showPictureID" Row="2" RowSpan="1" Column="6" ColumnSpan="2" /&gt;&lt;Control Name="label4" Row="2" RowSpan="1" Column="5" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutPanel_CamImageL" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutPanel_CamImageR" Row="4" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Percent,14,Absolute,6,Percent,14,Absolute,6,Percent,18,Percent,22,Percent,32" /&gt;&lt;Rows Styles="Absolute,50,Absolute,6,Absolute,29,Absolute,6,Percent,100,Absolute,6" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
