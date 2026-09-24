@@ -23,6 +23,7 @@ namespace OnlineMeasurement.IO
 
             // 初始化界面
             GeneralFunc.ChangeLanguateFun(typeof(RobotForm), this);
+            AppTheme.Apply(this);
             groupBox1.Enabled = false;
 
             this.signal = signal;

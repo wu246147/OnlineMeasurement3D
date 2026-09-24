@@ -88,6 +88,7 @@ namespace OnlineMeasurement
             }
 
             InitializeComponent();
+            AppTheme.Apply(this);
 
             //读取语言id
             GlobalVarAndFunc.ReadLanguageID();
@@ -626,6 +627,7 @@ namespace OnlineMeasurement
                     {
                         lblSysStatus.Text = Resources.LanguageDic.wait;
                         lblSysStatus.BackColor = Color.Yellow;
+                        lblSysStatus.ForeColor = Color.FromArgb(31, 37, 47);
                     }));
 
                     System.Diagnostics.Stopwatch sp = new System.Diagnostics.Stopwatch();
@@ -874,6 +876,7 @@ namespace OnlineMeasurement
                     {
                         lblSysStatus.Text = Resources.LanguageDic.Running;
                         lblSysStatus.BackColor = Color.Green;
+                        lblSysStatus.ForeColor = Color.White;
                         labelResult.Text = "--";
                         labelResult.BackColor = Color.Transparent;
 
@@ -1601,6 +1604,7 @@ namespace OnlineMeasurement
                     {
                         lblSysStatus.Text = $"{Resources.LanguageDic.finish}";
                         lblSysStatus.BackColor = Color.White;
+                        lblSysStatus.ForeColor = Color.FromArgb(31, 37, 47);
                         labelResult.Text = bResult ? "OK" : "NG";
                         labelResult.BackColor = bResult ? Color.Green : Color.Red;
                     }));
@@ -3633,6 +3637,7 @@ namespace OnlineMeasurement
             {
                 lblSysStatus.Text = $"{Resources.LanguageDic.stop}";
                 lblSysStatus.BackColor = Color.Red;
+                lblSysStatus.ForeColor = Color.White;
                 buttonRun.Enabled = true;
                 buttonStop.Enabled = false;
                 groupBox1.Enabled = true;
@@ -3643,7 +3648,7 @@ namespace OnlineMeasurement
         object olock = new object();
         void ShowMessage(string message)
         {
-            ShowMessage(message, Color.White);
+            ShowMessage(message, AppTheme.Surface);
         }
         void ShowMessage(string message, Color backColor)
         {
@@ -5103,7 +5108,7 @@ namespace OnlineMeasurement
             if (control.ClientRectangle.Width > 0 && control.ClientRectangle.Height > 0)
             {
                 graphicsPath.AddRectangle(control.ClientRectangle);
-                LinearGradientBrush brush = new LinearGradientBrush(control.ClientRectangle, Color.FromArgb(100, 212, 225), Color.FromArgb(100, 162, 225), LinearGradientMode.BackwardDiagonal);
+                LinearGradientBrush brush = new LinearGradientBrush(control.ClientRectangle, AppTheme.RaisedSurface, AppTheme.Window, LinearGradientMode.BackwardDiagonal);
                 g.FillPath(brush, graphicsPath);
             }
         }
@@ -5114,6 +5119,7 @@ namespace OnlineMeasurement
             GlobalVarAndFunc.LANGUAGE_ID = comboBox1.SelectedIndex;
             // 初始化界面
             GeneralFunc.ChangeLanguateFun(typeof(FormRun), this);
+            AppTheme.Apply(this);
             if (GlobalVarAndFunc.SHOW_MESSAGE)
             {
                 // 弹窗显示

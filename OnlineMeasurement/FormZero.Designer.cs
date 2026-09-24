@@ -61,8 +61,12 @@ namespace OnlineMeasurement
             // 
             resources.ApplyResources(this.buttonOK, "buttonOK");
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            this.buttonOK.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.buttonOK.BackColor = System.Drawing.Color.FromArgb(49, 61, 77);
+            this.buttonOK.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonOK.UseVisualStyleBackColor = false;
             // 
             // dataGridViewL
             // 
@@ -87,6 +91,9 @@ namespace OnlineMeasurement
             this.dataGridViewL.RowHeadersVisible = false;
             this.dataGridViewL.RowTemplate.Height = 23;
             this.dataGridViewL.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dataGridViewL_KeyPress);
+            this.dataGridViewL.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dataGridViewL.BackgroundColor = System.Drawing.Color.FromArgb(31, 37, 47);
+            this.dataGridViewL.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -120,21 +127,29 @@ namespace OnlineMeasurement
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
-            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Name = "label1";
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label2
             // 
             resources.ApplyResources(this.label2, "label2");
-            this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Name = "label2";
+            this.label2.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // buttonNG
             // 
             resources.ApplyResources(this.buttonNG, "buttonNG");
             this.buttonNG.Name = "buttonNG";
-            this.buttonNG.UseVisualStyleBackColor = true;
             this.buttonNG.Click += new System.EventHandler(this.buttonNG_Click);
+            this.buttonNG.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.buttonNG.BackColor = System.Drawing.Color.FromArgb(49, 61, 77);
+            this.buttonNG.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.buttonNG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonNG.UseVisualStyleBackColor = false;
             // 
             // dataGridViewR
             // 
@@ -159,6 +174,9 @@ namespace OnlineMeasurement
             this.dataGridViewR.RowHeadersVisible = false;
             this.dataGridViewR.RowTemplate.Height = 23;
             this.dataGridViewR.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dataGridViewR_KeyPress);
+            this.dataGridViewR.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dataGridViewR.BackgroundColor = System.Drawing.Color.FromArgb(31, 37, 47);
+            this.dataGridViewR.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -203,6 +221,9 @@ namespace OnlineMeasurement
             this.Name = "FormZero";
             this.Load += new System.EventHandler(this.FormZero_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormZero_Paint);
+            this.BackColor = System.Drawing.Color.FromArgb(31, 37, 47);
+            this.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewR)).EndInit();
             this.ResumeLayout(false);

@@ -21,6 +21,7 @@ namespace OnlineMeasurement
 
             // 初始化界面
             GeneralFunc.ChangeLanguateFun(typeof(FormName), this);
+            AppTheme.Apply(this);
 
         }
 
@@ -58,7 +59,7 @@ namespace OnlineMeasurement
             if (control.ClientRectangle.Width > 0 && control.ClientRectangle.Height > 0)
             {
                 graphicsPath.AddRectangle(control.ClientRectangle);
-                LinearGradientBrush brush = new LinearGradientBrush(control.ClientRectangle, Color.FromArgb(100, 212, 225), Color.FromArgb(100, 162, 225), LinearGradientMode.BackwardDiagonal);
+                LinearGradientBrush brush = new LinearGradientBrush(control.ClientRectangle, AppTheme.RaisedSurface, AppTheme.Window, LinearGradientMode.BackwardDiagonal);
                 g.FillPath(brush, graphicsPath);
             }
         }

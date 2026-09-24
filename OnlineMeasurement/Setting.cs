@@ -2584,7 +2584,6 @@ namespace OnlineMeasurement
             this.dgvProductItemIfo.AllowUserToDeleteRows = false;
             this.dgvProductItemIfo.AllowUserToResizeColumns = false;
             this.dgvProductItemIfo.AllowUserToResizeRows = false;
-            this.dgvProductItemIfo.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(192)))), ((int)(((byte)(233)))));
             this.dgvProductItemIfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProductItemIfo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column4,
@@ -2600,6 +2599,9 @@ namespace OnlineMeasurement
             this.dgvProductItemIfo.Size = new System.Drawing.Size(402, 246);
             this.dgvProductItemIfo.TabIndex = 2;
             this.dgvProductItemIfo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProductItemIfo_CellContentClick);
+            this.dgvProductItemIfo.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dgvProductItemIfo.BackgroundColor = System.Drawing.Color.FromArgb(31, 37, 47);
+            this.dgvProductItemIfo.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // Column4
             // 
@@ -2621,7 +2623,6 @@ namespace OnlineMeasurement
             // 
             // groupBox1
             // 
-            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.btnModifyProductItem);
             this.groupBox1.Controls.Add(this.btnAddProductItem);
             this.groupBox1.Controls.Add(this.btnDeleteProductItem);
@@ -2635,10 +2636,12 @@ namespace OnlineMeasurement
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "参数信息";
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.groupBox1.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
+            this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // btnModifyProductItem
             // 
-            this.btnModifyProductItem.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             //this.btnModifyProductItem.Image = ((System.Drawing.Image)(resources.GetObject("btnModifyProductItem.Image")));
             this.btnModifyProductItem.Location = new System.Drawing.Point(163, 80);
             this.btnModifyProductItem.Name = "btnModifyProductItem";
@@ -2647,13 +2650,15 @@ namespace OnlineMeasurement
             this.btnModifyProductItem.Text = "修改";
             this.btnModifyProductItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnModifyProductItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnModifyProductItem.UseVisualStyleBackColor = true;
             this.btnModifyProductItem.Click += new System.EventHandler(this.btnModifyProductItem_Click);
+            this.btnModifyProductItem.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnModifyProductItem.BackColor = System.Drawing.Color.FromArgb(49, 61, 77);
+            this.btnModifyProductItem.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.btnModifyProductItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnModifyProductItem.UseVisualStyleBackColor = false;
             // 
             // btnAddProductItem
             // 
-            this.btnAddProductItem.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnAddProductItem.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             //this.btnAddProductItem.Image = ((System.Drawing.Image)(resources.GetObject("btnAddProductItem.Image")));
             this.btnAddProductItem.Location = new System.Drawing.Point(28, 80);
             this.btnAddProductItem.Name = "btnAddProductItem";
@@ -2662,13 +2667,15 @@ namespace OnlineMeasurement
             this.btnAddProductItem.Text = "增加";
             this.btnAddProductItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAddProductItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnAddProductItem.UseVisualStyleBackColor = true;
             this.btnAddProductItem.Click += new System.EventHandler(this.btnAddProductItem_Click);
+            this.btnAddProductItem.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnAddProductItem.BackColor = System.Drawing.Color.FromArgb(49, 61, 77);
+            this.btnAddProductItem.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.btnAddProductItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddProductItem.UseVisualStyleBackColor = false;
             // 
             // btnDeleteProductItem
             // 
-            this.btnDeleteProductItem.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnDeleteProductItem.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             //this.btnDeleteProductItem.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteProductItem.Image")));
             this.btnDeleteProductItem.Location = new System.Drawing.Point(297, 80);
             this.btnDeleteProductItem.Name = "btnDeleteProductItem";
@@ -2677,8 +2684,12 @@ namespace OnlineMeasurement
             this.btnDeleteProductItem.Text = "删除";
             this.btnDeleteProductItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDeleteProductItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnDeleteProductItem.UseVisualStyleBackColor = true;
             this.btnDeleteProductItem.Click += new System.EventHandler(this.btnDeleteProductItem_Click);
+            this.btnDeleteProductItem.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnDeleteProductItem.BackColor = System.Drawing.Color.FromArgb(49, 61, 77);
+            this.btnDeleteProductItem.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.btnDeleteProductItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteProductItem.UseVisualStyleBackColor = false;
             // 
             // txtProductId
             // 
@@ -2686,6 +2697,9 @@ namespace OnlineMeasurement
             this.txtProductId.Name = "txtProductId";
             this.txtProductId.Size = new System.Drawing.Size(100, 21);
             this.txtProductId.TabIndex = 3;
+            this.txtProductId.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtProductId.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.txtProductId.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // labelID
             // 
@@ -2695,6 +2709,9 @@ namespace OnlineMeasurement
             this.labelID.Size = new System.Drawing.Size(41, 12);
             this.labelID.TabIndex = 2;
             this.labelID.Text = "产品ID";
+            this.labelID.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelID.BackColor = System.Drawing.Color.Transparent;
+            this.labelID.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // txtProductName
             // 
@@ -2702,6 +2719,9 @@ namespace OnlineMeasurement
             this.txtProductName.Name = "txtProductName";
             this.txtProductName.Size = new System.Drawing.Size(100, 21);
             this.txtProductName.TabIndex = 1;
+            this.txtProductName.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtProductName.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.txtProductName.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // labelCarName
             // 
@@ -2711,12 +2731,14 @@ namespace OnlineMeasurement
             this.labelCarName.Size = new System.Drawing.Size(53, 12);
             this.labelCarName.TabIndex = 0;
             this.labelCarName.Text = "产品名称";
+            this.labelCarName.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelCarName.BackColor = System.Drawing.Color.Transparent;
+            this.labelCarName.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // FormCarSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(192)))), ((int)(((byte)(233)))));
             this.ClientSize = new System.Drawing.Size(427, 410);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgvProductItemIfo);
@@ -2729,6 +2751,9 @@ namespace OnlineMeasurement
             this.Text = "产品列表";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormCarSet_FormClosing);
             this.Load += new System.EventHandler(this.FormCarSet_Load);
+            this.BackColor = System.Drawing.Color.FromArgb(31, 37, 47);
+            this.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductItemIfo)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -2760,6 +2785,7 @@ namespace OnlineMeasurement
         public FormCarSet(Dictionary<Guid, CarID> cars)
         {
             InitializeComponent();
+            AppTheme.Apply(this);
             this.Cars = cars;
             foreach (var item in this.Cars.Keys)
             {

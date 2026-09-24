@@ -39,27 +39,40 @@ namespace OnlineMeasurement
             // 
             resources.ApplyResources(this.textBox_Name, "textBox_Name");
             this.textBox_Name.Name = "textBox_Name";
+            this.textBox_Name.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox_Name.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBox_Name.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // buttonIn
             // 
             resources.ApplyResources(this.buttonIn, "buttonIn");
             this.buttonIn.Name = "buttonIn";
-            this.buttonIn.UseVisualStyleBackColor = true;
             this.buttonIn.Click += new System.EventHandler(this.buttonIn_Click);
+            this.buttonIn.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.buttonIn.BackColor = System.Drawing.Color.FromArgb(49, 61, 77);
+            this.buttonIn.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.buttonIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonIn.UseVisualStyleBackColor = false;
             // 
             // buttonOut
             // 
             this.buttonOut.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             resources.ApplyResources(this.buttonOut, "buttonOut");
             this.buttonOut.Name = "buttonOut";
-            this.buttonOut.UseVisualStyleBackColor = true;
             this.buttonOut.Click += new System.EventHandler(this.buttonOut_Click);
+            this.buttonOut.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.buttonOut.BackColor = System.Drawing.Color.FromArgb(49, 61, 77);
+            this.buttonOut.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.buttonOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonOut.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
-            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Name = "label1";
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // FormName
             // 
@@ -75,6 +88,9 @@ namespace OnlineMeasurement
             this.MaximizeBox = false;
             this.Name = "FormName";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormName_Paint);
+            this.BackColor = System.Drawing.Color.FromArgb(31, 37, 47);
+            this.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -33,6 +33,7 @@ namespace OnlineMeasurement
 
             // 初始化界面
             GeneralFunc.ChangeLanguateFun(typeof(FormSet), this);
+            AppTheme.Apply(this);
 
 
             checkDicReversed = checkDic
@@ -43,6 +44,7 @@ namespace OnlineMeasurement
             comboBox_locationLightMode.Items.AddRange(new string[] { Resources.LanguageDic.Model_Match, Resources.LanguageDic.Distance_Light});
 
             groupBox绿色范围值.ContextMenuStrip = new ContextMenuStrip();
+            AppTheme.ApplyToolStrip(groupBox绿色范围值.ContextMenuStrip);
             groupBox绿色范围值.ContextMenuStrip.Opening += (s, e) =>
             {
                 ContextMenuStrip contextMenuStrip = (ContextMenuStrip)s;
@@ -534,7 +536,7 @@ namespace OnlineMeasurement
             if (control.ClientRectangle.Width > 0 && control.ClientRectangle.Height > 0)
             {
                 graphicsPath.AddRectangle(control.ClientRectangle);
-                LinearGradientBrush brush = new LinearGradientBrush(control.ClientRectangle, Color.FromArgb(100, 212, 225), Color.FromArgb(100, 162, 225), LinearGradientMode.BackwardDiagonal);
+                LinearGradientBrush brush = new LinearGradientBrush(control.ClientRectangle, AppTheme.RaisedSurface, AppTheme.Window, LinearGradientMode.BackwardDiagonal);
                 g.FillPath(brush, graphicsPath);
             }
         }

@@ -39,6 +39,7 @@ namespace OnlineMeasurement.IO
 
             // 初始化界面
             GeneralFunc.ChangeLanguateFun(typeof(HslForm), this);
+            AppTheme.Apply(this);
 
             numericUpDownDA2.Enabled = DA2;
             comboBox_DataFormat.Items.AddRange(Enum.GetNames(typeof(DataFormat)));
@@ -489,7 +490,7 @@ namespace OnlineMeasurement.IO
             if (control.ClientRectangle.Width > 0 && control.ClientRectangle.Height > 0)
             {
                 graphicsPath.AddRectangle(control.ClientRectangle);
-                LinearGradientBrush brush = new LinearGradientBrush(control.ClientRectangle, Color.FromArgb(100, 212, 225), Color.FromArgb(100, 162, 225), LinearGradientMode.BackwardDiagonal);
+                LinearGradientBrush brush = new LinearGradientBrush(control.ClientRectangle, AppTheme.RaisedSurface, AppTheme.Window, LinearGradientMode.BackwardDiagonal);
                 g.FillPath(brush, graphicsPath);
             }
         }

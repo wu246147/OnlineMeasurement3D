@@ -86,6 +86,9 @@ namespace OnlineMeasurement.IO
             this.label3.Size = new System.Drawing.Size(23, 12);
             this.label3.TabIndex = 36;
             this.label3.Text = "RY:";
+            this.label3.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label2
             // 
@@ -95,6 +98,9 @@ namespace OnlineMeasurement.IO
             this.label2.Size = new System.Drawing.Size(23, 12);
             this.label2.TabIndex = 48;
             this.label2.Text = "IP:";
+            this.label2.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label5
             // 
@@ -104,6 +110,9 @@ namespace OnlineMeasurement.IO
             this.label5.Size = new System.Drawing.Size(17, 12);
             this.label5.TabIndex = 47;
             this.label5.Text = "mm";
+            this.label5.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label6
             // 
@@ -113,6 +122,9 @@ namespace OnlineMeasurement.IO
             this.label6.Size = new System.Drawing.Size(17, 12);
             this.label6.TabIndex = 46;
             this.label6.Text = "mm";
+            this.label6.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label4
             // 
@@ -122,6 +134,9 @@ namespace OnlineMeasurement.IO
             this.label4.Size = new System.Drawing.Size(35, 12);
             this.label4.TabIndex = 45;
             this.label4.Text = "port:";
+            this.label4.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label15
             // 
@@ -131,6 +146,9 @@ namespace OnlineMeasurement.IO
             this.label15.Size = new System.Drawing.Size(17, 12);
             this.label15.TabIndex = 44;
             this.label15.Text = "°";
+            this.label15.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // buttonGetRobotPose
             // 
@@ -139,8 +157,12 @@ namespace OnlineMeasurement.IO
             this.buttonGetRobotPose.Size = new System.Drawing.Size(75, 23);
             this.buttonGetRobotPose.TabIndex = 56;
             this.buttonGetRobotPose.Text = "get pose";
-            this.buttonGetRobotPose.UseVisualStyleBackColor = true;
             this.buttonGetRobotPose.Click += new System.EventHandler(this.buttonGetRobotPose_Click);
+            this.buttonGetRobotPose.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.buttonGetRobotPose.BackColor = System.Drawing.Color.FromArgb(49, 61, 77);
+            this.buttonGetRobotPose.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.buttonGetRobotPose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonGetRobotPose.UseVisualStyleBackColor = false;
             // 
             // label33
             // 
@@ -150,6 +172,9 @@ namespace OnlineMeasurement.IO
             this.label33.Size = new System.Drawing.Size(17, 12);
             this.label33.TabIndex = 42;
             this.label33.Text = "°";
+            this.label33.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label33.BackColor = System.Drawing.Color.Transparent;
+            this.label33.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotIP
             // 
@@ -157,6 +182,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotIP.Name = "textBoxRobotIP";
             this.textBoxRobotIP.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotIP.TabIndex = 57;
+            this.textBoxRobotIP.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotIP.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotIP.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label34
             // 
@@ -166,6 +194,9 @@ namespace OnlineMeasurement.IO
             this.label34.Size = new System.Drawing.Size(17, 12);
             this.label34.TabIndex = 41;
             this.label34.Text = "°";
+            this.label34.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label34.BackColor = System.Drawing.Color.Transparent;
+            this.label34.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label35
             // 
@@ -175,6 +206,9 @@ namespace OnlineMeasurement.IO
             this.label35.Size = new System.Drawing.Size(17, 12);
             this.label35.TabIndex = 43;
             this.label35.Text = "mm";
+            this.label35.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label35.BackColor = System.Drawing.Color.Transparent;
+            this.label35.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label36
             // 
@@ -184,6 +218,9 @@ namespace OnlineMeasurement.IO
             this.label36.Size = new System.Drawing.Size(17, 12);
             this.label36.TabIndex = 40;
             this.label36.Text = "X:";
+            this.label36.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label36.BackColor = System.Drawing.Color.Transparent;
+            this.label36.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotX
             // 
@@ -192,6 +229,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotX.ReadOnly = true;
             this.textBoxRobotX.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotX.TabIndex = 51;
+            this.textBoxRobotX.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotX.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotX.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label37
             // 
@@ -201,6 +241,9 @@ namespace OnlineMeasurement.IO
             this.label37.Size = new System.Drawing.Size(23, 12);
             this.label37.TabIndex = 39;
             this.label37.Text = "RZ:";
+            this.label37.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label37.BackColor = System.Drawing.Color.Transparent;
+            this.label37.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotRX
             // 
@@ -209,6 +252,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotRX.ReadOnly = true;
             this.textBoxRobotRX.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotRX.TabIndex = 52;
+            this.textBoxRobotRX.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotRX.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotRX.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotY
             // 
@@ -217,6 +263,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotY.ReadOnly = true;
             this.textBoxRobotY.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotY.TabIndex = 53;
+            this.textBoxRobotY.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotY.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotY.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotRY
             // 
@@ -225,6 +274,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotRY.ReadOnly = true;
             this.textBoxRobotRY.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotRY.TabIndex = 54;
+            this.textBoxRobotRY.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotRY.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotRY.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label38
             // 
@@ -234,6 +286,9 @@ namespace OnlineMeasurement.IO
             this.label38.Size = new System.Drawing.Size(17, 12);
             this.label38.TabIndex = 38;
             this.label38.Text = "Z:";
+            this.label38.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label38.BackColor = System.Drawing.Color.Transparent;
+            this.label38.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotZ
             // 
@@ -242,6 +297,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotZ.ReadOnly = true;
             this.textBoxRobotZ.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotZ.TabIndex = 55;
+            this.textBoxRobotZ.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotZ.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotZ.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label39
             // 
@@ -251,6 +309,9 @@ namespace OnlineMeasurement.IO
             this.label39.Size = new System.Drawing.Size(17, 12);
             this.label39.TabIndex = 37;
             this.label39.Text = "Y:";
+            this.label39.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label39.BackColor = System.Drawing.Color.Transparent;
+            this.label39.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotRZ
             // 
@@ -259,6 +320,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotRZ.ReadOnly = true;
             this.textBoxRobotRZ.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotRZ.TabIndex = 50;
+            this.textBoxRobotRZ.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotRZ.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotRZ.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label40
             // 
@@ -268,6 +332,9 @@ namespace OnlineMeasurement.IO
             this.label40.Size = new System.Drawing.Size(23, 12);
             this.label40.TabIndex = 49;
             this.label40.Text = "RX:";
+            this.label40.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label40.BackColor = System.Drawing.Color.Transparent;
+            this.label40.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // button_Close
             // 
@@ -277,8 +344,12 @@ namespace OnlineMeasurement.IO
             this.button_Close.Size = new System.Drawing.Size(75, 23);
             this.button_Close.TabIndex = 59;
             this.button_Close.Text = "disconnect";
-            this.button_Close.UseVisualStyleBackColor = true;
             this.button_Close.Click += new System.EventHandler(this.button_Close_Click);
+            this.button_Close.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button_Close.BackColor = System.Drawing.Color.FromArgb(49, 61, 77);
+            this.button_Close.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.button_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Close.UseVisualStyleBackColor = false;
             // 
             // button_Open
             // 
@@ -288,8 +359,12 @@ namespace OnlineMeasurement.IO
             this.button_Open.Size = new System.Drawing.Size(75, 23);
             this.button_Open.TabIndex = 60;
             this.button_Open.Text = "connect";
-            this.button_Open.UseVisualStyleBackColor = true;
             this.button_Open.Click += new System.EventHandler(this.button_Open_Click);
+            this.button_Open.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button_Open.BackColor = System.Drawing.Color.FromArgb(49, 61, 77);
+            this.button_Open.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.button_Open.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Open.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
@@ -299,6 +374,9 @@ namespace OnlineMeasurement.IO
             this.label1.Size = new System.Drawing.Size(23, 12);
             this.label1.TabIndex = 49;
             this.label1.Text = "A2:";
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotA6
             // 
@@ -307,6 +385,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotA6.ReadOnly = true;
             this.textBoxRobotA6.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotA6.TabIndex = 50;
+            this.textBoxRobotA6.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotA6.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotA6.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label7
             // 
@@ -316,6 +397,9 @@ namespace OnlineMeasurement.IO
             this.label7.Size = new System.Drawing.Size(23, 12);
             this.label7.TabIndex = 37;
             this.label7.Text = "A3:";
+            this.label7.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotA5
             // 
@@ -324,6 +408,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotA5.ReadOnly = true;
             this.textBoxRobotA5.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotA5.TabIndex = 55;
+            this.textBoxRobotA5.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotA5.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotA5.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label8
             // 
@@ -333,6 +420,9 @@ namespace OnlineMeasurement.IO
             this.label8.Size = new System.Drawing.Size(23, 12);
             this.label8.TabIndex = 38;
             this.label8.Text = "A5:";
+            this.label8.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotA4
             // 
@@ -341,6 +431,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotA4.ReadOnly = true;
             this.textBoxRobotA4.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotA4.TabIndex = 54;
+            this.textBoxRobotA4.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotA4.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotA4.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotA3
             // 
@@ -349,6 +442,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotA3.ReadOnly = true;
             this.textBoxRobotA3.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotA3.TabIndex = 53;
+            this.textBoxRobotA3.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotA3.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotA3.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotA2
             // 
@@ -357,6 +453,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotA2.ReadOnly = true;
             this.textBoxRobotA2.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotA2.TabIndex = 52;
+            this.textBoxRobotA2.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotA2.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotA2.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label9
             // 
@@ -366,6 +465,9 @@ namespace OnlineMeasurement.IO
             this.label9.Size = new System.Drawing.Size(23, 12);
             this.label9.TabIndex = 39;
             this.label9.Text = "A6:";
+            this.label9.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxRobotA1
             // 
@@ -374,6 +476,9 @@ namespace OnlineMeasurement.IO
             this.textBoxRobotA1.ReadOnly = true;
             this.textBoxRobotA1.Size = new System.Drawing.Size(100, 21);
             this.textBoxRobotA1.TabIndex = 51;
+            this.textBoxRobotA1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxRobotA1.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxRobotA1.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label10
             // 
@@ -383,6 +488,9 @@ namespace OnlineMeasurement.IO
             this.label10.Size = new System.Drawing.Size(23, 12);
             this.label10.TabIndex = 40;
             this.label10.Text = "A1:";
+            this.label10.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label12
             // 
@@ -392,6 +500,9 @@ namespace OnlineMeasurement.IO
             this.label12.Size = new System.Drawing.Size(17, 12);
             this.label12.TabIndex = 41;
             this.label12.Text = "°";
+            this.label12.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label13
             // 
@@ -401,6 +512,9 @@ namespace OnlineMeasurement.IO
             this.label13.Size = new System.Drawing.Size(17, 12);
             this.label13.TabIndex = 42;
             this.label13.Text = "°";
+            this.label13.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label14
             // 
@@ -410,6 +524,9 @@ namespace OnlineMeasurement.IO
             this.label14.Size = new System.Drawing.Size(17, 12);
             this.label14.TabIndex = 44;
             this.label14.Text = "°";
+            this.label14.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label14.BackColor = System.Drawing.Color.Transparent;
+            this.label14.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label18
             // 
@@ -419,6 +536,9 @@ namespace OnlineMeasurement.IO
             this.label18.Size = new System.Drawing.Size(23, 12);
             this.label18.TabIndex = 36;
             this.label18.Text = "A4:";
+            this.label18.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label18.BackColor = System.Drawing.Color.Transparent;
+            this.label18.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label11
             // 
@@ -428,6 +548,9 @@ namespace OnlineMeasurement.IO
             this.label11.Size = new System.Drawing.Size(17, 12);
             this.label11.TabIndex = 61;
             this.label11.Text = "°";
+            this.label11.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label19
             // 
@@ -437,6 +560,9 @@ namespace OnlineMeasurement.IO
             this.label19.Size = new System.Drawing.Size(17, 12);
             this.label19.TabIndex = 62;
             this.label19.Text = "°";
+            this.label19.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label19.BackColor = System.Drawing.Color.Transparent;
+            this.label19.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label20
             // 
@@ -446,6 +572,9 @@ namespace OnlineMeasurement.IO
             this.label20.Size = new System.Drawing.Size(17, 12);
             this.label20.TabIndex = 63;
             this.label20.Text = "°";
+            this.label20.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label20.BackColor = System.Drawing.Color.Transparent;
+            this.label20.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // groupBox1
             // 
@@ -491,6 +620,9 @@ namespace OnlineMeasurement.IO
             this.groupBox1.Size = new System.Drawing.Size(410, 249);
             this.groupBox1.TabIndex = 64;
             this.groupBox1.TabStop = false;
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.groupBox1.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
+            this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // numericUpDownPort
             // 
@@ -503,17 +635,22 @@ namespace OnlineMeasurement.IO
             this.numericUpDownPort.Name = "numericUpDownPort";
             this.numericUpDownPort.Size = new System.Drawing.Size(88, 21);
             this.numericUpDownPort.TabIndex = 64;
+            this.numericUpDownPort.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.numericUpDownPort.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.numericUpDownPort.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.BackColor = System.Drawing.Color.Transparent;
             this.label16.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label16.Location = new System.Drawing.Point(451, 73);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(29, 12);
             this.label16.TabIndex = 66;
             this.label16.Text = "日志";
+            this.label16.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label16.BackColor = System.Drawing.Color.Transparent;
+            this.label16.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // textBoxLog
             // 
@@ -523,6 +660,9 @@ namespace OnlineMeasurement.IO
             this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxLog.Size = new System.Drawing.Size(307, 239);
             this.textBoxLog.TabIndex = 65;
+            this.textBoxLog.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxLog.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
+            this.textBoxLog.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // RobotForm
             // 
@@ -542,6 +682,9 @@ namespace OnlineMeasurement.IO
             this.Text = "RobotForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RobotForm_FormClosing);
             this.Load += new System.EventHandler(this.RobotForm_Load);
+            this.BackColor = System.Drawing.Color.FromArgb(31, 37, 47);
+            this.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).EndInit();

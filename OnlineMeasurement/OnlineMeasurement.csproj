@@ -89,9 +89,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\halcondotnet.dll</HintPath>
     </Reference>
-    <Reference Include="HslCommunication, Version=11.3.1.0, Culture=neutral, PublicKeyToken=3d72ad3b6b5ec0e3, processorArchitecture=MSIL">
+    <Reference Include="HslCommunication, Version=11.5.3.0, Culture=neutral, PublicKeyToken=3d72ad3b6b5ec0e3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\P07250099 广丰二厂GBL线\OnlineMeasurement 1.17.0\OnlineMeasurement\HslCommunication.dll</HintPath>
+      <HintPath>.\HslCommunication.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=8.0.25.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -125,6 +125,7 @@
       <DependentUpon>FormSet.cs</DependentUpon>
     </Compile>
     <Compile Include="FormTool.cs" />
+    <Compile Include="AppTheme.cs" />
     <Compile Include="FormShow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +162,7 @@
     </Compile>
     <Compile Include="IO\TCPSocket.cs" />
     <Compile Include="IO\ToyotaPlc.cs" />
+    <Compile Include="IO\UDP.cs" />
     <Compile Include="LicenseKey.cs" />
     <Compile Include="MVCamera.cs" />
     <Compile Include="OLM.cs" />
