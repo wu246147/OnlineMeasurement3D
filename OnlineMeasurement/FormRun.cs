@@ -388,7 +388,14 @@ namespace OnlineMeasurement
                 相机.Clear();
                 相机参数.Clear();
                 TempareCalib.Clear();
-                robots.Clear();
+                if (robots.Count > 0)
+                {
+                    foreach (var item in robots)
+                    {
+                        item.Value.Close();
+                    }
+                    robots.Clear();
+                }
                 string[] camPaths = Directory.GetDirectories("Data\\Cam");
                 foreach (var item in camPaths)
                 {
@@ -518,17 +525,11 @@ namespace OnlineMeasurement
                     }
                     for (int i = 0; i < 16; i++)
                     {
-                        if (camIODict["L"].ContainsKey("Result"))
-                        {
-                            string address = camIODict["L"]["Result"].Address.Split('.')[0] + "." + (int.Parse(camIODict["L"]["Result"].Address.Split('.')[1]) + i).ToString();
-                            if (!plc.Write(address, false).IsSuccess)
-                            {
-                                ShowMessage(Resources.LanguageDic.check_result_write_fail, Color.Red);
-                            }
-                        }
+
                         if (camIODict["L"].ContainsKey("ResultOK"))
                         {
-                            string address = camIODict["L"]["ResultOK"].Address.Split('.')[0] + "." + (int.Parse(camIODict["L"]["ResultOK"].Address.Split('.')[1]) + i).ToString();
+
+                            string address = camIODict["L"]["ResultOK"].Address.Split('.')[0] + "." + (Convert.ToUInt16(camIODict["L"]["ResultOK"].Address.Split('.')[1], 16) + i).ToString("X");
                             if (!plc.Write(address, false).IsSuccess)
                             {
                                 ShowMessage(Resources.LanguageDic.check_result_write_fail, Color.Red);
@@ -536,7 +537,7 @@ namespace OnlineMeasurement
                         }
                         if (camIODict["L"].ContainsKey("ResultNG"))
                         {
-                            string address = camIODict["L"]["ResultNG"].Address.Split('.')[0] + "." + (int.Parse(camIODict["L"]["ResultNG"].Address.Split('.')[1]) + i).ToString();
+                            string address = camIODict["L"]["ResultNG"].Address.Split('.')[0] + "." + (Convert.ToUInt16(camIODict["L"]["ResultNG"].Address.Split('.')[1], 16) + i).ToString("X");
                             if (!plc.Write(address, false).IsSuccess)
                             {
                                 ShowMessage(Resources.LanguageDic.check_result_write_fail, Color.Red);
@@ -547,17 +548,9 @@ namespace OnlineMeasurement
 
                     for (int i = 0; i < 16; i++)
                     {
-                        if (camIODict["R"].ContainsKey("Result"))
-                        {
-                            string address = camIODict["R"]["Result"].Address.Split('.')[0] + "." + (int.Parse(camIODict["R"]["Result"].Address.Split('.')[1]) + i).ToString();
-                            if (!plc.Write(address, false).IsSuccess)
-                            {
-                                ShowMessage(Resources.LanguageDic.check_result_write_fail, Color.Red);
-                            }
-                        }
                         if (camIODict["R"].ContainsKey("ResultOK"))
                         {
-                            string address = camIODict["R"]["ResultOK"].Address.Split('.')[0] + "." + (int.Parse(camIODict["R"]["ResultOK"].Address.Split('.')[1]) + i).ToString();
+                            string address = camIODict["R"]["ResultOK"].Address.Split('.')[0] + "." + (Convert.ToUInt16(camIODict["R"]["ResultOK"].Address.Split('.')[1], 16) + i).ToString("X");
                             if (!plc.Write(address, false).IsSuccess)
                             {
                                 ShowMessage(Resources.LanguageDic.check_result_write_fail, Color.Red);
@@ -565,7 +558,7 @@ namespace OnlineMeasurement
                         }
                         if (camIODict["R"].ContainsKey("ResultNG"))
                         {
-                            string address = camIODict["R"]["ResultNG"].Address.Split('.')[0] + "." + (int.Parse(camIODict["R"]["ResultNG"].Address.Split('.')[1]) + i).ToString();
+                            string address = camIODict["R"]["ResultNG"].Address.Split('.')[0] + "." + (Convert.ToUInt16(camIODict["R"]["ResultNG"].Address.Split('.')[1], 16) + i).ToString("X");
                             if (!plc.Write(address, false).IsSuccess)
                             {
                                 ShowMessage(Resources.LanguageDic.check_result_write_fail, Color.Red);
@@ -584,6 +577,10 @@ namespace OnlineMeasurement
                         ShowMessage(Resources.LanguageDic.model_no_code_write_fail, Color.Red);
                     }
 
+                    if (!plc.Write(camIODict["L"]["Feedback_Car_Finish"].Address, false).IsSuccess)
+                    {
+                        ShowMessage("反馈车型信号完成写入失败", Color.Red);
+                    }
 
                     if (!plc.Write(camIODict["L"]["Point_Check_Finish"].Address, false).IsSuccess)
                     {
@@ -631,7 +628,95 @@ namespace OnlineMeasurement
                     }));
 
                     System.Diagnostics.Stopwatch sp = new System.Diagnostics.Stopwatch();
+
+                    ShowMessage("等待读取车型/连番信息");
+
+                    while (true)
+                    {
+                        if (stop) return;
+                        var val = plc.ReadBool(camIODict["L"]["Reading_Car_Info"].Address);
+                        if (val.IsSuccess)
+                        {
+                            if ((val.Content == true && lastStartResult.Content == false) || bSkipStart)
+                            {
+                                bSkipStart = false;
+                                sp.Start();
+                                ShowMessage("收到可以读取车型/连番信息");
+                                break;
+                            }
+                            lastStartResult = val;
+                        }
+                        else
+                        {
+                            ShowMessage("读取等待读取车型/连番信息失败", Color.Red);
+                            return;
+                        }
+
+
+                        Thread.Sleep(50);
+                    }
+
+                    ShowMessage("开始读取车型/连番信息");
+
+                    bDry_mode = false;
+                    ShowMessage(Resources.LanguageDic.run_empty_signal + bDry_mode);
+
+                    //读车型连番
+                    var carKind = plc.ReadUInt16(camIODict["L"]["Car_Model"].Address);
+
+                    if (!carKind.IsSuccess)
+                    {
+                        ShowMessage(Resources.LanguageDic.model_no_code_read_fail, Color.Red);
+                        return;
+                    }
+
+                    //反馈车型码
+                    //读车型连番
+                    var writecarKind = plc.Write(camIODict["L"]["Feedback_Car_Model"].Address, carKind.Content);
+                    if (!writecarKind.IsSuccess)
+                    {
+                        ShowMessage(Resources.LanguageDic.model_no_code_write_fail, Color.Red);
+                        return;
+                    }
+
+                    // 暂时不用托盘号和连番号，都写死为1
+                    short carNum = 1;
+
+                    short TRnum = 1;
+
+
+                    var carNumStringInfo = plc.ReadUInt16(camIODict["L"]["Car_NO"].Address);
+                    if (!carNumStringInfo.IsSuccess)
+                    {
+                        ShowMessage(Resources.LanguageDic.vin_read_fail, Color.Red);
+                        return;
+                    }
+                    string carNumString = carNumStringInfo.Content.ToString();
+
+                    //反馈车号
+                    var writecarNO = plc.Write(camIODict["L"]["Feedback_Car_NO"].Address, carNumStringInfo.Content);
+                    if (!writecarNO.IsSuccess)
+                    {
+                        ShowMessage("反馈车号写入失败", Color.Red);
+                        return;
+                    }
+
+                    var writecarFinish = plc.Write(camIODict["L"]["Feedback_Car_Finish"].Address, true);
+                    if (!writecarFinish.IsSuccess)
+                    {
+                        ShowMessage("反馈车号写入完成失败", Color.Red);
+                        return;
+                    }
+
+
+                    ShowMessage(Resources.LanguageDic.model_no2 + carKind.Content);
+                    ShowMessage(Resources.LanguageDic.pallet_no + TRnum);
+                    ShowMessage(Resources.LanguageDic.car_no2 + carNum);
+                    ShowMessage(Resources.LanguageDic.vin2 + carNumString);
+
+
                     ShowMessage(Resources.LanguageDic.wait_start_signal);
+
 
                     bool isCheckStart = false;
                     bool isCalibStart = false;
@@ -654,7 +739,7 @@ namespace OnlineMeasurement
                         else
                         {
                             ShowMessage(Resources.LanguageDic.start_signal_read_fail, Color.Red);
-                            //return;
+                            return;
                         }
 
                         val = plc.ReadBool(camIODict["L"]["Calibration_Start"].Address);
@@ -673,26 +758,13 @@ namespace OnlineMeasurement
                         else
                         {
                             ShowMessage(Resources.LanguageDic.start_signal_read_fail, Color.Red);
-                            //return;
+                            return;
                         }
 
 
                         Thread.Sleep(50);
                     }
 
-                    ////是否空运行
-                    //var dry_mode = plc.ReadBool(camIODict["L"]["空运行"].Address);
-                    //if (!dry_mode.IsSuccess)
-                    //{
-                    //    ShowMessage(Resources.LanguageDic.run_empty_signal_read_fail, Color.Red);
-                    //    return;
-                    //}
-                    //bDry_mode = dry_mode.Content;
-                    bDry_mode = false;
-                    ShowMessage(Resources.LanguageDic.run_empty_signal + bDry_mode);
-
-                    //读车型连番
-                    var carKind = plc.ReadUInt16(camIODict["L"]["Car_Model"].Address);
 
                     if (isCalibStart)
                     {
@@ -700,67 +772,6 @@ namespace OnlineMeasurement
                         carKind.Content = (ushort)otherSet.olmCarKind;
                     }
 
-                    if (!carKind.IsSuccess)
-                    {
-                        ShowMessage(Resources.LanguageDic.model_no_code_read_fail, Color.Red);
-                        return;
-                    }
-
-                    //反馈车型码
-                    //读车型连番
-                    var writecarKind = plc.Write(camIODict["L"]["Feedback_Car_Model"].Address, carKind.Content);
-                    if (!writecarKind.IsSuccess)
-                    {
-                        ShowMessage(Resources.LanguageDic.model_no_code_write_fail, Color.Red);
-                        return;
-                    }
-
-                    //转换成整十数，暂时屏蔽，没啥用
-                    //carKind.Content[0] = (short)(carKind.Content[0] / 10 * 10);
-
-                    // 暂时不用托盘号和连番号，都写死为1
-                    short carNum = 1;
-
-                    short TRnum = 1;
-
-                    //var carNumInfo = ReadInt16(DIO.连番信息, 1);
-                    //if (!carNumInfo.IsSuccess)
-                    //{
-                    //    ShowMessage(Resources.LanguageDic.car_no_info_read_fail, Color.Red);
-                    //    return;
-                    //}
-                    //short carNum = carNumInfo.Content[0];
-
-                    //var TRnumInfo = plc.ReadUInt16(camIODict["L"]["Batch_Number"].Address);
-                    //if (!TRnumInfo.IsSuccess)
-                    //{
-                    //    ShowMessage(Resources.LanguageDic.pallet_no_read_fail, Color.Red);
-                    //    return;
-                    //}
-                    //ushort TRnum = TRnumInfo.Content;
-
-
-                    var carNumStringInfo = plc.ReadUInt16(camIODict["L"]["Car_NO"].Address);
-                    if (!carNumStringInfo.IsSuccess)
-                    {
-                        ShowMessage(Resources.LanguageDic.vin_read_fail, Color.Red);
-                        return;
-                    }
-                    string carNumString = carNumStringInfo.Content.ToString();
-
-                    //反馈车号
-                    var writecarNO = plc.Write(camIODict["L"]["Feedback_Car_NO"].Address, carNumStringInfo.Content);
-                    if (!writecarNO.IsSuccess)
-                    {
-                        ShowMessage("反馈车号写入失败", Color.Red);
-                        return;
-                    }
-
-
-                    ShowMessage(Resources.LanguageDic.model_no2 + carKind.Content);
-                    ShowMessage(Resources.LanguageDic.pallet_no + TRnum);
-                    ShowMessage(Resources.LanguageDic.car_no2 + carNum);
-                    ShowMessage(Resources.LanguageDic.vin2 + carNumString);
                     dateTimeNow = DateTime.Now;
 
                     string carVIN = carNumString;
@@ -927,12 +938,6 @@ namespace OnlineMeasurement
                             double dz = 0;
 
 
-                            //string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 3).ToString();
-                            //var writeXRef = plc.Write("D" + address, (ushort)(point3d.X * 100));
-                            //address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 3).ToString();
-                            //var writeYRef = plc.Write("D" + address, (ushort)(point3d.Y * 100));
-                            //address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 3).ToString();
-                            //var writeZRef = plc.Write("D" + address, (ushort)(point3d.Z * 100));
                             WriteDResult(IOName, item, dx, dy, dz);
 
                         }
@@ -946,13 +951,6 @@ namespace OnlineMeasurement
                             double dx = 0;
                             double dy = 0;
                             double dz = 0;
-
-                            //string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 3).ToString();
-                            //var writeXRef = plc.Write("D" + address, (ushort)(point3d.X * 100));
-                            //address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 3).ToString();
-                            //var writeYRef = plc.Write("D" + address, (ushort)(point3d.Y * 100));
-                            //address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 3).ToString();
-                            //var writeZRef = plc.Write("D" + address, (ushort)(point3d.Z * 100));
 
                             WriteDResult(IOName, item, dx, dy, dz);
 
@@ -1006,7 +1004,8 @@ namespace OnlineMeasurement
                     bool 检测异常R = true; bool 数据超差R = true;
 
                     Dictionary<int, bool> PointResultsR = new Dictionary<int, bool>();
-
+ 
+              
                     Dictionary<int, Point3D> point3dR = new Dictionary<int, Point3D>();
                     Dictionary<int, Point3D> point3dBaseR = new Dictionary<int, Point3D>();
                     Dictionary<int, Dictionary<string, string>> sqlValuePairsR = new Dictionary<int, Dictionary<string, string>>();
@@ -1035,7 +1034,8 @@ namespace OnlineMeasurement
                         {
                             if (相机参数.ContainsKey(key) && 车型参数.ContainsKey($"{carKind.Content}-{TRnum}") && 车型参数[$"{carKind.Content}-{TRnum}"].car.ContainsKey(key))
                             {
-                                RobotRun(path, 相机[key], robots[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], TempareCalib[key], key, camIODict[key], out point3dR, out point3dBaseR, out sqlValuePairsR, ref 检测异常R, ref 数据超差R, ref PointResultsR);
+                                RobotRun(path, 相机[key], robots[key], 相机参数[key], 车型参数[$"{carKind.Content}-{TRnum}"].car[key], TempareCalib[key], key, camIODict[key], out point3dR, out point3dBaseR, out sqlValuePairsR, ref 检测异常R, 
+                                    ref 数据超差R, ref PointResultsR);
                             }
                             else
                             {
@@ -1300,14 +1300,6 @@ namespace OnlineMeasurement
                                     double dy = 0;
                                     double dz = 0;
 
-
-                                    //string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
-
                                     WriteDResult(IOName, item, dx, dy, dz);
                                 }
                                 IOName = "R";
@@ -1320,13 +1312,6 @@ namespace OnlineMeasurement
                                     double dx = 0;
                                     double dy = 0;
                                     double dz = 0;
-
-                                    //string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
 
                                     WriteDResult(IOName, item, dx, dy, dz);
 
@@ -1348,19 +1333,6 @@ namespace OnlineMeasurement
                                     double dy = point3d.Y - carSetting.gSets[item].Y;
                                     double dz = point3d.Z - carSetting.gSets[item].Z;
 
-
-                                    //string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
                                     WriteDResult(IOName, item, dx, dy, dz);
 
 
@@ -1376,18 +1348,6 @@ namespace OnlineMeasurement
                                     double dz = point3d.Z - carSetting.gSets[item].Z;
 
 
-                                    //string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
                                     WriteDResult(IOName, item, dx, dy, dz);
 
                                 }
@@ -1405,18 +1365,6 @@ namespace OnlineMeasurement
                                     double dz = point3d.Z - carSetting.gSets[item].Z;
 
 
-                                    //string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
 
                                     WriteDResult(IOName, item, dx, dy, dz);
 
@@ -1432,18 +1380,7 @@ namespace OnlineMeasurement
                                     double dz = point3d.Z - carSetting.gSets[item].Z;
 
 
-                                    //string address = (int.Parse(camIODict[IOName]["X"].Address.Substring(1, camIODict[IOName]["X"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeXRef = plc.Write("D" + address, (int)(point3d.X * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Y"].Address.Substring(1, camIODict[IOName]["Y"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeYRef = plc.Write("D" + address, (int)(point3d.Y * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Z"].Address.Substring(1, camIODict[IOName]["Z"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeZRef = plc.Write("D" + address, (int)(point3d.Z * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeDXRef = plc.Write("D" + address, (int)(dx * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeDYRef = plc.Write("D" + address, (int)(dy * 100));
-                                    //address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 12).ToString();
-                                    //var writeDZRef = plc.Write("D" + address, (int)(dz * 100));
+                                    
                                     WriteDResult(IOName, item, dx, dy, dz);
 
                                 }
@@ -1524,15 +1461,15 @@ namespace OnlineMeasurement
                                 数据超差L = false;
                                 数据超差R = false;
 
-                                PointResultsL.Clear();
+                                
 
                                 foreach (var item in 车型参数[$"{carKind.Content}-{TRnum}"].car["L"].gSets.Keys)
                                 {
-                                    PointResultsL.Add(item, false);
+                                    PointResultsL[item] = false;
                                 }
                                 foreach (var item in 车型参数[$"{carKind.Content}-{TRnum}"].car["R"].gSets.Keys)
                                 {
-                                    PointResultsR.Add(item, false);
+                                    PointResultsR[item] = false;
                                 }
                             }
                             else
@@ -1686,41 +1623,55 @@ namespace OnlineMeasurement
         {
             foreach (var item in carSetting.gSets.Keys)
             {
-                string address = camIODict[IOName]["ResultOK"].Address.Split('.')[0] + "." + (int.Parse(camIODict[IOName]["ResultOK"].Address.Split('.')[1]) + item - 1).ToString();
+                string address = camIODict[IOName]["ResultOK"].Address.Split('.')[0] + "." + (Convert.ToUInt16(camIODict[IOName]["ResultOK"].Address.Split('.')[1], 16) + item -1).ToString("X");
 
-
-                if (!plc.Write(address, PointResults[item]).IsSuccess)
+                if (PointResults.ContainsKey(item))
                 {
-                    ShowMessage($"发送点{item}检测OK", Color.Red);
+                    if (!plc.Write(address, PointResults[item]).IsSuccess)
+                    {
+                        ShowMessage($"发送点{item}检测OK", Color.Red);
+                    }
                 }
+               
 
             }
             foreach (var item in carSetting.gSets.Keys)
             {
-                string address = camIODict[IOName]["ResultNG"].Address.Split('.')[0] + "." + (int.Parse(camIODict[IOName]["ResultOK"].Address.Split('.')[1]) + item - 1).ToString();
+                string address = camIODict[IOName]["ResultNG"].Address.Split('.')[0] + "." + (Convert.ToUInt16(camIODict[IOName]["ResultNG"].Address.Split('.')[1], 16) + item - 1).ToString("X");
 
 
-                if (!plc.Write(address, PointResults[item]).IsSuccess)
+                if (PointResults.ContainsKey(item))
                 {
-                    ShowMessage($"发送点{item}检测NG", Color.Red);
+                    if (!plc.Write(address, !PointResults[item]).IsSuccess)
+                    {
+                        ShowMessage($"发送点{item}检测NG", Color.Red);
+                    }
                 }
-
+                else
+                {
+                    if (!plc.Write(address, true).IsSuccess)
+                    {
+                        ShowMessage($"发送点{item}检测NG", Color.Red);
+                    }
+                }
             }
         }
 
         private void WriteDResult(string IOName, int item, double dx, double dy, double dz)
         {
-            string address = (int.Parse(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1)) + (item - 1) * 3).ToString();
+           
+            string address = (Convert.ToUInt16(camIODict[IOName]["Dx"].Address.Substring(1, camIODict[IOName]["Dx"].Address.Length - 1), 16) + (item - 1) * 3).ToString("X");
             int value = (int)(dx * 100);
             value = DataConvert(value);
+
             var writeDXRef = plc.Write("D" + address, (ushort)(value));
 
-            address = (int.Parse(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1)) + (item - 1) * 3).ToString();
+            address = (Convert.ToUInt16(camIODict[IOName]["Dy"].Address.Substring(1, camIODict[IOName]["Dy"].Address.Length - 1), 16) + (item - 1) * 3).ToString("X");
             value = (int)(dy * 100);
             value = DataConvert(value);
             var writeDYRef = plc.Write("D" + address, (ushort)(value));
 
-            address = (int.Parse(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1)) + (item - 1) * 3).ToString();
+            address = (Convert.ToUInt16(camIODict[IOName]["Dz"].Address.Substring(1, camIODict[IOName]["Dz"].Address.Length - 1), 16) + (item - 1) * 3).ToString("X");
             value = (int)(dz * 100);
             value = DataConvert(value);
             var writeDZRef = plc.Write("D" + address, (ushort)(value));
@@ -1751,13 +1702,37 @@ namespace OnlineMeasurement
                 sp.Restart();
 
                 //等姿态到位
+
+                //等点位号
+
+                //}
+
+                int pointNum = 0;
                 while (true)
                 {
                     if (stop) return;
+                    pointNum = 0;
+                    for (int i = 0; i < 4; i++)
+                    {
+                        string address = IO["Check_Point_NO"].Address.Split('.')[0] + "." + (Convert.ToUInt16(IO["Check_Point_NO"].Address.Split('.')[1], 16) + i).ToString("X");
+
+                        var pointNumList = plc.ReadBool(address);
+                        if (pointNumList.IsSuccess)
+                        {
+                            pointNum += pointNumList.Content ? (int)Math.Pow(2, i) : 0;
+
+                        }
+                        else
+                        {
+                            ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}", Color.Red);
+                            return;
+                        }
+                    }
+
                     var val = plc.ReadBool(IO["Arrive_Photo_Spot"].Address);
                     if (val.IsSuccess)
                     {
-                        if (val.Content == true)
+                        if (val.Content == true && pointNum !=0)
                         {
                             ShowMessage($"{camName}{Resources.LanguageDic.reserve_the_signal_that_the_camera_posture_is_in_place}ON，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
                             break;
@@ -1768,7 +1743,10 @@ namespace OnlineMeasurement
                         ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}", Color.Red);
                         return;
                     }
-                    var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
+
+                   
+
+                    var abort = plc.ReadBool(IO["Reset"].Address);
                     if (!abort.IsSuccess)
                     {
                         ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
@@ -1796,28 +1774,9 @@ namespace OnlineMeasurement
                 //pointNum += point.Content[3] ? 8 : 0;
 
                 sp.Restart();
-                //等点位号
+               
 
-                //}
-
-                int pointNum = 0;
-
-                for (int i = 0; i < 4; i++)
-                {
-                    string address = camIODict["L"]["Check_Point_NO"].Address.Split('.')[0] + "." + (int.Parse(camIODict["L"]["Check_Point_NO"].Address.Split('.')[1]) + i).ToString();
-
-                    var pointNumList = plc.ReadBool(IO["Check_Point_NO"].Address + i);
-                    if (pointNumList.IsSuccess)
-                    {
-                            pointNum = pointNumList.Content ? (int)Math.Pow(2,i) : 0;
-
-                    }
-                    else
-                    {
-                        ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}", Color.Red);
-                        return;
-                    }
-                }
+               
 
                 ShowMessage($"{camName} {Resources.LanguageDic.success_get_point_NO} {pointNum}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
 
@@ -1837,8 +1796,10 @@ namespace OnlineMeasurement
                 //获取机器人姿态
                 HPose Pose;
                 HTuple Angle;
-                Pose = new HPose();
-                Angle = new HTuple();
+                Pose = new HPose(0, 0, 0, 0, 0, 0, "Rp+T", "abg", "point");
+
+                Angle = new HTuple(0, 0, 0, 0, 0, 0);
+
                 if (robot != null)
                 {
                     bool rt = robot.ReadPose(out Pose);
@@ -2757,14 +2718,38 @@ namespace OnlineMeasurement
                 if (stop) return;
                 sp.Restart();
 
+                //等点位号
+
+                //}
+
+                int pointNum = 0;
+
                 //等姿态到位
                 while (true)
                 {
                     if (stop) return;
+                    pointNum = 0;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        string address = IO["Calibration_Point_NO"].Address.Split('.')[0] + "." + (Convert.ToUInt16(IO["Calibration_Point_NO"].Address.Split('.')[1], 16) + i).ToString("X");
+
+                        var pointNumList = plc.ReadBool(address);
+                        if (pointNumList.IsSuccess)
+                        {
+                            pointNum = pointNumList.Content ? (int)Math.Pow(2, i) : 0;
+
+                        }
+                        else
+                        {
+                            ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}", Color.Red);
+                            return;
+                        }
+                    }
+
                     var val = plc.ReadBool(IO["Arrive_Photo_Spot"].Address);
                     if (val.IsSuccess)
                     {
-                        if (val.Content == true)
+                        if (val.Content == true && pointNum != 0 )
                         {
                             ShowMessage($"{camName}{Resources.LanguageDic.reserve_the_signal_that_the_camera_posture_is_in_place}ON，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
                             break;
@@ -2790,28 +2775,8 @@ namespace OnlineMeasurement
                     Thread.Sleep(50);
                 }
 
-                //等点位号
 
-                //}
-
-                int pointNum = 0;
-
-                for (int i = 0; i < 5; i++)
-                {
-                    string address = camIODict["L"]["Calibration_Point_NO"].Address.Split('.')[0] + "." + (int.Parse(camIODict["L"]["Calibration_Point_NO"].Address.Split('.')[1]) + i).ToString();
-
-                    var pointNumList = plc.ReadBool(IO["Calibration_Point_NO"].Address + i);
-                    if (pointNumList.IsSuccess)
-                    {
-                        pointNum = pointNumList.Content ? (int)Math.Pow(2, i) : 0;
-
-                    }
-                    else
-                    {
-                        ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}", Color.Red);
-                        return;
-                    }
-                }
+             
 
                 ShowMessage($"{camName} {Resources.LanguageDic.success_get_point_NO} {pointNum}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
 
@@ -2867,8 +2832,8 @@ namespace OnlineMeasurement
                 //获取机器人姿态
                 HPose Pose;
                 HTuple Angle;
-                Pose = new HPose();
-                Angle = new HTuple();
+                Pose = new HPose(0, 0, 0, 0, 0, 0, "Rp+T", "abg", "point");
+                Angle = new HTuple(0, 0, 0, 0, 0, 0);
 
                 bool rt = robot.ReadPose(out Pose);
                 if (!rt)
@@ -5231,7 +5196,15 @@ namespace OnlineMeasurement
         private void button3_Click(object sender, EventArgs e)
         {
 
-            string address = camIODict["L"]["Result"].Address.Split('.')[0] + "." + (int.Parse(camIODict["L"]["Result"].Address.Split('.')[1]) + 1).ToString();
+            //string address = camIODict["L"]["Result"].Address.Split('.')[0] + "." + (int.Parse(camIODict["L"]["Result"].Address.Split('.')[1]) + 1).ToString();
+
+            if (robots.Count > 0)
+            {
+                // 不知道为啥R就是不行
+                HPose Pose = new HPose();
+                robots["R"].ReadPose(out Pose);
+            }
+          
 
             //var writeYRef = plc.Write("D1410", (int)(99999 * 100));
 
@@ -5258,6 +5231,14 @@ namespace OnlineMeasurement
 
         private void button_setRobotL_Click(object sender, EventArgs e)
         {
+            if (robots.Count > 0)
+            {
+                foreach (var item in robots)
+                {
+                    item.Value.Close();
+                }
+                robots.Clear();
+            }
             //机器人
             IRobot robot;
             //默认库卡
@@ -5283,6 +5264,14 @@ namespace OnlineMeasurement
 
         private void button_setRobotR_Click(object sender, EventArgs e)
         {
+            if (robots.Count > 0)
+            {
+                foreach (var item in robots)
+                {
+                    item.Value.Close();
+                }
+                robots.Clear();
+            }
             //机器人
             IRobot robot;
             //默认库卡

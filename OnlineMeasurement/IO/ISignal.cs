@@ -20,6 +20,8 @@ namespace OnlineMeasurement.IO
         ResultOK,                   //检测OK结果，是以bool数组保存，这里只记录第一位
         ResultNG,                   //检测NG结果，是以bool数组保存，这里只记录第一位
         All_Check_Finish,           //所有检测完毕、检测结果可读
+
+        Feedback_Car_Finish,
         //独立：
         Point_Check_Finish,         //当前点检测完毕
         Check_Point_Result,         //当前检测点结果

@@ -1521,23 +1521,23 @@ namespace OnlineMeasurement.IO
                     if (string.IsNullOrEmpty(s)) return defaultValue;
                     return int.TryParse(s, out int v) ? v : defaultValue;
                 }
+                int total = parts.Length;
 
                 // ---- 关节角 J1~J6 (索引 7~12) ----
-                R1 = SafeFloat(7);    // J1: -86.6277
-                R2 = SafeFloat(8);    // J2: -27.53063
-                R3 = SafeFloat(9);    // J3: -18.65816
-                R4 = SafeFloat(10);   // J4: -178.16177
-                R5 = SafeFloat(11);   // J5: 12.41696
-                R6 = SafeFloat(12);   // J6: -5.59366
+                R1 = SafeFloat(total - 6);    // J1: -86.6277
+                R2 = SafeFloat(total - 5);    // J2: -27.53063
+                R3 = SafeFloat(total - 4);    // J3: -18.65816
+                R4 = SafeFloat(total - 3);   // J4: -178.16177
+                R5 = SafeFloat(total - 2);   // J5: 12.41696
+                R6 = SafeFloat(total - 1);   // J6: -5.59366
 
                 // ---- 末端位姿 X,Y,Z,RX,RY,RZ (倒数第 7~2 位) ----
-                int total = parts.Length;
-                X = SafeFloat(total - 6);   // -2446.65137
-                Y = SafeFloat(total - 5);   // 218.11565
-                Z = SafeFloat(total - 4);   // 2085.89941
-                RX = SafeFloat(total - 3);   // 87.2569
-                RY = SafeFloat(total - 2);   // 86.23324
-                RZ = SafeFloat(total - 1);   // -3.54589
+                X = SafeFloat(total - 14);   // -2446.65137
+                Y = SafeFloat(total - 13);   // 218.11565
+                Z = SafeFloat(total - 12);   // 2085.89941
+                RX = SafeFloat(total - 11);   // 87.2569
+                RY = SafeFloat(total - 10);   // 86.23324
+                RZ = SafeFloat(total - 9);   // -3.54589
 
                 //zyz 转 xyz
                 double transformRX = 0, transformRY = 0, transformRz = 0;
@@ -1610,8 +1610,8 @@ namespace OnlineMeasurement.IO
                 hPose = new HPose(x, y, z, rx, ry, rz, "Rp+T", "abg", "point");
 
 
-                string info = serializationInfo(_X, _Y, _Z, _RZ, _RY, _RX, 1, "11");
-                robot.Send(info + "\r\n");
+                //string info = serializationInfo(_X, _Y, _Z, _RZ, _RY, _RX, 1, "11");
+                //robot.Send(info + "\r\n");
             }
             else
             {

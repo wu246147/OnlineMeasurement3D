@@ -91,6 +91,7 @@ namespace OnlineMeasurement
             // tableLayoutPanel_Max
             // 
             resources.ApplyResources(this.tableLayoutPanel_Max, "tableLayoutPanel_Max");
+            this.tableLayoutPanel_Max.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.tableLayoutPanel_Max.Controls.Add(this.pictureBox11, 5, 4);
             this.tableLayoutPanel_Max.Controls.Add(this.label_carNum, 6, 0);
             this.tableLayoutPanel_Max.Controls.Add(this.label_carName, 5, 0);
@@ -108,11 +109,9 @@ namespace OnlineMeasurement
             this.tableLayoutPanel_Max.Controls.Add(this.label4, 5, 2);
             this.tableLayoutPanel_Max.Controls.Add(this.tableLayoutPanel_CamImageL, 1, 4);
             this.tableLayoutPanel_Max.Controls.Add(this.tableLayoutPanel_CamImageR, 3, 4);
+            this.tableLayoutPanel_Max.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.tableLayoutPanel_Max.Name = "tableLayoutPanel_Max";
             this.tableLayoutPanel_Max.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel_Max_Paint);
-            this.tableLayoutPanel_Max.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tableLayoutPanel_Max.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.tableLayoutPanel_Max.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // pictureBox11
             // 
@@ -121,206 +120,181 @@ namespace OnlineMeasurement
             this.tableLayoutPanel_Max.SetColumnSpan(this.pictureBox11, 3);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.TabStop = false;
-            this.pictureBox11.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             // 
             // label_carNum
             // 
             resources.ApplyResources(this.label_carNum, "label_carNum");
+            this.label_carNum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
+            this.label_carNum.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.label_carNum.Name = "label_carNum";
-            this.label_carNum.Font = new System.Drawing.Font("Microsoft YaHei UI", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_carNum.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.label_carNum.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label_carName
             // 
             resources.ApplyResources(this.label_carName, "label_carName");
+            this.label_carName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
+            this.label_carName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.label_carName.Name = "label_carName";
-            this.label_carName.Font = new System.Drawing.Font("Microsoft YaHei UI", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_carName.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.label_carName.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.panel2.Controls.Add(this.label_time);
             resources.ApplyResources(this.panel2, "panel2");
+            this.panel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel2.Name = "panel2";
-            this.panel2.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel2.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label_time
             // 
             resources.ApplyResources(this.label_time, "label_time");
+            this.label_time.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
+            this.label_time.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.label_time.Name = "label_time";
-            this.label_time.Font = new System.Drawing.Font("Microsoft YaHei UI", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_time.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.label_time.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label_camL);
             resources.ApplyResources(this.panel1, "panel1");
+            this.panel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel1.Name = "panel1";
-            this.panel1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel1.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label2
             // 
             resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            this.label2.Font = new System.Drawing.Font("Microsoft YaHei UI", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
+            this.label2.Name = "label2";
             // 
             // label_camL
             // 
             resources.ApplyResources(this.label_camL, "label_camL");
+            this.label_camL.BackColor = System.Drawing.Color.Transparent;
+            this.label_camL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.label_camL.Name = "label_camL";
             this.label_camL.Paint += new System.Windows.Forms.PaintEventHandler(this.label_camL_Paint);
-            this.label_camL.Font = new System.Drawing.Font("Microsoft YaHei UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_camL.BackColor = System.Drawing.Color.Transparent;
-            this.label_camL.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel3
             // 
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.label_camR);
             resources.ApplyResources(this.panel3, "panel3");
+            this.panel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel3.Name = "panel3";
-            this.panel3.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel3.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label3
             // 
             resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
-            this.label3.Font = new System.Drawing.Font("Microsoft YaHei UI", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
+            this.label3.Name = "label3";
             // 
             // label_camR
             // 
             resources.ApplyResources(this.label_camR, "label_camR");
+            this.label_camR.BackColor = System.Drawing.Color.Transparent;
+            this.label_camR.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.label_camR.Name = "label_camR";
             this.label_camR.Paint += new System.Windows.Forms.PaintEventHandler(this.label_camR_Paint);
-            this.label_camR.Font = new System.Drawing.Font("Microsoft YaHei UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_camR.BackColor = System.Drawing.Color.Transparent;
-            this.label_camR.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel4
             // 
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             resources.ApplyResources(this.panel4, "panel4");
+            this.panel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel4.Name = "panel4";
             this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            this.panel4.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel4.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel_bian
             // 
+            this.panel_bian.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             resources.ApplyResources(this.panel_bian, "panel_bian");
+            this.panel_bian.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel_bian.Name = "panel_bian";
             this.panel_bian.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            this.panel_bian.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel_bian.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel_bian.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel5
             // 
+            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             resources.ApplyResources(this.panel5, "panel5");
+            this.panel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel5.Name = "panel5";
             this.panel5.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            this.panel5.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel5.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel5.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel6
             // 
+            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             resources.ApplyResources(this.panel6, "panel6");
+            this.panel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel6.Name = "panel6";
             this.panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            this.panel6.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel6.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel6.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel20
             // 
+            this.panel20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             resources.ApplyResources(this.panel20, "panel20");
+            this.panel20.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel20.Name = "panel20";
             this.panel20.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            this.panel20.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel20.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel20.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel21
             // 
+            this.panel21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             resources.ApplyResources(this.panel21, "panel21");
+            this.panel21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel21.Name = "panel21";
             this.panel21.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            this.panel21.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel21.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel21.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel25
             // 
+            this.panel25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.tableLayoutPanel_Max.SetColumnSpan(this.panel25, 3);
             resources.ApplyResources(this.panel25, "panel25");
+            this.panel25.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel25.Name = "panel25";
             this.panel25.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_bian_Paint);
-            this.panel25.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel25.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel25.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // comboBox_showPictureID
             // 
+            this.comboBox_showPictureID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(66)))), ((int)(((byte)(83)))));
             this.tableLayoutPanel_Max.SetColumnSpan(this.comboBox_showPictureID, 2);
             resources.ApplyResources(this.comboBox_showPictureID, "comboBox_showPictureID");
             this.comboBox_showPictureID.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBox_showPictureID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_showPictureID.ItemHeight = 18;
+            this.comboBox_showPictureID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.comboBox_showPictureID.FormattingEnabled = true;
             this.comboBox_showPictureID.Name = "comboBox_showPictureID";
             this.comboBox_showPictureID.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBox_showPictureID_DrawItem);
             this.comboBox_showPictureID.SelectedIndexChanged += new System.EventHandler(this.comboBox_showPictureID_SelectedIndexChanged);
-            this.comboBox_showPictureID.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.comboBox_showPictureID.BackColor = System.Drawing.Color.FromArgb(54, 66, 83);
-            this.comboBox_showPictureID.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
-            this.comboBox_showPictureID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             // 
             // label4
             // 
             resources.ApplyResources(this.label4, "label4");
+            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.label4.Name = "label4";
-            this.label4.Font = new System.Drawing.Font("Microsoft YaHei UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // tableLayoutPanel_CamImageL
             // 
             resources.ApplyResources(this.tableLayoutPanel_CamImageL, "tableLayoutPanel_CamImageL");
+            this.tableLayoutPanel_CamImageL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
+            this.tableLayoutPanel_CamImageL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.tableLayoutPanel_CamImageL.Name = "tableLayoutPanel_CamImageL";
-            this.tableLayoutPanel_CamImageL.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tableLayoutPanel_CamImageL.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.tableLayoutPanel_CamImageL.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // tableLayoutPanel_CamImageR
             // 
             resources.ApplyResources(this.tableLayoutPanel_CamImageR, "tableLayoutPanel_CamImageR");
+            this.tableLayoutPanel_CamImageR.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
+            this.tableLayoutPanel_CamImageR.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.tableLayoutPanel_CamImageR.Name = "tableLayoutPanel_CamImageR";
-            this.tableLayoutPanel_CamImageR.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tableLayoutPanel_CamImageR.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.tableLayoutPanel_CamImageR.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 42F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
+            this.label1.Name = "label1";
             // 
             // pictureBox_raivas
             // 
@@ -329,7 +303,6 @@ namespace OnlineMeasurement
             this.pictureBox_raivas.Image = global::OnlineMeasurement.Properties.Resources.RAIVAS;
             this.pictureBox_raivas.Name = "pictureBox_raivas";
             this.pictureBox_raivas.TabStop = false;
-            this.pictureBox_raivas.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             // 
             // timer1
             // 
@@ -340,155 +313,142 @@ namespace OnlineMeasurement
             // panel_Title
             // 
             resources.ApplyResources(this.panel_Title, "panel_Title");
+            this.panel_Title.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(37)))), ((int)(((byte)(47)))));
             this.panel_Title.Controls.Add(this.label1);
+            this.panel_Title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel_Title.Name = "panel_Title";
             this.panel_Title.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Title_Paint);
-            this.panel_Title.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel_Title.BackColor = System.Drawing.Color.FromArgb(31, 37, 47);
-            this.panel_Title.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel_Top
             // 
             resources.ApplyResources(this.panel_Top, "panel_Top");
+            this.panel_Top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.panel_Top.Controls.Add(this.panel_CloseBox);
             this.panel_Top.Controls.Add(this.panel_MaximizeBox);
             this.panel_Top.Controls.Add(this.panel_MinimizeBox);
+            this.panel_Top.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel_Top.Name = "panel_Top";
             this.panel_Top.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Top_Paint);
             this.panel_Top.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel10_MouseDoubleClick);
             this.panel_Top.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel10_MouseDown);
-            this.panel_Top.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel_Top.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel_Top.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel_CloseBox
             // 
             resources.ApplyResources(this.panel_CloseBox, "panel_CloseBox");
+            this.panel_CloseBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.panel_CloseBox.Controls.Add(this.label_CloseBox);
+            this.panel_CloseBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel_CloseBox.Name = "panel_CloseBox";
             this.panel_CloseBox.Click += new System.EventHandler(this.CloseBox_Click);
             this.panel_CloseBox.MouseEnter += new System.EventHandler(this.MinimizeBox_MouseEnter);
             this.panel_CloseBox.MouseLeave += new System.EventHandler(this.MinimizeBox_MouseLeave);
-            this.panel_CloseBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel_CloseBox.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel_CloseBox.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label_CloseBox
             // 
             resources.ApplyResources(this.label_CloseBox, "label_CloseBox");
+            this.label_CloseBox.BackColor = System.Drawing.Color.Transparent;
+            this.label_CloseBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.label_CloseBox.Name = "label_CloseBox";
             this.label_CloseBox.Click += new System.EventHandler(this.CloseBox_Click);
             this.label_CloseBox.MouseEnter += new System.EventHandler(this.MinimizeBox_MouseEnter);
             this.label_CloseBox.MouseLeave += new System.EventHandler(this.MinimizeBox_MouseLeave);
-            this.label_CloseBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_CloseBox.BackColor = System.Drawing.Color.Transparent;
-            this.label_CloseBox.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel_MaximizeBox
             // 
             resources.ApplyResources(this.panel_MaximizeBox, "panel_MaximizeBox");
+            this.panel_MaximizeBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.panel_MaximizeBox.Controls.Add(this.label_MaximizeBox);
+            this.panel_MaximizeBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel_MaximizeBox.Name = "panel_MaximizeBox";
             this.panel_MaximizeBox.Click += new System.EventHandler(this.MaximizeBox_Click);
             this.panel_MaximizeBox.MouseEnter += new System.EventHandler(this.MinimizeBox_MouseEnter);
             this.panel_MaximizeBox.MouseLeave += new System.EventHandler(this.MinimizeBox_MouseLeave);
-            this.panel_MaximizeBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel_MaximizeBox.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel_MaximizeBox.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label_MaximizeBox
             // 
             resources.ApplyResources(this.label_MaximizeBox, "label_MaximizeBox");
+            this.label_MaximizeBox.BackColor = System.Drawing.Color.Transparent;
+            this.label_MaximizeBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.label_MaximizeBox.Name = "label_MaximizeBox";
             this.label_MaximizeBox.Click += new System.EventHandler(this.MaximizeBox_Click);
             this.label_MaximizeBox.MouseEnter += new System.EventHandler(this.MinimizeBox_MouseEnter);
             this.label_MaximizeBox.MouseLeave += new System.EventHandler(this.MinimizeBox_MouseLeave);
-            this.label_MaximizeBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_MaximizeBox.BackColor = System.Drawing.Color.Transparent;
-            this.label_MaximizeBox.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel_MinimizeBox
             // 
             resources.ApplyResources(this.panel_MinimizeBox, "panel_MinimizeBox");
+            this.panel_MinimizeBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.panel_MinimizeBox.Controls.Add(this.label_MinimizeBox);
+            this.panel_MinimizeBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel_MinimizeBox.Name = "panel_MinimizeBox";
             this.panel_MinimizeBox.Click += new System.EventHandler(this.MinimizeBox_Click);
             this.panel_MinimizeBox.MouseEnter += new System.EventHandler(this.MinimizeBox_MouseEnter);
             this.panel_MinimizeBox.MouseLeave += new System.EventHandler(this.MinimizeBox_MouseLeave);
-            this.panel_MinimizeBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel_MinimizeBox.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel_MinimizeBox.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // label_MinimizeBox
             // 
             resources.ApplyResources(this.label_MinimizeBox, "label_MinimizeBox");
+            this.label_MinimizeBox.BackColor = System.Drawing.Color.Transparent;
+            this.label_MinimizeBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.label_MinimizeBox.Name = "label_MinimizeBox";
             this.label_MinimizeBox.Click += new System.EventHandler(this.MinimizeBox_Click);
             this.label_MinimizeBox.MouseEnter += new System.EventHandler(this.MinimizeBox_MouseEnter);
             this.label_MinimizeBox.MouseLeave += new System.EventHandler(this.MinimizeBox_MouseLeave);
-            this.label_MinimizeBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_MinimizeBox.BackColor = System.Drawing.Color.Transparent;
-            this.label_MinimizeBox.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel11
             // 
             resources.ApplyResources(this.panel11, "panel11");
+            this.panel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.panel11.Cursor = System.Windows.Forms.Cursors.SizeWE;
+            this.panel11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel11.Name = "panel11";
             this.panel11.Tag = "2";
             this.panel11.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormShow_MouseDown);
             this.panel11.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ResizeForm);
-            this.panel11.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel11.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel11.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel12
             // 
             resources.ApplyResources(this.panel12, "panel12");
+            this.panel12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.panel12.Cursor = System.Windows.Forms.Cursors.SizeWE;
+            this.panel12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel12.Name = "panel12";
             this.panel12.Tag = "1";
             this.panel12.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormShow_MouseDown);
             this.panel12.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ResizeForm);
-            this.panel12.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel12.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel12.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel13
             // 
             resources.ApplyResources(this.panel13, "panel13");
+            this.panel13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.panel13.Cursor = System.Windows.Forms.Cursors.SizeNS;
+            this.panel13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel13.Name = "panel13";
             this.panel13.Tag = "6";
             this.panel13.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormShow_MouseDown);
             this.panel13.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ResizeForm);
-            this.panel13.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel13.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel13.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel14
             // 
             resources.ApplyResources(this.panel14, "panel14");
+            this.panel14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.panel14.Cursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.panel14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel14.Name = "panel14";
             this.panel14.Tag = "8";
             this.panel14.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormShow_MouseDown);
             this.panel14.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ResizeForm);
-            this.panel14.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel14.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel14.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // panel15
             // 
             resources.ApplyResources(this.panel15, "panel15");
+            this.panel15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.panel15.Cursor = System.Windows.Forms.Cursors.SizeNESW;
+            this.panel15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.panel15.Name = "panel15";
             this.panel15.Tag = "7";
             this.panel15.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormShow_MouseDown);
             this.panel15.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ResizeForm);
-            this.panel15.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panel15.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.panel15.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             // 
             // contextMenuStrip1
             // 
@@ -501,41 +461,38 @@ namespace OnlineMeasurement
             // 
             // 最小化ToolStripMenuItem
             // 
-            this.最小化ToolStripMenuItem.Name = "最小化ToolStripMenuItem";
             resources.ApplyResources(this.最小化ToolStripMenuItem, "最小化ToolStripMenuItem");
+            this.最小化ToolStripMenuItem.Name = "最小化ToolStripMenuItem";
             this.最小化ToolStripMenuItem.Click += new System.EventHandler(this.最小化ToolStripMenuItem_Click);
-            this.最小化ToolStripMenuItem.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             // 
             // 最大化ToolStripMenuItem
             // 
-            this.最大化ToolStripMenuItem.Name = "最大化ToolStripMenuItem";
             resources.ApplyResources(this.最大化ToolStripMenuItem, "最大化ToolStripMenuItem");
+            this.最大化ToolStripMenuItem.Name = "最大化ToolStripMenuItem";
             this.最大化ToolStripMenuItem.Click += new System.EventHandler(this.最大化ToolStripMenuItem_Click);
-            this.最大化ToolStripMenuItem.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             // 
             // 切换屏幕ToolStripMenuItem
             // 
-            this.切换屏幕ToolStripMenuItem.Name = "切换屏幕ToolStripMenuItem";
             resources.ApplyResources(this.切换屏幕ToolStripMenuItem, "切换屏幕ToolStripMenuItem");
+            this.切换屏幕ToolStripMenuItem.Name = "切换屏幕ToolStripMenuItem";
             this.切换屏幕ToolStripMenuItem.Click += new System.EventHandler(this.切换屏幕ToolStripMenuItem_Click);
-            this.切换屏幕ToolStripMenuItem.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             // 
             // checkBox_show_all
             // 
             resources.ApplyResources(this.checkBox_show_all, "checkBox_show_all");
+            this.checkBox_show_all.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(63)))));
             this.checkBox_show_all.Checked = true;
             this.checkBox_show_all.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_show_all.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.checkBox_show_all.Name = "checkBox_show_all";
-            this.checkBox_show_all.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            this.checkBox_show_all.Font = new System.Drawing.Font("Microsoft YaHei UI", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBox_show_all.BackColor = System.Drawing.Color.FromArgb(39, 49, 63);
-            this.checkBox_show_all.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
             this.checkBox_show_all.UseVisualStyleBackColor = false;
+            this.checkBox_show_all.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // FormShow
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(37)))), ((int)(((byte)(47)))));
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.checkBox_show_all);
             this.Controls.Add(this.panel15);
@@ -548,6 +505,7 @@ namespace OnlineMeasurement
             this.Controls.Add(this.pictureBox_raivas);
             this.Controls.Add(this.tableLayoutPanel_Max);
             this.DoubleBuffered = true;
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(248)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormShow";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
@@ -556,9 +514,6 @@ namespace OnlineMeasurement
             this.Load += new System.EventHandler(this.FormShow_Load);
             this.SizeChanged += new System.EventHandler(this.FormShow_SizeChanged);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormShow_MouseDown);
-            this.BackColor = System.Drawing.Color.FromArgb(31, 37, 47);
-            this.ForeColor = System.Drawing.Color.FromArgb(239, 243, 248);
-            this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tableLayoutPanel_Max.ResumeLayout(false);
             this.tableLayoutPanel_Max.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
