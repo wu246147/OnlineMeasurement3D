@@ -1734,6 +1734,26 @@ namespace OnlineMeasurement
                     {
                         if (val.Content == true && pointNum !=0)
                         {
+                            ShowMessage($"{camName} {Resources.LanguageDic.success_get_point_NO} {pointNum}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
+                            //等待0.1s再读一遍点位号
+                            pointNum = 0;
+                            for (int i = 0; i < 4; i++)
+                            {
+                                string address = IO["Check_Point_NO"].Address.Split('.')[0] + "." + (Convert.ToUInt16(IO["Check_Point_NO"].Address.Split('.')[1], 16) + i).ToString("X");
+
+                                var pointNumList = plc.ReadBool(address);
+                                if (pointNumList.IsSuccess)
+                                {
+                                    pointNum += pointNumList.Content ? (int)Math.Pow(2, i) : 0;
+
+                                }
+                                else
+                                {
+                                    ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}", Color.Red);
+                                    return;
+                                }
+                            }
+
                             ShowMessage($"{camName}{Resources.LanguageDic.reserve_the_signal_that_the_camera_posture_is_in_place}ON，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
                             break;
                         }
@@ -1773,12 +1793,13 @@ namespace OnlineMeasurement
                 //pointNum += point.Content[2] ? 4 : 0;
                 //pointNum += point.Content[3] ? 8 : 0;
 
+                ShowMessage($"{camName} {Resources.LanguageDic.success_get_point_NO} {pointNum}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
+
                 sp.Restart();
                
 
                
 
-                ShowMessage($"{camName} {Resources.LanguageDic.success_get_point_NO} {pointNum}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
 
 
 
@@ -2388,8 +2409,16 @@ namespace OnlineMeasurement
 
                     ShowMessage(camName + $" b no data");
                 }
+                if (PointResults.ContainsKey(pointNum))
+                {
+                    PointResults[pointNum]= PointResult;
 
-                PointResults.Add(pointNum, PointResult);
+                }
+                else
+                {
+                    PointResults.Add(pointNum, PointResult);
+
+                }
 
                 ShowMessage($"{camName}{Resources.LanguageDic.Coordinate_calculation_completed}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
                 sp.Stop();
@@ -2751,6 +2780,25 @@ namespace OnlineMeasurement
                     {
                         if (val.Content == true && pointNum != 0 )
                         {
+                            ShowMessage($"{camName} {Resources.LanguageDic.success_get_point_NO} {pointNum}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
+                            //等待0.1s再读一遍点位号
+                            pointNum = 0;
+                            for (int i = 0; i < 5; i++)
+                            {
+                                string address = IO["Calibration_Point_NO"].Address.Split('.')[0] + "." + (Convert.ToUInt16(IO["Calibration_Point_NO"].Address.Split('.')[1], 16) + i).ToString("X");
+
+                                var pointNumList = plc.ReadBool(address);
+                                if (pointNumList.IsSuccess)
+                                {
+                                    pointNum = pointNumList.Content ? (int)Math.Pow(2, i) : 0;
+
+                                }
+                                else
+                                {
+                                    ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}", Color.Red);
+                                    return;
+                                }
+                            }
                             ShowMessage($"{camName}{Resources.LanguageDic.reserve_the_signal_that_the_camera_posture_is_in_place}ON，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
                             break;
                         }
@@ -2780,7 +2828,7 @@ namespace OnlineMeasurement
 
                 ShowMessage($"{camName} {Resources.LanguageDic.success_get_point_NO} {pointNum}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
 
-
+                sp.Restart();
 
                 //点位号反馈
                 var writepointNumList = plc.Write(IO["Feedback_Check_Point_NO"].Address, (ushort)pointNum);
