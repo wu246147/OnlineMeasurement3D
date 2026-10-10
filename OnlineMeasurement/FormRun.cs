@@ -292,6 +292,11 @@ namespace OnlineMeasurement
             foreach (var item in camPaths)
             {
                 Dictionary<string, IoAddress> ioDict = new Dictionary<string, IoAddress>();
+                // 先补齐所有 IO，兼容旧版本或尚未保存完整的配置。
+                foreach (string ioName in Enum.GetNames(typeof(DI)).Concat(Enum.GetNames(typeof(DO))))
+                {
+                    ioDict[ioName] = new IoAddress() { IoName = ioName, Address = string.Empty };
+                }
                 string name = Path.GetFileNameWithoutExtension(item);
 
                 string paramPath = item + "\\IoParam.xml";
@@ -310,7 +315,14 @@ namespace OnlineMeasurement
                     }
                     else
                     {
-                        ioDict = ios.ToDictionary(n => { return n.IoName; });
+                        foreach (IoAddress io in ios)
+                        {
+                            if (io == null || string.IsNullOrWhiteSpace(io.IoName))
+                            {
+                                continue;
+                            }
+                            ioDict[io.IoName] = io;
+                        }
                     }
 
                     camIODict.Add(name, ioDict);
@@ -873,12 +885,18 @@ namespace OnlineMeasurement
                         }
                     }
 
+                    if (!车型参数.ContainsKey($"{carKind.Content}-{TRnum}"))
+                    {
+                        MessageBox.Show("车型参数不存在");
+                        return;
+                    }
+
                     string carName = carKind.Content.ToString();
                     if (车型号转名称.ContainsKey(carKind.Content))
                     {
                         carName = 车型号转名称[carKind.Content];
                     }
-
+                    
 
                     //显示
                     formShow?.UpDataCamImage(null, "Clear");///////////////////////////

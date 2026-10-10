@@ -461,20 +461,20 @@ namespace OnlineMeasurement
             // 
             // 最小化ToolStripMenuItem
             // 
-            resources.ApplyResources(this.最小化ToolStripMenuItem, "最小化ToolStripMenuItem");
             this.最小化ToolStripMenuItem.Name = "最小化ToolStripMenuItem";
+            resources.ApplyResources(this.最小化ToolStripMenuItem, "最小化ToolStripMenuItem");
             this.最小化ToolStripMenuItem.Click += new System.EventHandler(this.最小化ToolStripMenuItem_Click);
             // 
             // 最大化ToolStripMenuItem
             // 
-            resources.ApplyResources(this.最大化ToolStripMenuItem, "最大化ToolStripMenuItem");
             this.最大化ToolStripMenuItem.Name = "最大化ToolStripMenuItem";
+            resources.ApplyResources(this.最大化ToolStripMenuItem, "最大化ToolStripMenuItem");
             this.最大化ToolStripMenuItem.Click += new System.EventHandler(this.最大化ToolStripMenuItem_Click);
             // 
             // 切换屏幕ToolStripMenuItem
             // 
-            resources.ApplyResources(this.切换屏幕ToolStripMenuItem, "切换屏幕ToolStripMenuItem");
             this.切换屏幕ToolStripMenuItem.Name = "切换屏幕ToolStripMenuItem";
+            resources.ApplyResources(this.切换屏幕ToolStripMenuItem, "切换屏幕ToolStripMenuItem");
             this.切换屏幕ToolStripMenuItem.Click += new System.EventHandler(this.切换屏幕ToolStripMenuItem_Click);
             // 
             // checkBox_show_all
