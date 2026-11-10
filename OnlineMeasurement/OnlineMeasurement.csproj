@@ -161,6 +161,7 @@
     </Compile>
     <Compile Include="IO\TCPSocket.cs" />
     <Compile Include="IO\ToyotaPlc.cs" />
+    <Compile Include="IO\UDP.cs" />
     <Compile Include="LicenseKey.cs" />
     <Compile Include="MVCamera.cs" />
     <Compile Include="OLM.cs" />
