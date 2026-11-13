@@ -2,6 +2,7 @@
 
 using BaslerCamera;
 using HalconDotNet;
+using HslCommunication;
 using OnlineMeasurement.IO;
 using System;
 using System.Collections.Generic;
@@ -162,6 +163,17 @@ namespace OnlineMeasurement
         }
 
         bool b = true;
+        /// <summary>
+        /// 在主流程运行期间读取 PLC 心跳并写入反值，用于维持上位机与 PLC 的运行状态交互。
+        /// 使用现有执行标志限制重复处理，读写失败时将本次结果的错误码和错误信息写入运行日志。
+        /// </summary>
+        /// <param name="sender">触发心跳回调的定时器对象；本方法不读取该参数。</param>
+        /// <param name="e">定时器事件参数；本方法不读取该参数。</param>
+        /// <remarks>
+        /// 由 System.Timers.Timer 在线程池线程上调用，同步通信和日志写入可能阻塞当前回调。
+        /// 心跳写入沿用 iolock，执行标志和主流程状态沿用现有访问方式，本方法不提供完整的跨线程同步保证。
+        /// PLC 连接由主流程管理，本方法不创建或关闭连接。
+        /// </remarks>
         void alive_Tick(object sender, EventArgs e)
         {
             //非UI线程执行,且会并行执行
@@ -173,19 +185,19 @@ namespace OnlineMeasurement
                     var result = plc.ReadBool(camIODict["L"]["HeartBeat"].Address);
                     if (result.IsSuccess)
                     {
-                        bool b2;
+                        OperateResult writeResult;
                         lock (iolock)
                         {
-                            b2 = plc.Write(camIODict["L"]["HeartBeat"].Address, !result.Content).IsSuccess;
+                            writeResult = plc.Write(camIODict["L"]["HeartBeat"].Address, !result.Content);
                         }
-                        if (!b2)
+                        if (!writeResult.IsSuccess)
                         {
-                            ShowMessage("心跳写入失败", Color.Red);
+                            ShowMessage($"心跳写入失败，错误码：{writeResult.ErrorCode}，错误信息：{writeResult.Message}", Color.Red);
                         }
                     }
                     else
                     {
-                        ShowMessage("心跳读取失败", Color.Red);
+                        ShowMessage($"心跳读取失败，错误码：{result.ErrorCode}，错误信息：{result.Message}", Color.Red);
                     }
                 }
                 b = true;
@@ -293,6 +305,16 @@ namespace OnlineMeasurement
             }
         }
 
+        /// <summary>
+        /// 执行在线检测主流程：加载参数并连接设备，等待 PLC 开始信号，启动左右两侧任务，
+        /// 汇总检测数据并反馈结果；PLC 读写失败日志附带对应请求的错误码和错误信息。
+        /// </summary>
+        /// <remarks>
+        /// 由专用主线程执行，会修改运行状态、操作 PLC 和数据库，并通过界面调度更新控件。
+        /// 创建的两侧任务与心跳共用 PLC；本方法沿用现有同步和失败处理规则，不额外串行化通信。
+        /// 主流程异常记录到日志；退出时设置停止标志、停用心跳，等待存图线程和两侧任务结束，再关闭相机。
+        /// 设备初始化、模型加载和文件访问可能耗时，调用方不得在界面线程上同步执行本方法。
+        /// </remarks>
         void MainThread()
         {
             try
@@ -449,70 +471,82 @@ namespace OnlineMeasurement
 
                     bAbort = false;
                     //信号复位
-                    if (!plc.Write(camIODict["L"]["Readily"].Address, false).IsSuccess)
+                    var resetReadyResult = plc.Write(camIODict["L"]["Readily"].Address, false);
+                    if (!resetReadyResult.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.ready_write_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.ready_write_fail}，错误码：{resetReadyResult.ErrorCode}，错误信息：{resetReadyResult.Message}", Color.Red);
                     }
-                    if (!plc.Write(camIODict["L"]["Running"].Address, false).IsSuccess)
+                    var resetRunningResult = plc.Write(camIODict["L"]["Running"].Address, false);
+                    if (!resetRunningResult.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.running_write_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.running_write_fail}，错误码：{resetRunningResult.ErrorCode}，错误信息：{resetRunningResult.Message}", Color.Red);
                     }
-                    if (!plc.Write(camIODict["L"]["Check_Finish"].Address, false).IsSuccess)
+                    var resetCheckFinishResult = plc.Write(camIODict["L"]["Check_Finish"].Address, false);
+                    if (!resetCheckFinishResult.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.check_result_readable_write_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.check_result_readable_write_fail}，错误码：{resetCheckFinishResult.ErrorCode}，错误信息：{resetCheckFinishResult.Message}", Color.Red);
                     }
-                    if (!plc.Write(camIODict["L"]["Result"].Address, false).IsSuccess)
+                    var resetCheckResult = plc.Write(camIODict["L"]["Result"].Address, false);
+                    if (!resetCheckResult.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.check_result_write_fail, Color.Red);
-                    }
-
-                    if (!plc.Write(camIODict["L"]["ResultOK"].Address, false).IsSuccess)
-                    {
-                        ShowMessage(Resources.LanguageDic.check_result_ok_write_fail, Color.Red);
-                    }
-
-                    if (!plc.Write(camIODict["L"]["ResultNG"].Address, false).IsSuccess)
-                    {
-                        ShowMessage(Resources.LanguageDic.check_result_ng_write_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.check_result_write_fail}，错误码：{resetCheckResult.ErrorCode}，错误信息：{resetCheckResult.Message}", Color.Red);
                     }
 
-                    if (!plc.Write(camIODict["L"]["Acq_Finish"].Address, false).IsSuccess)
+                    var resetResultOk = plc.Write(camIODict["L"]["ResultOK"].Address, false);
+                    if (!resetResultOk.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.L_photo_finish_write_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.check_result_ok_write_fail}，错误码：{resetResultOk.ErrorCode}，错误信息：{resetResultOk.Message}", Color.Red);
                     }
-                    if (!plc.Write(camIODict["R"]["Acq_Finish"].Address, false).IsSuccess)
+
+                    var resetResultNg = plc.Write(camIODict["L"]["ResultNG"].Address, false);
+                    if (!resetResultNg.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.R_photo_finish_write_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.check_result_ng_write_fail}，错误码：{resetResultNg.ErrorCode}，错误信息：{resetResultNg.Message}", Color.Red);
+                    }
+
+                    var resetAcqFinishL = plc.Write(camIODict["L"]["Acq_Finish"].Address, false);
+                    if (!resetAcqFinishL.IsSuccess)
+                    {
+                        ShowMessage($"{Resources.LanguageDic.L_photo_finish_write_fail}，错误码：{resetAcqFinishL.ErrorCode}，错误信息：{resetAcqFinishL.Message}", Color.Red);
+                    }
+                    var resetAcqFinishR = plc.Write(camIODict["R"]["Acq_Finish"].Address, false);
+                    if (!resetAcqFinishR.IsSuccess)
+                    {
+                        ShowMessage($"{Resources.LanguageDic.R_photo_finish_write_fail}，错误码：{resetAcqFinishR.ErrorCode}，错误信息：{resetAcqFinishR.Message}", Color.Red);
                     }
 
 
                     //
 
-                    if (!plc.Write(camIODict["L"]["Feedback_Car_Model"].Address, 0).IsSuccess)
+                    var resetCarModelResult = plc.Write(camIODict["L"]["Feedback_Car_Model"].Address, 0);
+                    if (!resetCarModelResult.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.model_no_code_write_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.model_no_code_write_fail}，错误码：{resetCarModelResult.ErrorCode}，错误信息：{resetCarModelResult.Message}", Color.Red);
                     }
 
-                    if (!plc.Write(camIODict["L"]["Feedback_Check_Point_NO"].Address, 0).IsSuccess)
+                    var resetPointNumberL = plc.Write(camIODict["L"]["Feedback_Check_Point_NO"].Address, 0);
+                    if (!resetPointNumberL.IsSuccess)
                     {
-                        ShowMessage("L" + $"{Resources.LanguageDic.Point_number_writing_failed}", Color.Red);
+                        ShowMessage("L" + $"{Resources.LanguageDic.Point_number_writing_failed}，错误码：{resetPointNumberL.ErrorCode}，错误信息：{resetPointNumberL.Message}", Color.Red);
                     }
 
-                    if (!plc.Write(camIODict["R"]["Feedback_Check_Point_NO"].Address, 0).IsSuccess)
+                    var resetPointNumberR = plc.Write(camIODict["R"]["Feedback_Check_Point_NO"].Address, 0);
+                    if (!resetPointNumberR.IsSuccess)
                     {
-                        ShowMessage("R" + $"{Resources.LanguageDic.Point_number_writing_failed}", Color.Red);
+                        ShowMessage("R" + $"{Resources.LanguageDic.Point_number_writing_failed}，错误码：{resetPointNumberR.ErrorCode}，错误信息：{resetPointNumberR.Message}", Color.Red);
                     }
                     Thread.Sleep(100);
                     var lastStartResult = plc.ReadBool(camIODict["L"]["Start"].Address);
                     if (!lastStartResult.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.start_signal_read_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.start_signal_read_fail}，错误码：{lastStartResult.ErrorCode}，错误信息：{lastStartResult.Message}", Color.Red);
                         return;
                     }
 
-                    if (!plc.Write(camIODict["L"]["Readily"].Address, true).IsSuccess)
+                    var readyResult = plc.Write(camIODict["L"]["Readily"].Address, true);
+                    if (!readyResult.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.ready_write_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.ready_write_fail}，错误码：{readyResult.ErrorCode}，错误信息：{readyResult.Message}", Color.Red);
                     }
                     ShowMessage(Resources.LanguageDic.output_ready_signal);
 
@@ -541,7 +575,7 @@ namespace OnlineMeasurement
                         }
                         else
                         {
-                            ShowMessage(Resources.LanguageDic.start_signal_read_fail, Color.Red);
+                            ShowMessage($"{Resources.LanguageDic.start_signal_read_fail}，错误码：{val.ErrorCode}，错误信息：{val.Message}", Color.Red);
                             //return;
                         }
                         Thread.Sleep(50);
@@ -568,7 +602,7 @@ namespace OnlineMeasurement
                     
                     if (!carKind.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.model_no_code_read_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.model_no_code_read_fail}，错误码：{carKind.ErrorCode}，错误信息：{carKind.Message}", Color.Red);
                         return;
                     }
 
@@ -577,7 +611,7 @@ namespace OnlineMeasurement
                     var writecarKind = plc.Write(camIODict["L"]["Feedback_Car_Model"].Address, carKind.Content);
                     if (!writecarKind.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.model_no_code_write_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.model_no_code_write_fail}，错误码：{writecarKind.ErrorCode}，错误信息：{writecarKind.Message}", Color.Red);
                         return;
                     }
 
@@ -609,7 +643,7 @@ namespace OnlineMeasurement
                     var carNumStringInfo = plc.ReadString(camIODict["L"]["Car_NO"].Address, 10);
                     if (!carNumStringInfo.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.vin_read_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.vin_read_fail}，错误码：{carNumStringInfo.ErrorCode}，错误信息：{carNumStringInfo.Message}", Color.Red);
                         return;
                     }
                     string carNumString = carNumStringInfo.Content;
@@ -771,14 +805,16 @@ namespace OnlineMeasurement
                     //{
                     //    ShowMessage(Resources.LanguageDic.check_result_readable_write_fail, Color.Red);
                     //}
-                    if (!plc.Write(camIODict["L"]["Running"].Address, true).IsSuccess)
+                    var runningResult = plc.Write(camIODict["L"]["Running"].Address, true);
+                    if (!runningResult.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.running_write_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.running_write_fail}，错误码：{runningResult.ErrorCode}，错误信息：{runningResult.Message}", Color.Red);
                     }
                     Thread.Sleep(50);
-                    if (!plc.Write(camIODict["L"]["Readily"].Address, false).IsSuccess)
+                    var clearReadyResult = plc.Write(camIODict["L"]["Readily"].Address, false);
+                    if (!clearReadyResult.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.ready_write_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.ready_write_fail}，错误码：{clearReadyResult.ErrorCode}，错误信息：{clearReadyResult.Message}", Color.Red);
                     }
 
                     // 输出点结果信号,初始化
@@ -1391,30 +1427,35 @@ namespace OnlineMeasurement
 
 
                     //输出信号
-                    if (!plc.Write(camIODict["L"]["Result"].Address, bResult).IsSuccess)
+                    var checkResult = plc.Write(camIODict["L"]["Result"].Address, bResult);
+                    if (!checkResult.IsSuccess)
                     {
-                        ShowMessage($"{Resources.LanguageDic.check_result_write_fail}", Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.check_result_write_fail}，错误码：{checkResult.ErrorCode}，错误信息：{checkResult.Message}", Color.Red);
                     }
-                    if (!plc.Write(camIODict["L"]["ResultOK"].Address, bResult).IsSuccess)
+                    var resultOk = plc.Write(camIODict["L"]["ResultOK"].Address, bResult);
+                    if (!resultOk.IsSuccess)
                     {
-                        ShowMessage(Resources.LanguageDic.check_result_ok_write_fail, Color.Red);
-                    }
-
-                    if (!plc.Write(camIODict["L"]["ResultNG"].Address, !bResult).IsSuccess)
-                    {
-                        ShowMessage(Resources.LanguageDic.check_result_ng_write_fail, Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.check_result_ok_write_fail}，错误码：{resultOk.ErrorCode}，错误信息：{resultOk.Message}", Color.Red);
                     }
 
-
-
-
-                    if (!plc.Write(camIODict["L"]["Check_Finish"].Address, true).IsSuccess)
+                    var resultNg = plc.Write(camIODict["L"]["ResultNG"].Address, !bResult);
+                    if (!resultNg.IsSuccess)
                     {
-                        ShowMessage($"{Resources.LanguageDic.check_result_readable_write_fail}", Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.check_result_ng_write_fail}，错误码：{resultNg.ErrorCode}，错误信息：{resultNg.Message}", Color.Red);
                     }
-                    if (!plc.Write(camIODict["L"]["Running"].Address, false).IsSuccess)
+
+
+
+
+                    var checkFinishResult = plc.Write(camIODict["L"]["Check_Finish"].Address, true);
+                    if (!checkFinishResult.IsSuccess)
                     {
-                        ShowMessage($"{Resources.LanguageDic.running_write_fail}", Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.check_result_readable_write_fail}，错误码：{checkFinishResult.ErrorCode}，错误信息：{checkFinishResult.Message}", Color.Red);
+                    }
+                    var clearRunningResult = plc.Write(camIODict["L"]["Running"].Address, false);
+                    if (!clearRunningResult.IsSuccess)
+                    {
+                        ShowMessage($"{Resources.LanguageDic.running_write_fail}，错误码：{clearRunningResult.ErrorCode}，错误信息：{clearRunningResult.Message}", Color.Red);
                     }
 
                     lblSysStatus.BeginInvoke(new Action(() =>
@@ -1440,13 +1481,13 @@ namespace OnlineMeasurement
                         }
                         else
                         {
-                            ShowMessage($"{Resources.LanguageDic.read_signal_read_fail}", Color.Red);
+                            ShowMessage($"{Resources.LanguageDic.read_signal_read_fail}，错误码：{val.ErrorCode}，错误信息：{val.Message}", Color.Red);
                             return;
                         }
                         var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
                         if (!abort.IsSuccess)
                         {
-                            ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
+                            ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}，错误码：{abort.ErrorCode}，错误信息：{abort.Message}", Color.Red);
                             return;
                         }
                         if (bAbort || abort.Content)
@@ -1498,6 +1539,28 @@ namespace OnlineMeasurement
             }
         }
 
+        /// <summary>
+        /// 执行单侧机器人检测任务：等待点位和拍照到位信号，读取机器人位姿、采图匹配并计算坐标，
+        /// 完成 PLC 拍照握手，收集本侧检测结果；通信失败日志保留对应请求的错误码和错误信息。
+        /// </summary>
+        /// <param name="path">当前检测轮次的图像保存目录；启用存图时应为有效路径，图像按现有队列交给存图线程处理。</param>
+        /// <param name="cam">本侧已打开的相机对象，不能为 null；采图期间须保持有效，由调用方管理连接生命周期。</param>
+        /// <param name="robot">本侧已连接的机器人接口，应能返回有效的六维位姿和六轴角度；由调用方管理其生命周期。</param>
+        /// <param name="camSetting">本侧相机标定和匹配参数；调用方应使其与车型参数对应，未配置场景沿用现有缺参处理。</param>
+        /// <param name="carSetting">本侧车型及测点参数；可为 null，此时按缺参分支拍照显示并标记检测异常。</param>
+        /// <param name="oLM">本侧温漂模型；可为 null。非空时使用关节角计算补偿位姿，是否采用补偿结果由现有配置决定。</param>
+        /// <param name="camName">本侧相机标识，通常为 L 或 R，用于日志、界面和存图命名，须与设备配置一致。</param>
+        /// <param name="IO">本侧 PLC 地址表，不能为 null，须包含点位号、点位反馈、到位、末点和拍照完成等当前流程使用的信号。</param>
+        /// <param name="point3d">输出按点位号索引的检测坐标，单位为毫米；进入方法时新建，提前退出时可能为空或仅包含部分结果。</param>
+        /// <param name="point3dBase">输出用于坐标重建的基准点名义坐标，单位为毫米；进入方法时新建，仅收集有效匹配的基准点。</param>
+        /// <param name="sqlValuePairs">输出按点位号索引的数据库字段和值；进入方法时新建，提前退出时可能仅包含已完成的测点。</param>
+        /// <param name="检测异常">输入输出的检测有效标志；沿用调用方初值，发生缺参、匹配或计算异常时置为 false。</param>
+        /// <param name="数据超差">输入输出的尺寸合格标志；沿用调用方初值，任一轴偏差超出测点上下限时置为 false。</param>
+        /// <remarks>
+        /// 由本侧后台任务调用；同侧相机和参数在任务结束前须保持有效，调用方应等待任务结束后读取输出集合。
+        /// 与另一侧任务和心跳共用 PLC，并访问停止标志、界面及存图队列；保留现有同步方式，不保证任意并发调用安全。
+        /// 本方法不关闭调用方传入的设备和模型；未在内部处理的异常由外层 Task 保存并由主流程检查。
+        /// </remarks>
         private void RobotRun(string path, BaslerCamera.Cam cam,IRobot robot, CamSetting camSetting, CarSetting carSetting, OLM oLM, string camName,
             Dictionary<string, IoAddress> IO, out Dictionary<int, Point3D> point3d, out Dictionary<int, Point3D> point3dBase, out Dictionary<int, Dictionary<string, string>> sqlValuePairs,
             ref bool 检测异常, ref bool 数据超差)
@@ -1547,13 +1610,13 @@ namespace OnlineMeasurement
                     }
                     else
                     {
-                        ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}", Color.Red);
+                        ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}，错误码：{pointNumList.ErrorCode}，错误信息：{pointNumList.Message}", Color.Red);
                         //return;
                     }
                     var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
                     if (!abort.IsSuccess)
                     {
-                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}，错误码：{abort.ErrorCode}，错误信息：{abort.Message}", Color.Red);
                         //return;
                     }
                     if (bAbort || abort.Content)
@@ -1569,7 +1632,7 @@ namespace OnlineMeasurement
                 var writepointNumList = plc.Write(IO["Feedback_Check_Point_NO"].Address, pointNum);
                 if (!writepointNumList.IsSuccess)
                 {
-                    ShowMessage(camName + $"{Resources.LanguageDic.Point_number_writing_failed}", Color.Red);
+                    ShowMessage(camName + $"{Resources.LanguageDic.Point_number_writing_failed}，错误码：{writepointNumList.ErrorCode}，错误信息：{writepointNumList.Message}", Color.Red);
                     robotStop = true;
                     return;
                 }
@@ -1595,13 +1658,13 @@ namespace OnlineMeasurement
                     }
                     else
                     {
-                        ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}", Color.Red);
+                        ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}，错误码：{val.ErrorCode}，错误信息：{val.Message}", Color.Red);
                         //return;
                     }
                     var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
                     if (!abort.IsSuccess)
                     {
-                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}，错误码：{abort.ErrorCode}，错误信息：{abort.Message}", Color.Red);
                         //return;
                     }
                     if (bAbort || abort.Content)
@@ -1713,7 +1776,7 @@ namespace OnlineMeasurement
                 var endPoint = plc.ReadBool(IO["End_of_Check_Points"].Address);
                 if (!endPoint.IsSuccess)
                 {
-                    ShowMessage(camName + $"{Resources.LanguageDic.Trajectory_endpoint_reading_failed}", Color.Red);
+                    ShowMessage(camName + $"{Resources.LanguageDic.Trajectory_endpoint_reading_failed}，错误码：{endPoint.ErrorCode}，错误信息：{endPoint.Message}", Color.Red);
                     robotStop = true;
 
                     return;
@@ -2077,9 +2140,10 @@ namespace OnlineMeasurement
                 //Led_Light(camName, false, false);
                 ShowMessage($"{camName}_{pointNum}{Resources.LanguageDic.take_photo_finish}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
 
-                if (!plc.Write(IO["Acq_Finish"].Address, true).IsSuccess)
+                var acqFinishOnResult = plc.Write(IO["Acq_Finish"].Address, true);
+                if (!acqFinishOnResult.IsSuccess)
                 {
-                    ShowMessage(camName + $"{Resources.LanguageDic.take_photo_finish_write_fail}", Color.Red);
+                    ShowMessage(camName + $"{Resources.LanguageDic.take_photo_finish_write_fail}，错误码：{acqFinishOnResult.ErrorCode}，错误信息：{acqFinishOnResult.Message}", Color.Red);
                 }
                 else
                 {
@@ -2103,13 +2167,13 @@ namespace OnlineMeasurement
                     }
                     else
                     {
-                        ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}", Color.Red);
+                        ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}，错误码：{val.ErrorCode}，错误信息：{val.Message}", Color.Red);
                         //return;
                     }
                     var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
                     if (!abort.IsSuccess)
                     {
-                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}，错误码：{abort.ErrorCode}，错误信息：{abort.Message}", Color.Red);
                         //return;
                     }
                     if (bAbort || abort.Content)
@@ -2122,9 +2186,10 @@ namespace OnlineMeasurement
                 }
 
                 //反馈点位号
-                if (!plc.Write(IO["Feedback_Check_Point_NO"].Address, 0).IsSuccess)
+                var clearPointNumberResult = plc.Write(IO["Feedback_Check_Point_NO"].Address, 0);
+                if (!clearPointNumberResult.IsSuccess)
                 {
-                    ShowMessage(camName + $"{Resources.LanguageDic.Point_number_writing_failed}", Color.Red);
+                    ShowMessage(camName + $"{Resources.LanguageDic.Point_number_writing_failed}，错误码：{clearPointNumberResult.ErrorCode}，错误信息：{clearPointNumberResult.Message}", Color.Red);
                     robotStop = true;
 
                     return;
@@ -2132,9 +2197,10 @@ namespace OnlineMeasurement
 
 
                 //拍照完成
-                if (!plc.Write(IO["Acq_Finish"].Address, false).IsSuccess)
+                var acqFinishOffResult = plc.Write(IO["Acq_Finish"].Address, false);
+                if (!acqFinishOffResult.IsSuccess)
                 {
-                    ShowMessage(camName + $"{Resources.LanguageDic.take_photo_finish_write_fail}", Color.Red);
+                    ShowMessage(camName + $"{Resources.LanguageDic.take_photo_finish_write_fail}，错误码：{acqFinishOffResult.ErrorCode}，错误信息：{acqFinishOffResult.Message}", Color.Red);
                 }
                 else
                 {
@@ -2538,6 +2604,21 @@ namespace OnlineMeasurement
 
          }
 
+        /// <summary>
+        /// 采集单侧温漂标定数据：等待 PLC 点位和拍照到位信号，读取机器人位姿并保存标定图像，
+        /// 完成拍照握手，直至收到末点；通信失败日志附带本次请求的错误码和错误信息。
+        /// </summary>
+        /// <param name="path">当前轮次路径参数；现有实现使用 Data/TempareCalib 下的固定目录保存数据，不使用该参数。</param>
+        /// <param name="cam">本侧已打开的相机对象，不能为 null；标定采图期间须保持有效，由调用方管理连接生命周期。</param>
+        /// <param name="robot">本侧已连接的机器人接口，不能为 null，需支持读取位姿和六轴角度，由调用方管理生命周期。</param>
+        /// <param name="camSetting">本侧相机标定参数；可为 null，非空时使用 mapImage 生成采集图像的校正图像。</param>
+        /// <param name="carSetting">本侧标定车型参数，不能为 null，测点集合须已配置，用于划分上下位采集目录。</param>
+        /// <param name="camName">本侧相机标识，通常为 L 或 R，用于日志、显示及标定目录命名，须与配置一致。</param>
+        /// <param name="IO">本侧 PLC 地址表，不能为 null，须包含点位号、点位反馈、到位、末点和拍照完成等使用到的信号。</param>
+        /// <remarks>
+        /// 由本侧后台任务执行，会创建标定目录并写入图像、位姿和关节数据；调用方应避免并发写入同一组标定文件。
+        /// 与另一侧和心跳共用 PLC，沿用现有同步及失败退出规则；方法不关闭传入设备，未处理的异常交由外层 Task 保存。
+        /// </remarks>
         private void RobotRunTempareCalib(string path, BaslerCamera.Cam cam,IRobot robot, CamSetting camSetting, CarSetting carSetting, string camName, Dictionary<string, IoAddress> IO)
         {
             int pictureBoxIndex = 0;
@@ -2567,13 +2648,13 @@ namespace OnlineMeasurement
                     }
                     else
                     {
-                        ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}", Color.Red);
+                        ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}，错误码：{pointNumList.ErrorCode}，错误信息：{pointNumList.Message}", Color.Red);
                         return;
                     }
                     var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
                     if (!abort.IsSuccess)
                     {
-                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}，错误码：{abort.ErrorCode}，错误信息：{abort.Message}", Color.Red);
                         return;
                     }
                     if (bAbort || abort.Content)
@@ -2589,7 +2670,7 @@ namespace OnlineMeasurement
                 var writepointNumList = plc.Write(IO["Feedback_Check_Point_NO"].Address, pointNum);
                 if (!writepointNumList.IsSuccess)
                 {
-                    ShowMessage(camName + $"{Resources.LanguageDic.Point_number_writing_failed}", Color.Red);
+                    ShowMessage(camName + $"{Resources.LanguageDic.Point_number_writing_failed}，错误码：{writepointNumList.ErrorCode}，错误信息：{writepointNumList.Message}", Color.Red);
                     return;
                 }
 
@@ -2612,13 +2693,13 @@ namespace OnlineMeasurement
                     }
                     else
                     {
-                        ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}", Color.Red);
+                        ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}，错误码：{val.ErrorCode}，错误信息：{val.Message}", Color.Red);
                         return;
                     }
                     var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
                     if (!abort.IsSuccess)
                     {
-                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}，错误码：{abort.ErrorCode}，错误信息：{abort.Message}", Color.Red);
                         return;
                     }
                     if (bAbort || abort.Content)
@@ -2707,7 +2788,7 @@ namespace OnlineMeasurement
                 var endPoint = plc.ReadBool(IO["End_of_Check_Points"].Address);
                 if (!endPoint.IsSuccess)
                 {
-                    ShowMessage(camName + $"{Resources.LanguageDic.Trajectory_endpoint_reading_failed}", Color.Red);
+                    ShowMessage(camName + $"{Resources.LanguageDic.Trajectory_endpoint_reading_failed}，错误码：{endPoint.ErrorCode}，错误信息：{endPoint.Message}", Color.Red);
                     return;
                 }
                 ShowMessage(camName + $"{Resources.LanguageDic.reserve_end_point}" + pointNum);
@@ -2862,9 +2943,10 @@ namespace OnlineMeasurement
                 //Led_Light(camName, false, false);
                 ShowMessage($"{camName}_{pointNum}{Resources.LanguageDic.take_photo_finish}，{Resources.LanguageDic.use_time2}{sp.ElapsedMilliseconds}ms");
 
-                if (!plc.Write(IO["Acq_Finish"].Address, true).IsSuccess)
+                var acqFinishOnResult = plc.Write(IO["Acq_Finish"].Address, true);
+                if (!acqFinishOnResult.IsSuccess)
                 {
-                    ShowMessage(camName + $"{Resources.LanguageDic.take_photo_finish_write_fail}", Color.Red);
+                    ShowMessage(camName + $"{Resources.LanguageDic.take_photo_finish_write_fail}，错误码：{acqFinishOnResult.ErrorCode}，错误信息：{acqFinishOnResult.Message}", Color.Red);
                 }
                 else
                 {
@@ -2886,13 +2968,13 @@ namespace OnlineMeasurement
                     }
                     else
                     {
-                        ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}", Color.Red);
+                        ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}，错误码：{val.ErrorCode}，错误信息：{val.Message}", Color.Red);
                         return;
                     }
                     var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
                     if (!abort.IsSuccess)
                     {
-                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
+                        ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}，错误码：{abort.ErrorCode}，错误信息：{abort.Message}", Color.Red);
                         return;
                     }
                     if (bAbort || abort.Content)
@@ -2905,17 +2987,19 @@ namespace OnlineMeasurement
                 }
 
                 //反馈点位号
-                if (!plc.Write(IO["Feedback_Check_Point_NO"].Address, 0).IsSuccess)
+                var clearPointNumberResult = plc.Write(IO["Feedback_Check_Point_NO"].Address, 0);
+                if (!clearPointNumberResult.IsSuccess)
                 {
-                    ShowMessage(camName + $"{Resources.LanguageDic.Point_number_writing_failed}", Color.Red);
+                    ShowMessage(camName + $"{Resources.LanguageDic.Point_number_writing_failed}，错误码：{clearPointNumberResult.ErrorCode}，错误信息：{clearPointNumberResult.Message}", Color.Red);
                     return;
                 }
 
 
                 //拍照完成
-                if (!plc.Write(IO["Acq_Finish"].Address, false).IsSuccess)
+                var acqFinishOffResult = plc.Write(IO["Acq_Finish"].Address, false);
+                if (!acqFinishOffResult.IsSuccess)
                 {
-                    ShowMessage(camName + $"{Resources.LanguageDic.take_photo_finish_write_fail}", Color.Red);
+                    ShowMessage(camName + $"{Resources.LanguageDic.take_photo_finish_write_fail}，错误码：{acqFinishOffResult.ErrorCode}，错误信息：{acqFinishOffResult.Message}", Color.Red);
                 }
                 else
                 {

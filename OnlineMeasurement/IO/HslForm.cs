@@ -206,6 +206,16 @@ namespace OnlineMeasurement.IO
             }
         }
 
+        /// <summary>
+        /// 响应输入信号标签双击，在连接已打开时按信号枚举区间选择对应数据类型读取 PLC，
+        /// 成功则更新输入值文本框，失败则显示该次请求的错误码和错误信息。
+        /// </summary>
+        /// <param name="sender">被双击的输入标签；仅处理 Label，Tag 应为有效输入控件索引，文本须对应已配置的 DI 枚举和地址。</param>
+        /// <param name="e">双击事件参数；本方法不读取该参数。</param>
+        /// <remarks>
+        /// 必须在界面线程调用，会同步等待 PLC 响应并更新控件；通信对象由主窗口持有，本方法不管理连接。
+        /// 控件索引、枚举名称或地址配置无效时，现有转换和索引操作可能抛出异常，本方法不捕获这些配置异常。
+        /// </remarks>
         private void LblIn_DoubleClick(object sender, EventArgs e)
         {
             if (signal.IsOpen)
@@ -224,7 +234,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                         }
                     }
                     else if ((int)eIO < 512)
@@ -236,7 +246,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                         }
                     }
                     else if ((int)eIO < 768)
@@ -248,7 +258,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                         }
                     }
                     else if ((int)eIO < 1024)
@@ -260,7 +270,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                         }
                     }
                     else if ((int)eIO < 1280)
@@ -272,7 +282,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                         }
                     }
                     else if ((int)eIO < 1536)
@@ -284,7 +294,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                         }
                     }
                     else if ((int)eIO < 1792)
@@ -296,7 +306,7 @@ namespace OnlineMeasurement.IO
                         }
                         else
                         {
-                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}:" + result.Message);
+                            ShowMessage($"{Resources.LanguageDic.signal_read_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                         }
                     }
 
@@ -304,6 +314,16 @@ namespace OnlineMeasurement.IO
             }
         }
 
+        /// <summary>
+        /// 响应输出信号标签双击，按信号枚举区间解析文本框中的值并写入 PLC，
+        /// 格式错误时显示原有提示，通信失败时显示对应请求的错误码和错误信息。
+        /// </summary>
+        /// <param name="sender">被双击的输出标签；仅处理 Label，Tag 应为有效输出控件索引，文本须对应已配置的 DO 枚举和地址。</param>
+        /// <param name="e">双击事件参数；本方法不读取该参数。</param>
+        /// <remarks>
+        /// 必须在界面线程调用，同步写入会修改 PLC 信号并可能阻塞界面；字符串沿用最多十个字符的现有限制。
+        /// 通信对象由主窗口持有；配置索引或枚举名称无效导致的异常沿用现有传播方式。
+        /// </remarks>
         private void LblOut_DoubleClick(object sender, EventArgs e)
         {
             if (signal.IsOpen)
@@ -320,7 +340,7 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                             }
                         }
                         else
@@ -335,7 +355,7 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                             }
                         }
                         else
@@ -350,7 +370,7 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                             }
                         }
                         else
@@ -365,7 +385,7 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                             }
                         }
                         else
@@ -380,7 +400,7 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, (ushort)value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                             }
                         }
                         else
@@ -395,7 +415,7 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                             }
                         }
                         else
@@ -411,7 +431,7 @@ namespace OnlineMeasurement.IO
                             var result = signal.Write(ioDict[eIO.ToString()].Address, value);
                             if (!result.IsSuccess)
                             {
-                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}:" + result.Message);
+                                ShowMessage($"{Resources.LanguageDic.signal_rewrite_fail}，错误码：{result.ErrorCode}，错误信息：{result.Message}");
                             }
                         }
                         else
@@ -450,6 +470,15 @@ namespace OnlineMeasurement.IO
             signal.Close();
         }
 
+        /// <summary>
+        /// 响应连接按钮，按当前 PLC 参数建立连接并更新按钮状态；
+        /// 连接失败时显示通信对象保存的错误码和错误信息，并恢复连接按钮。
+        /// </summary>
+        /// <param name="sender">触发连接操作的按钮对象；本方法不读取该参数。</param>
+        /// <param name="e">按钮点击事件参数；本方法不读取该参数。</param>
+        /// <remarks>
+        /// 必须在界面线程调用，同步连接可能阻塞至连接超时；打开的是主窗口共用的通信对象，不创建新的 PLC 实例。
+        /// </remarks>
         private void button_Open_Click(object sender, EventArgs e)
         {
             if (button_Open.Enabled)//没有效果
@@ -462,7 +491,7 @@ namespace OnlineMeasurement.IO
                 }
                 else
                 {
-                    ShowMessage($"{Resources.LanguageDic.connection_failed}");
+                    ShowMessage($"{Resources.LanguageDic.connection_failed}：{signal.ErrMsg}");
                     button_Open.Enabled = true;
                 }
             }
