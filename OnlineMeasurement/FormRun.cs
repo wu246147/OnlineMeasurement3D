@@ -38,6 +38,9 @@ namespace OnlineMeasurement
     {
         Thread mainThread = null;
         bool stop = true;
+
+        bool robotStop = false;
+
         System.Timers.Timer alive = new System.Timers.Timer();
         //private OmronFinsNet omronFinsNet = null;
         //private MelsecMcNet plc = null;
@@ -380,6 +383,8 @@ namespace OnlineMeasurement
 
                 otherSet.Load();
 
+                //关闭plc通讯
+                plcClose();
                 if (!plcInit())
                 {
                     return;
@@ -905,6 +910,8 @@ namespace OnlineMeasurement
                     while (!(taskL.IsCompleted && taskR.IsCompleted))
                     {
                         if (stop) return;
+
+                        if (robotStop) return;
 
                         Thread.Sleep(10);
                     }
@@ -1511,6 +1518,8 @@ namespace OnlineMeasurement
                 ShowMessage(camName + $"{Resources.LanguageDic.wait_for_point_NO}");
 
                 if (stop) return;
+                if (robotStop) return;
+
                 sp.Restart();
                 //等点位号
 
@@ -1524,6 +1533,8 @@ namespace OnlineMeasurement
                 while (true)
                 {
                     if (stop) return;
+                    if (robotStop) return;
+
                     var pointNumList = plc.ReadInt16(IO["Check_Point_NO"].Address);
                     if (pointNumList.IsSuccess)
                     {
@@ -1537,21 +1548,21 @@ namespace OnlineMeasurement
                     else
                     {
                         ShowMessage(camName + $"{Resources.LanguageDic.fail_get_point_NO}", Color.Red);
-                        return;
+                        //return;
                     }
                     var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
                     if (!abort.IsSuccess)
                     {
                         ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
-                        return;
+                        //return;
                     }
                     if (bAbort || abort.Content)
                     {
                         bAbort = true;
                         ShowMessage(camName + $"{Resources.LanguageDic.reserve_reset_signal}", Color.Yellow);
-                        return;
+                        //return;
                     }
-                    Thread.Sleep(50);
+                    Thread.Sleep(100);
                 }
 
                 //点位号反馈
@@ -1559,6 +1570,7 @@ namespace OnlineMeasurement
                 if (!writepointNumList.IsSuccess)
                 {
                     ShowMessage(camName + $"{Resources.LanguageDic.Point_number_writing_failed}", Color.Red);
+                    robotStop = true;
                     return;
                 }
 
@@ -1570,6 +1582,8 @@ namespace OnlineMeasurement
                 while (true)
                 {
                     if (stop) return;
+                    if (robotStop) return;
+
                     var val = plc.ReadBool(IO["Arrive_Photo_Spot"].Address);
                     if (val.IsSuccess)
                     {
@@ -1582,21 +1596,21 @@ namespace OnlineMeasurement
                     else
                     {
                         ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}", Color.Red);
-                        return;
+                        //return;
                     }
                     var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
                     if (!abort.IsSuccess)
                     {
                         ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
-                        return;
+                        //return;
                     }
                     if (bAbort || abort.Content)
                     {
                         bAbort = true;
                         ShowMessage(camName + $"{Resources.LanguageDic.reserve_reset_signal}", Color.Yellow);
-                        return;
+                        //return;
                     }
-                    Thread.Sleep(50);
+                    Thread.Sleep(100);
                 }
                 //读取点位号
                 //var point = plc.ReadBool(IO.点位号1, 4);
@@ -1629,6 +1643,8 @@ namespace OnlineMeasurement
                         if (!rt)
                         {
                             ShowMessage(camName + $"{Resources.LanguageDic.Read_pose_fail},{robot.ErrMsg}", Color.Red);
+                            robotStop = true;
+
                             return;
                         }
                     }
@@ -1643,6 +1659,8 @@ namespace OnlineMeasurement
                         if (!rt2)
                         {
                             ShowMessage(camName + $"{Resources.LanguageDic.read_robot_angle_fail},{robot.ErrMsg}", Color.Red);
+                            robotStop = true;
+
                             return;
                         }
                     }
@@ -1696,6 +1714,8 @@ namespace OnlineMeasurement
                 if (!endPoint.IsSuccess)
                 {
                     ShowMessage(camName + $"{Resources.LanguageDic.Trajectory_endpoint_reading_failed}", Color.Red);
+                    robotStop = true;
+
                     return;
                 }
                 ShowMessage(camName + $"{Resources.LanguageDic.reserve_end_point}" + pointNum);
@@ -2070,6 +2090,8 @@ namespace OnlineMeasurement
                 while (true)
                 {
                     if (stop) return;
+                    if (robotStop) return;
+
                     var val = plc.ReadBool(IO["Arrive_Photo_Spot"].Address);
                     if (val.IsSuccess)
                     {
@@ -2082,19 +2104,19 @@ namespace OnlineMeasurement
                     else
                     {
                         ShowMessage(camName + $"{Resources.LanguageDic.Photo_posture_in_place_signal_reading_failed}", Color.Red);
-                        return;
+                        //return;
                     }
                     var abort = plc.ReadBool(camIODict["L"]["Reset"].Address);
                     if (!abort.IsSuccess)
                     {
                         ShowMessage($"{Resources.LanguageDic.reset_signal_read_fail}", Color.Red);
-                        return;
+                        //return;
                     }
                     if (bAbort || abort.Content)
                     {
                         bAbort = true;
                         ShowMessage(camName + $"{Resources.LanguageDic.reserve_reset_signal}", Color.Yellow);
-                        return;
+                        //return;
                     }
                     Thread.Sleep(10);
                 }
@@ -2103,6 +2125,8 @@ namespace OnlineMeasurement
                 if (!plc.Write(IO["Feedback_Check_Point_NO"].Address, 0).IsSuccess)
                 {
                     ShowMessage(camName + $"{Resources.LanguageDic.Point_number_writing_failed}", Color.Red);
+                    robotStop = true;
+
                     return;
                 }
 
@@ -2188,6 +2212,8 @@ namespace OnlineMeasurement
                     catch (Exception ex)
                     {
                         ShowMessage(camName + $"result process error：{ex.Message}",Color.Red);
+                        robotStop = true;
+
                         return;
                     }
 
@@ -3397,6 +3423,7 @@ namespace OnlineMeasurement
         /// </summary>
         void RunState()
         {
+            robotStop = false;
             stop = false;
             buttonRun.Enabled = false;
             buttonStop.Enabled = true;
